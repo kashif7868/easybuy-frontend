@@ -1,0 +1,126 @@
+.navbar-container {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-bottom: 2px solid #15976d; /* Subtle border for separation */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.navbar-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
+}
+
+.logo-img {
+  width: 150px; /* Adjust logo size */
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.cart,
+.sign-in {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cart-icon,
+.sign-in-icon {
+  color: #15976d; /* Green color */
+  font-size: 24px;
+}
+
+.cart-count {
+  margin-left: 5px;
+  font-size: 14px;
+  color: #15976d; /* Green color */
+  font-weight: bold;
+}
+
+.sign-in-btn {
+  background-color: #7ae573; /* Light green button */
+  color: #000; /* Black text */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  padding: 8px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.sign-in-btn:hover {
+  background-color: #15976d; /* Darker green on hover */
+  color: #fff; /* White text on hover */
+}
+
+.navbar {
+  background-color: #15976d; /* Green navbar */
+}
+
+.navbar-list {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  list-style-type: none;
+  margin: 0;
+}
+
+.navbar-item {
+  margin: 0 15px;
+}
+
+.navbar-item a {
+  color: #fff; /* White text */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-item a:hover {
+  color: #7ae573; /* Light green on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo-img {
+    width: 120px; /* Adjust logo size for smaller screens */
+    margin-bottom: 10px;
+  }
+
+  .navbar-right {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .navbar-list {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+  }
+
+  .navbar-item {
+    margin: 10px 0;
+  }
+
+  .navbar-item a {
+    font-size: 14px;
+  }
+
+  .sign-in-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
