@@ -1,6 +1,6 @@
 .footer-container {
-  background-color: #121212; /* Updated background color */
-  color: #fff; /* Updated text color */
+  background-color: #b8ffd5; /* Light background */
+  color: #000; /* Black text */
   padding: 40px 20px;
   font-family: "Arial", sans-serif;
   margin-top: 40px;
@@ -25,18 +25,18 @@
 .social-links {
   display: flex;
   gap: 10px;
+  justify-content: center;
 }
+
 .social-links a {
   margin-right: 10px;
-}
-.social-links a .social-icons {
-  color: #fff;
+  color: #000;
   font-size: 20px;
   text-decoration: none;
 }
 
-.social-links a .social-icons:hover {
-  color: #f39c12; /* Golden color on hover */
+.social-links a:hover {
+  color: #006d2d /* Golden color on hover */
 }
 
 /* Payment Icons */
@@ -70,10 +70,11 @@
   content: "";
   width: 80px;
   height: 2px;
-  background-color: #f39c12; /* Golden underline */
+  background-color: #006d2d; /* Golden underline */
   display: block;
   margin-top: 5px;
 }
+
 /* Category List */
 .footer-category-list {
   list-style: none;
@@ -95,14 +96,15 @@
 }
 
 .footer-category-name {
-  color: #ccc;
+  color: #333;
   font-size: 16px;
   transition: color 0.3s ease;
 }
 
 .footer-category-link-btn:hover .footer-category-name {
-  color: #f39c12; /* Hover color */
+  color: #006d2d; /* Hover color */
 }
+
 /* Footer Section Text and Links */
 .footer-column p,
 .footer-column ul {
@@ -122,7 +124,7 @@
 
 .footer-column ul li a {
   text-decoration: none;
-  color: #ccc; /* Lightened link color for better contrast */
+  color: #000; /* Updated link color */
   font-size: 16px;
   position: relative;
   transition: color 0.3s ease;
@@ -130,7 +132,7 @@
 
 .footer-column ul li a::before {
   content: "→ ";
-  color: #f39c12;
+  color: #17eb6f;
   transition: transform 0.3s ease, color 0.3s ease;
   position: absolute;
   left: -20px;
@@ -138,7 +140,7 @@
 }
 
 .footer-column ul li a:hover {
-  color: #f39c12; /* Hover color */
+  color: #006d2d; /* Hover color */
   cursor: pointer;
 }
 
@@ -179,16 +181,111 @@
 .footer-details p {
   margin-bottom: 10px;
 }
-.footer-copyright {
-  text-align: center;
+
+
+/* Stay Updated Section */
+.footer-column .footer-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-column .footer-description {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.footer-column input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.footer-column input[type="email"]::placeholder {
+  color: #aaa;
+}
+
+.footer-column button {
+  width: 100%;
+  padding: 10px;
+  background-color: #00c451; /* Green button */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.footer-column button:hover {
+  background-color: #009e3b; /* Darker green on hover */
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
   margin-top: 20px;
 }
+
+.social-icons a {
+  color: #000;
+  font-size: 24px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #00c451; /* Green color on hover */
+}
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff; /* You can change this background color */
+  border-top: 1px solid #ddd; /* Optional: Add a border at the top */
+}
+
+.footer-left {
+  font-size: 14px;
+  color: #000;
+  text-align: left;
+}
+
+.footer-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footer-right img {
+  width: 50px; /* Adjust the size of the payment method logos */
+  margin-left: 15px; /* Space between the logos */
+  max-height: 40px; /* Optional: to ensure logos maintain a consistent height */
+}
+
+.footer-right img:first-child {
+  margin-left: 0; /* Remove the left margin for the first image */
+}
+
+
 /* Mobile Styles (1024px and below) */
 @media screen and (max-width: 1024px) {
   .footer-container {
-    background-color: #333; /* Dark background */
+    background-color: #00c451; /* Light background */
+    color: #000; /* Black text */
     padding: 20px;
-    color: #fff; /* White text */
   }
 
   .footer-content {
@@ -272,34 +369,4 @@
   .footer-details {
     display: block; /* Show all sections expanded */
   }
-}
-
-/* Animation for Footer Sections */
-.footer-column.mobile-version {
-  display: flex;
-  flex-direction: column;
-}
-
-.footer-column.mobile-version.open .footer-details {
-  display: block;
-}
-
-.footer-column.mobile-version .footer-details {
-  display: none;
-}
-
-.footer-column.mobile-version h4 {
-  cursor: pointer;
-}
-
-/* Animation for fade-in when the sections open */
-.footer-column.mobile-version {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.footer-column.mobile-version.open {
-  opacity: 1;
-  transform: translateY(0);
 }
