@@ -1,97 +1,86 @@
-.home-container {
-  width: 90%;
-  margin: 0 auto;
-  padding-top: 30px;
-}
-
-/* Slider container */
-.slider-container {
+/* General styling for the carousel */
+.carousel-container {
   width: 100%;
-  max-width: 100%; /* Ensures full width */
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden; /* Ensures the slider images don't overflow */
-  border-radius: 8px; /* Optional, adds rounded corners */
+  margin: 20px auto; /* Centering the carousel */
+  padding: 0 15px; /* Adding padding on both sides */
 }
 
-/* Slick Slider styles */
-.slick-slide {
+.carousel-slide {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.slick-prev, .slick-next {
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  color: white;
-  border-radius: 50%;
   padding: 10px;
-  font-size: 20px;
-  z-index: 10;
 }
 
-.slick-prev:hover, .slick-next:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
-}
-
-.slick-prev {
-  left: 10px;
-}
-
-.slick-next {
-  right: 10px;
-}
-
-/* Slick dots (navigation bullets) */
-.slick-dots {
-  position: absolute;
-  bottom: 10px; /* Positioning dots at the bottom */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.slick-dots li button {
-  background-color: #ffffff; /* White color for dots */
-  border-radius: 50%;
-  width: 12px;
-  height: 12px;
-  margin: 0 5px;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-}
-
-.slick-dots li.slick-active button {
-  background-color: #ff7f50; /* Active dot color */
-  opacity: 1;
-}
-
-.slick-dots li button:hover {
-  opacity: 1; /* Hover effect for dots */
-}
-
-/* Image styling */
-.slick-slide img {
+.carousel-image {
   width: 100%;
   height: auto;
-  border-radius: 8px; /* Optional, gives images rounded corners */
-  object-fit: cover; /* Ensures image fills the space without distortion */
+  object-fit: cover;
+  border-radius: 8px; /* Rounded corners for images */
 }
 
-/* Optional: Add a shadow to the slider container for a polished look */
-.slider-container {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Make the images fully responsive */
+@media (max-width: 1024px) {
+  .carousel-image {
+    width: 100%;
+    height: auto;
+  }
 }
 
-/* Optional: Adjust the image container in case of large images */
-.slick-track {
+@media (max-width: 768px) {
+  .carousel-container {
+    padding: 0 10px; /* Padding on smaller screens */
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Slick Carousel Arrows */
+.slick-prev,
+.slick-next {
+  font-size: 30px;
+  color: #fff; /* White color for the arrows */
+  opacity: 0.8;
+  z-index: 1; /* Ensure arrows are above the images */
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  color: #ff6347; /* Change arrow color on hover */
+  opacity: 1; /* Full opacity on hover */
+}
+
+/* Customizing the Dots */
+.slick-dots {
+  position: absolute;
+  bottom: 10px; /* Positioning dots near the bottom */
+  width: 100%; /* Ensures dots cover full width */
   display: flex;
-  align-items: center;
+  justify-content: center; /* Centers the dots horizontally */
+}
+
+.slick-dots li {
+  margin: 0 5px; /* Space between dots */
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #fff; /* Default white color for dots */
+  transition: color 0.3s ease; /* Smooth transition for active dot */
+}
+
+.slick-dots li.slick-active button:before {
+  color: #ff6347; /* Active dot color */
+}
+
+/* Make the dots more visible on smaller screens */
+@media (max-width: 768px) {
+  .slick-dots li button:before {
+    font-size: 10px; /* Smaller dots on small screens */
+  }
 }
 
 
@@ -106,6 +95,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
+  padding: 20px;
   justify-items: center;
 }
 
@@ -213,4 +203,279 @@
 .cart-info p {
   font-size: 18px;
   color: #333;
+}
+/* Mobile and tablet view adjustments */
+/* Between 1230px and 1024px - Adjust for medium to large screens */
+@media (max-width: 1230px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr); /* Four products per row */
+  }
+
+  .product-card h2 {
+    font-size: 18px;
+  }
+
+  .product-card p {
+    font-size: 14px;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row; /* Align price and discount side by side */
+    justify-content: space-between; /* Space out the prices */
+    width: 100%;
+  }
+
+  .discount-price {
+    font-size: 16px;
+  }
+
+  .original-price {
+    font-size: 14px;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .product-card img {
+    height: 250px; /* Adjust image height for this size */
+  }
+
+  .rating {
+    font-size: 14px;
+  }
+}
+
+/* Between 1024px and 768px - Adjust for tablet screens */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr); /* Three products per row */
+  }
+
+  .product-card h2 {
+    font-size: 16px;
+  }
+
+  .product-card p {
+    font-size: 12px;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .discount-price {
+    font-size: 14px;
+  }
+
+  .original-price {
+    font-size: 12px;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .product-card img {
+    height: 220px;
+  }
+
+  .rating {
+    font-size: 12px;
+  }
+}
+
+/* Between 768px and 576px - Adjust for smaller tablets and large phones */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two products per row */
+    gap: 15px;
+  }
+
+  .product-card h2 {
+    font-size: 16px;
+  }
+
+  .product-card p {
+    font-size: 12px;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .discount-price {
+    font-size: 14px;
+  }
+
+  .original-price {
+    font-size: 12px;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .product-card img {
+    height: 200px;
+  }
+
+  .rating {
+    font-size: 12px;
+  }
+}
+
+/* Between 576px and 400px - Mobile screens */
+@media (max-width: 576px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two products per row */
+    gap: 15px;
+  }
+
+  .product-card {
+    width: 100%;
+  }
+
+  .product-card h2 {
+    font-size: 14px;
+  }
+
+  .product-card p {
+    font-size: 10px;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px;
+  }
+
+  .discount-price {
+    font-size: 12px;
+  }
+
+  .original-price {
+    font-size: 10px;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .product-card img {
+    height: 150px;
+  }
+
+  .rating {
+    font-size: 10px;
+  }
+
+  .wishlist-icon {
+    padding: 4px 4px;
+  }
+
+  .sale-banner {
+    font-size: 12px;
+  }
+}
+
+/* Between 400px and 300px - Larger mobile screens */
+@media (max-width: 400px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .product-card img {
+    height: 120px; /* Smaller images for small devices */
+  }
+
+  .product-card h2 {
+    font-size: 12px;
+  }
+
+  .product-card p {
+    font-size: 9px;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 6px;
+  }
+
+  .discount-price {
+    font-size: 10px;
+  }
+
+  .original-price {
+    font-size: 8px;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .rating {
+    font-size: 8px;
+  }
+
+  .wishlist-icon {
+    padding: 3px 3px;
+  }
+
+  .sale-banner {
+    font-size: 10px;
+  }
+}
+
+/* Between 300px and 250px - Smaller mobile screens */
+@media (max-width: 300px) {
+  .products-grid {
+    grid-template-columns: 1fr; /* One product per row */
+    gap: 10px; /* Adjust gap for single product view */
+  }
+
+  .product-card img {
+    height: 120px; /* Smaller images for small devices */
+  }
+
+  .product-card h2 {
+    font-size: 12px;
+  }
+
+  .product-card p {
+    font-size: 8px;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 6px;
+  }
+
+  .discount-price {
+    font-size: 10px;
+  }
+
+  .original-price {
+    font-size: 8px;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .rating {
+    font-size: 8px;
+  }
+
+  .wishlist-icon {
+    padding: 3px 3px;
+  }
+
+  .sale-banner {
+    font-size: 8px;
+  }
 }

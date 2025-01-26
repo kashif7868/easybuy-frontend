@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "../assets/css/navbar.css";
 import { Link } from "react-router-dom";
 import easybuyLogo from "../assets/images/logo.png";
-import { FaBars } from "react-icons/fa6";
-import { IoIosClose } from "react-icons/io";
+import { FaBars } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { LuHeart } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 import { GrLanguage } from "react-icons/gr"; // Import language icon
+import { IoIosClose } from "react-icons/io";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,6 +23,18 @@ const Navbar = () => {
     setWishlistCount(wishlistCount + 1); // Increase wishlist count by 1
   };
 
+  // Define menu items for categories
+  const menuItems = [
+    { label: "Men", link: "/men" },
+    { label: "Women", link: "/women" },
+    { label: "Boys", link: "/boys" },
+    { label: "Girls", link: "/girls" },
+    { label: "Food", link: "/food" },
+    { label: "Health Care", link: "/health-care" },
+    { label: "Tech Hub", link: "/tech-hub" },
+    { label: "Bedding", link: "/bedding" },
+  ];
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -31,45 +43,26 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className={`navbar-menu ${menuOpen ? "active" : ""}`}>
-        <ul className="navbar-items">
-          <li className="navbar-item">
-            <Link to="/" className="navbar-link">
-              Home
+      <nav className={`navbar-menu ${menuOpen ? "active" : ""}`}>
+        <ul className={`navbar-items-container ${menuOpen ? "active" : ""}`}>
+          <li className="category-item-list">
+            <Link to="/">
+              <span className="home-link-text">Home</span>
             </Link>
           </li>
-          <li className="navbar-item">
-            <Link to="/shop" className="navbar-link">
-              Shop
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/collection" className="navbar-link">
-              Collection
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/blogs" className="navbar-link">
-              Blogs
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/pages" className="navbar-link">
-              Pages
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/offers" className="navbar-link">
-              Offers
-            </Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/order-history" className="navbar-link">
-              Order History
-            </Link>
-          </li>
+          {menuItems.length > 0 ? (
+            menuItems.map((item, index) => (
+              <li key={index} className="category-item-list">
+                <Link to={item.link} className="category-link-btn">
+                  <span className="category-name">{item.label}</span>
+                </Link>
+              </li>
+            ))
+          ) : (
+            <li>Loading...</li>
+          )}
         </ul>
-      </div>
+      </nav>
 
       <div className="navbar-icons-container">
         {/* Language and Flag (Urdu & Pakistan flag) */}

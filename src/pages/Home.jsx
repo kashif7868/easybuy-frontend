@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { LuHeart } from "react-icons/lu"; // Heart icon for wishlist
 import { useNavigate } from "react-router-dom"; // For navigating to product detail page
-import Slider from "react-slick"; // Import react-slick
 import "../assets/css/Pages/home.css"; // Corrected path for your CSS file
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 // Importing product images
@@ -12,10 +12,10 @@ import productImage3 from "../assets/images/product/WhatsApp Image 2025-01-16 at
 import productImage4 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_fc52264f.jpg";
 import productImage5 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.53.17_44a5c57c.jpg";
 
-// Slider images
-import sliderImage1 from "../assets/images/sliders/1731427468095_New_Project_13.webp";
-import sliderImage2 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_26864108.jpg";
-import sliderImage3 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.53.17_44a5c57c.jpg";
+// Slider images (direct imports)
+import sliderImage1 from "../assets/images/sliders/wild-honey.png";
+import sliderImage2 from "../assets/images/sliders/wild-honey.png";
+import sliderImage3 from "../assets/images/sliders/wild-honey.png";
 
 const Home = () => {
   const navigate = useNavigate(); // Hook to handle page navigation
@@ -84,29 +84,43 @@ const Home = () => {
     },
   ];
 
-  const sliderImages = [sliderImage1, sliderImage2, sliderImage3]; // Updated slider images
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: true,
-  };
-
   return (
     <div className="home-container">
       {/* Slider Section using Slick Carousel */}
-      <div className="slider-container">
-        <Slider {...settings}>
-          {sliderImages.map((sliderImages, index) => (
-            <div key={index}>
-              <img src={sliderImages} alt="Promotional Slider" />
-            </div>
-          ))}
+      <div className="carousel-container">
+        <Slider
+          dots={true}
+          infinite={true}
+          speed={500}
+          slidesToShow={2} // Show two images per row
+          slidesToScroll={1}
+          autoplay={true}
+          autoplaySpeed={3000}
+          arrows={true}
+          responsive={[
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 2, // Two slides on medium screens
+              },
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 1, // One slide on small screens
+              },
+            },
+          ]}
+        >
+          <div className="carousel-slide">
+            <img src={sliderImage1} alt="Slider 1" className="carousel-image" />
+          </div>
+          <div className="carousel-slide">
+            <img src={sliderImage2} alt="Slider 2" className="carousel-image" />
+          </div>
+          <div className="carousel-slide">
+            <img src={sliderImage3} alt="Slider 3" className="carousel-image" />
+          </div>
         </Slider>
       </div>
 

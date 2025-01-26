@@ -1,16 +1,19 @@
-/* Container for the entire product view page */
+/* General Product View Container */
 .product-view-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #f4f4f4;
+  background-color: #fff; /* Updated background color */
+  gap: 20px;
 }
 
 /* Left side - Product Images */
 .product-images-section {
-  width: 45%;
+  width: 100%;
+  max-width: 45%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,7 +54,8 @@
 
 /* Right side - Product Details */
 .product-details-contant-info {
-  width: 50%;
+  width: 100%;
+  max-width: 50%;
   display: flex;
   flex-direction: column;
   padding-left: 20px;
@@ -72,6 +76,49 @@
 
 .description-text {
   line-height: 1.6;
+}
+
+.description-text p {
+  margin: 0;
+  font-size: 14px; /* Optional: Customize text size */
+  line-height: 1.6;
+  color: #555; /* Optional: Customize text color */
+}
+
+.description-text h1,
+.description-text h2,
+.description-text h3,
+.description-text h4,
+.description-text h5,
+.description-text h6 {
+  font-weight: bold;
+  color: #222; /* Darker color for headers */
+  margin: 0 0 8px 0; /* Add space below headers */
+}
+
+/* Optional: Adjusting header sizes */
+.description-text h1 {
+  font-size: 32px;
+}
+
+.description-text h2 {
+  font-size: 28px;
+}
+
+.description-text h3 {
+  font-size: 24px;
+}
+
+.description-text h4 {
+  font-size: 20px;
+}
+
+.description-text h5 {
+  font-size: 18px;
+}
+
+.description-text h6 {
+  font-size: 16px;
 }
 
 .product-reviews-section {
@@ -197,20 +244,25 @@
 /* Related Products Section */
 .related-products-section {
   margin-top: 50px;
+  width: 100%;
 }
 
 .related-products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
+  padding: 20px;
+  justify-items: center;
 }
 
 .related-product-card {
-  background-color: #fff;
-  border-radius: 8px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  cursor: pointer;
+  position: relative;
 }
 
 .related-product-card:hover {
@@ -219,8 +271,10 @@
 
 .related-product-img {
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
+  border-bottom: 1px solid #f1f1f1;
+  transition: opacity 0.3s ease;
 }
 
 .related-product-info {
@@ -252,4 +306,77 @@
 .related-product-rating {
   font-size: 16px;
   color: #ffd700;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .product-view-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-images-section, .product-details-contant-info {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .product-details-contant-info {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+
+  .related-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 22px;
+  }
+
+  .product-description, .stars-container, .product-price-section, .color-options, .size-options-section {
+    font-size: 14px;
+  }
+
+  .product-price-section {
+    font-size: 20px;
+  }
+
+  .add-cart-btn, .buy-now-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+
+  .related-products-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-title {
+    font-size: 18px;
+  }
+
+  .product-description, .stars-container, .product-price-section {
+    font-size: 12px;
+  }
+
+  .add-cart-btn, .buy-now-btn {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+
+  .quantity-input {
+    width: 50px;
+  }
+
+  .related-products-grid {
+    grid-template-columns: 1fr;
+  }
 }
