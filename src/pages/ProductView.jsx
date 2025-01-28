@@ -1,55 +1,41 @@
-import React, { useState } from "react"; // Import React and useState
-import { useParams } from "react-router-dom"; // Import useParams
-import productImage1 from "../assets/images/product/0USM2P24V354_2.png";
-import productImage2 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.52_455b025f.jpg";
-import productImage3 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_26864108.jpg";
-import productImage4 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_fc52264f.jpg";
-import productImage5 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.53.17_44a5c57c.jpg";
+import React, { useState, useEffect } from "react"; 
+import { useParams } from "react-router-dom"; 
+import { addToCart } from "../app/actions/actionsCart"; 
+import { useDispatch } from "react-redux"; 
+import { productData } from "../data/productData"; 
 import "../assets/css/Pages/productView.css";
+
 const ProductView = () => {
-  const { id } = useParams(); // Fetch product ID from the URL
-  const [selectedImage, setSelectedImage] = useState(productImage1); // Default product image
+  const { id } = useParams(); 
+  const dispatch = useDispatch();
+
+  const [product, setProduct] = useState(null); 
+  const [selectedImage, setSelectedImage] = useState(null); 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [isLoading, setIsLoading] = useState(false); 
+  const [successMessage, setSuccessMessage] = useState("");  // State for success message
 
-  const product = {
-    id: id, // Product ID fetched from the URL
-    name: "Example T-Shirt",
-    color: "Red",
-    price: 20.0,
-    discountPrice: 18.0,
-    rating: 5,
-    reviews: 1,
-    description:
-      "This is an example t-shirt made of high-quality cotton, perfect for everyday wear.",
-    image: productImage1, // Replace with actual image path
-    additionalImages: [
-      productImage1,
-      productImage2,
-      productImage3,
-      productImage4,
-      productImage5,
-    ], // Additional product images
-    colors: ["Red", "Blue", "Black"],
-    sizes: ["S", "M", "L", "XL"],
-    relatedProducts: [
-      {
-        name: "Winter Jacket",
-        price: 50.0,
-        discountPrice: 45.0,
-        rating: 4,
-        image: productImage5,
-      },
-      {
-        name: "Sport Shoes",
-        price: 80.0,
-        discountPrice: 72.0,
-        rating: 5,
-        image: productImage5,
-      },
-    ],
-  };
+  useEffect(() => {
+    const fetchProduct = () => {
+      const foundProduct = productData
+        .flatMap(category => category.subCategories)
+        .flatMap(subCategory => subCategory.products)
+        .find(product => product.id === parseInt(id));
+
+      if (foundProduct) {
+        setProduct(foundProduct);
+        setSelectedImage(foundProduct.image); 
+      }
+    };
+
+    fetchProduct(); 
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   const handleImageChange = (image) => {
     setSelectedImage(image);
@@ -64,18 +50,38 @@ const ProductView = () => {
   };
 
   const handleAddToCart = () => {
-    console.log("Product added to cart");
-    // Add the product to the cart logic
+    if (!selectedSize || !selectedColor) {
+      alert("Please select size and color");
+      return;
+    }
+
+    setIsLoading(true); 
+
+    const productToAdd = {
+      id: product.id,
+      name: product.name,
+      selectedSize, // use the selectedSize
+      selectedColor, // use the selectedColor
+      price: product.discountPrice,
+      qty: quantity,
+      total: product.discountPrice * quantity, // calculate total based on quantity
+      image: selectedImage,
+    };
+
+    setTimeout(() => {
+      dispatch(addToCart(productToAdd));
+      setIsLoading(false); 
+      setSuccessMessage("Product added to cart successfully!");  // Set the success message
+      console.log("Product added to cart", productToAdd);
+    }, 1000); 
   };
 
   const handleBuyNow = () => {
     console.log("Proceeding to checkout");
-    // Proceed to checkout logic
   };
 
   return (
     <div className="product-view-container">
-      {/* Left: Product Images */}
       <div className="product-images-section">
         <img
           src={selectedImage}
@@ -88,16 +94,13 @@ const ProductView = () => {
               key={index}
               src={image}
               alt={`Thumbnail ${index + 1}`}
-              className={`thumbnail ${
-                selectedImage === image ? "thumbnail-active" : ""
-              }`}
+              className={`thumbnail ${selectedImage === image ? "thumbnail-active" : ""}`}
               onClick={() => handleImageChange(image)}
             />
           ))}
         </div>
       </div>
 
-      {/* Right: Product Details */}
       <div className="product-details-contant-info">
         <div className="product-title">{product.name}</div>
 
@@ -105,40 +108,26 @@ const ProductView = () => {
           <p className="description-text">{product.description}</p>
         </div>
 
-        {/* Product Reviews */}
         <div className="product-reviews-section">
           <div className="stars-container">
-            {"★"
-              .repeat(product.rating)
-              .split("")
-              .map((star, index) => (
-                <span key={index} className="star-filled">
-                  {star}
-                </span>
-              ))}
-            <span>
-              ({product.reviews} Review{product.reviews > 1 ? "s" : ""})
-            </span>
+            {"★".repeat(product.rating).split("").map((star, index) => (
+              <span key={index} className="star-filled">{star}</span>
+            ))}
+            <span>({product.reviews} Review{product.reviews > 1 ? "s" : ""})</span>
           </div>
         </div>
 
-        {/* Product Price */}
         <div className="product-price-section">
-          <span className="old-price">${product.price.toFixed(2)}</span>
-          <span className="current-price">
-            ${product.discountPrice.toFixed(2)}
-          </span>
+          <span className="old-price">₨ {product.price.toFixed(0)}</span>
+          <span className="current-price">₨ {product.discountPrice.toFixed(0)}</span>
         </div>
 
-        {/* Color Options */}
         <div className="color-options-section">
           <div className="color-options">
             {product.colors.map((color, index) => (
               <div
                 key={index}
-                className={`color-box ${
-                  selectedColor === color ? "color-active" : ""
-                }`}
+                className={`color-box ${selectedColor === color ? "color-active" : ""}`}
                 style={{ backgroundColor: color.toLowerCase() }}
                 onClick={() => handleColorSelect(color)}
               ></div>
@@ -146,15 +135,12 @@ const ProductView = () => {
           </div>
         </div>
 
-        {/* Size Options */}
         <div className="size-options-section">
           <div className="size-options-boxes">
             {product.sizes.map((size, index) => (
               <div
                 key={index}
-                className={`size-option-box ${
-                  selectedSize === size ? "selected" : ""
-                }`}
+                className={`size-option-box ${selectedSize === size ? "selected" : ""}`}
                 onClick={() => handleSizeSelect(size)}
               >
                 {size}
@@ -163,7 +149,6 @@ const ProductView = () => {
           </div>
         </div>
 
-        {/* Quantity Selector */}
         <div className="quantity-section">
           <input
             type="number"
@@ -174,7 +159,6 @@ const ProductView = () => {
           />
         </div>
 
-        {/* Action Buttons */}
         <div className="action-buttons-section">
           <button className="add-cart-btn" onClick={handleAddToCart}>
             Add to Cart
@@ -183,40 +167,36 @@ const ProductView = () => {
             Buy Now
           </button>
         </div>
+
+        {isLoading && (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="success-message">
+            {successMessage}
+          </div>
+        )}
       </div>
 
-      {/* Related Products Section */}
       <div className="related-products-section">
         <h3>Related Products</h3>
         <div className="related-products-grid">
           {product.relatedProducts.map((relatedProduct, index) => (
             <div key={index} className="related-product-card">
-              <img
-                src={relatedProduct.image}
-                alt={relatedProduct.name}
-                className="related-product-img"
-              />
+              <img src={relatedProduct.image} alt={relatedProduct.name} className="related-product-img" />
               <div className="related-product-info">
-                <div className="related-product-name">
-                  {relatedProduct.name}
-                </div>
+                <div className="related-product-name">{relatedProduct.name}</div>
                 <div className="related-product-rating">
-                  {"★"
-                    .repeat(relatedProduct.rating)
-                    .split("")
-                    .map((star, index) => (
-                      <span key={index} className="star-filled">
-                        {star}
-                      </span>
-                    ))}
+                  {"★".repeat(relatedProduct.rating).split("").map((star, index) => (
+                    <span key={index} className="star-filled">{star}</span>
+                  ))}
                 </div>
                 <div className="related-product-price">
-                  <span className="related-product-old-price">
-                    ${relatedProduct.price}
-                  </span>
-                  <span className="related-product-current-price">
-                    ${relatedProduct.discountPrice}
-                  </span>
+                  <span className="related-product-old-price">₨ {relatedProduct.price}</span>
+                  <span className="related-product-current-price">₨ {relatedProduct.discountPrice}</span>
                 </div>
               </div>
             </div>

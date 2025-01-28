@@ -1,88 +1,85 @@
 import React, { useState } from "react";
 import { LuHeart } from "react-icons/lu"; // Heart icon for wishlist
+import { HiOutlineShoppingBag } from "react-icons/hi2"; // Shopping Bag icon for Add to Cart
 import { useNavigate } from "react-router-dom"; // For navigating to product detail page
 import "../assets/css/Pages/home.css"; // Corrected path for your CSS file
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// Importing product images
-import productImage1 from "../assets/images/product/0USM2P24V354_2.png";
-import productImage2 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.52_455b025f.jpg";
-import productImage3 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_26864108.jpg";
-import productImage4 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_fc52264f.jpg";
-import productImage5 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.53.17_44a5c57c.jpg";
-
-// Slider images (direct imports)
-import sliderImage1 from "../assets/images/sliders/wild-honey.png";
-import sliderImage2 from "../assets/images/sliders/wild-honey.png";
-import sliderImage3 from "../assets/images/sliders/wild-honey.png";
+import SliderData from "../data/SliderData"; // Importing the SliderData
+import { productData } from "../data/productData"; // Importing productData
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../app/reducer/favoritesSlice";
+import { addToCart } from "../app/actions/actionsCart"; 
+import { useDispatch, useSelector } from "react-redux"; // Added to use dispatch and selector
+import { toast } from "react-toastify"; // Importing toast for notifications
 
 const Home = () => {
+  const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [loading, setLoading] = useState(null); // State to track loading for add to cart
   const navigate = useNavigate(); // Hook to handle page navigation
-  const [wishlist, setWishlist] = useState([]);
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites); // Accessing favorites state
 
-  const exchangeRate = 285; // 1 USD = 285 PKR (adjust if necessary)
+  const isFavorite = (productId) =>
+    Array.isArray(favorites) && favorites.includes(productId);
 
-  const handleAddToWishlist = (product) => {
-    setWishlist([...wishlist, product]);
+  const handleFavoriteToggle = (product) => {
+    if (isFavorite(product.id)) {
+      dispatch(removeFromFavorites(product.id)); // Remove from favorites using product.id
+      toast.info(`${product.productName || "Product"} removed from favorites.`);
+    } else {
+      dispatch(addToFavorites(product.id)); // Add to favorites using product.id
+      toast.success(`${product.productName || "Product"} added to favorites!`);
+    }
   };
 
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`); // Navigate to the product view page
   };
 
-  const products = [
-    {
-      id: 1,
-      name: "Example T-Shirt",
-      color: "Red",
-      price: 20.0 * exchangeRate,
-      discountPrice: 20.0 * 0.9 * exchangeRate, // Apply 10% discount
-      rating: 5,
-      reviews: 1,
-      image: productImage1,
-    },
-    {
-      id: 2,
-      name: "The Snowboard: Liquid",
-      color: "Red",
-      price: 750.0 * exchangeRate,
-      discountPrice: 750.0 * 0.9 * exchangeRate, // Apply 10% discount
-      rating: 4,
-      reviews: 1,
-      image: productImage2,
-    },
-    {
-      id: 3,
-      name: "The Snowboard: Oxygen",
-      color: "Red",
-      price: 1025.0 * exchangeRate,
-      discountPrice: 1025.0 * 0.9 * exchangeRate, // Apply 10% discount
-      rating: 5,
-      reviews: 1,
-      image: productImage3,
-    },
-    {
-      id: 4,
-      name: "The 3p Fulfilled Snowboard",
-      color: "Green",
-      price: 2630.0 * exchangeRate,
-      discountPrice: 2630.0 * 0.9 * exchangeRate, // Apply 10% discount
-      rating: 5,
-      reviews: 1,
-      image: productImage4,
-    },
-    {
-      id: 5,
-      name: "The Red Hoodie",
-      color: "Maroon",
-      price: 40.0 * exchangeRate,
-      discountPrice: 40.0 * 0.9 * exchangeRate, // Apply 10% discount
-      rating: 4,
-      reviews: 2,
-      image: productImage5,
-    },
-  ];
+  const handleMouseEnter = (productId) => {
+    setHoveredProduct(productId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredProduct(null);
+  };
+
+  const handleAddToCart = async (product) => {
+    setLoading(product.id); // Set loading state to show loading indicator
+
+    try {
+      // Ensure quantity and price exist, default to 1 and 0 if missing
+      const qty = product.qty || 1;
+      const price = product.price || 0;
+
+      // If the selectedSize exists, include it in the action
+      const selectedSize = product.selectedSize || "default"; // Ensure this value exists
+
+      const productWithQty = {
+        ...product,
+        qty,
+        selectedSize,
+        total: qty * price,
+      };
+
+      dispatch(addToCart(productWithQty)); // Dispatch action to add product to cart
+
+      toast.success(`${product.name || "Product"} added to cart!`); // Success message
+    } catch (error) {
+      toast.error("Failed to add product to cart.");
+    } finally {
+      setLoading(null); // Reset loading state after action
+    }
+  };
+
+  // Flatten the product data from all categories and subcategories
+  const allProducts = productData.flatMap((category) =>
+    category.subCategories.flatMap((subCategory) => subCategory.products)
+  );
 
   return (
     <div className="home-container">
@@ -112,26 +109,29 @@ const Home = () => {
             },
           ]}
         >
-          <div className="carousel-slide">
-            <img src={sliderImage1} alt="Slider 1" className="carousel-image" />
-          </div>
-          <div className="carousel-slide">
-            <img src={sliderImage2} alt="Slider 2" className="carousel-image" />
-          </div>
-          <div className="carousel-slide">
-            <img src={sliderImage3} alt="Slider 3" className="carousel-image" />
-          </div>
+          {SliderData.map((sliderItem) => (
+            <div key={sliderItem.id} className="carousel-slide">
+              <img
+                src={sliderItem.image}
+                alt={`Slider ${sliderItem.id}`}
+                className="carousel-image"
+              />
+            </div>
+          ))}
         </Slider>
       </div>
 
+      {/* Product Section */}
       <div className="products-container">
         <h1>Trending Products</h1>
         <div className="products-grid">
-          {products.map((product) => (
+          {allProducts.map((product) => (
             <div
               key={product.id}
               className="product-card"
               onClick={() => handleProductClick(product.id)}
+              onMouseEnter={() => handleMouseEnter(product.id)}
+              onMouseLeave={handleMouseLeave}
             >
               {product.discountPrice && (
                 <div className="sale-banner">10% Off</div>
@@ -140,14 +140,34 @@ const Home = () => {
                 className="wishlist-icon"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleAddToWishlist(product);
+                  handleFavoriteToggle(product); // Correct function call for adding/removing from favorites
                 }}
               >
-                <LuHeart />
+                <LuHeart
+                  color={isFavorite(product.id) ? "red" : "gray"} // Change icon color based on favorite state
+                />
               </div>
               <img src={product.image} alt={product.name} />
               <h2>{product.name}</h2>
-              <p>Color: {product.color}</p>
+              {hoveredProduct === product.id && (
+                <div
+                  className="add-to-cart-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart(product); // Trigger add to cart
+                  }}
+                >
+                  {loading === product.id ? (
+                    <div className="loading-spinner"></div> // Show loading spinner when loading
+                  ) : (
+                    <HiOutlineShoppingBag size={24} color="#000" />
+                  )}
+                </div>
+              )}
+              <div
+                className="product-color"
+                style={{ backgroundColor: product.color ? product.color.toLowerCase() : "gray" }}
+              ></div>
               <div className="rating">
                 {"★".repeat(product.rating)}
                 <span>
@@ -157,11 +177,11 @@ const Home = () => {
               <div className="price">
                 {product.discountPrice && (
                   <span className="discount-price">
-                    ₨ {product.discountPrice.toFixed(2)}
+                    ₨ {product.discountPrice}
                   </span>
                 )}
                 <span className="original-price">
-                  ₨ {product.price.toFixed(2)}
+                  ₨ {product.price || 0}
                 </span>
               </div>
             </div>

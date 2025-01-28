@@ -1,39 +1,36 @@
 import React, { useState } from "react";
-import "../assets/css/navbar.css";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom"; // For navigation
 import easybuyLogo from "../assets/images/logo.png";
 import { FaBars } from "react-icons/fa";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { HiOutlineShoppingBag } from "react-icons/hi2"; // Cart icon
 import { LuHeart } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 import { GrLanguage } from "react-icons/gr"; // Import language icon
 import { IoIosClose } from "react-icons/io";
+import { categoryItems } from "../data/categoryData"; // Import category data
+import CollapsibleCart from "../pages/CollapsibleCart "; // Import CartPage
+import "../assets/css/navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0); // Default value for cart
-  const [wishlistCount, setWishlistCount] = useState(0); // Default value for wishlist
+  const [cartOpen, setCartOpen] = useState(false); // State to handle cart visibility
 
-  // Example functions to simulate adding items to cart or wishlist
-  const addToCart = () => {
-    setCartCount(cartCount + 1); // Increase cart count by 1
+  // Accessing the Redux state for category status and items
+  const categoryStatus = useSelector((state) => state.category?.status || "idle");
+
+  // Wishlist and Cart states
+  const favorites = useSelector((state) => state.favorites || []);
+  const cart = useSelector((state) => state.cart?.cart || []);
+
+  // Counts for wishlist and cart
+  const favoriteCount = favorites.length;
+  const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
+
+  // Toggle cart visibility
+  const toggleCart = () => {
+    setCartOpen(!cartOpen); // Toggle cart state when the cart icon is clicked
   };
-
-  const addToWishlist = () => {
-    setWishlistCount(wishlistCount + 1); // Increase wishlist count by 1
-  };
-
-  // Define menu items for categories
-  const menuItems = [
-    { label: "Men", link: "/men" },
-    { label: "Women", link: "/women" },
-    { label: "Boys", link: "/boys" },
-    { label: "Girls", link: "/girls" },
-    { label: "Food", link: "/food" },
-    { label: "Health Care", link: "/health-care" },
-    { label: "Tech Hub", link: "/tech-hub" },
-    { label: "Bedding", link: "/bedding" },
-  ];
 
   return (
     <nav className="navbar">
@@ -50,8 +47,10 @@ const Navbar = () => {
               <span className="home-link-text">Home</span>
             </Link>
           </li>
-          {menuItems.length > 0 ? (
-            menuItems.map((item, index) => (
+          {categoryStatus === "loading" ? (
+            <li>Loading categories...</li> // Show loading message if status is loading
+          ) : categoryItems.length > 0 ? (
+            categoryItems.map((item, index) => (
               <li key={index} className="category-item-list">
                 <Link to={item.link} className="category-link-btn">
                   <span className="category-name">{item.label}</span>
@@ -59,7 +58,7 @@ const Navbar = () => {
               </li>
             ))
           ) : (
-            <li>Loading...</li>
+            <li>No categories available.</li> // Handle case when categories are not available
           )}
         </ul>
       </nav>
@@ -69,23 +68,21 @@ const Navbar = () => {
         <div className="navbar-icons-items">
           <GrLanguage className="navbar-icons" />
           <span className="language-counter">
-            {/* Show Pakistan flag with Urdu */}
             🇵🇰 Urdu
           </span>
         </div>
 
-        <Link
-          to="/wishlist"
-          className="navbar-icons-items"
-          onClick={addToWishlist}
-        >
+        <Link to="/wishlist" className="navbar-icons-items">
           <LuHeart className="navbar-icons" />
-          <span className="counter">{wishlistCount}</span>
+          <span className="counter">{favoriteCount}</span>
         </Link>
-        <Link to="/cart" className="navbar-icons-items" onClick={addToCart}>
+
+        {/* Cart Icon */}
+        <div className="navbar-icons-items" onClick={toggleCart}>
           <HiOutlineShoppingBag className="navbar-icons" />
           <span className="counter">{cartCount}</span>
-        </Link>
+        </div>
+
         <Link to="/user" className="navbar-icons-items">
           <FiUser className="navbar-icons" />
         </Link>
@@ -98,6 +95,9 @@ const Navbar = () => {
           )}
         </div>
       </div>
+
+      {/* Render the collapsible cart when cartOpen is true */}
+      {cartOpen && <CollapsibleCart setCartOpen={setCartOpen} />}
     </nav>
   );
 };

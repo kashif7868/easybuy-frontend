@@ -83,7 +83,16 @@
   }
 }
 
+/* Styling for the product color circle */
+.product-color {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 10px;
+}
 
+/* Products Section */
 .products-container h1 {
   font-size: 30px;
   font-weight: bold;
@@ -133,6 +142,43 @@
 .product-card:hover img {
   opacity: 0.7;
 }
+.add-to-cart-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 8px 16px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show Add to Cart button when product card is hovered */
+.product-card:hover .add-to-cart-icon {
+  opacity: 1;
+}
+
+/* Loading Spinner Styles */
+.add-to-cart-icon .loading-spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3); /* Light gray border */
+  border-top: 3px solid #000; /* Black border for the spinning effect */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite; /* Animation for spinning */
+}
+
+/* Spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .product-card h2 {
   font-size: 18px;
@@ -167,7 +213,7 @@
 .discount-price {
   font-size: 16px;
   font-weight: bold;
-  background-color:#b8ffd5;
+  background-color: #b8ffd5;
   color: #000;
   padding: 5px 10px;
   border-radius: 5px;
@@ -204,6 +250,7 @@
   font-size: 18px;
   color: #333;
 }
+
 /* Mobile and tablet view adjustments */
 /* Between 1230px and 1024px - Adjust for medium to large screens */
 @media (max-width: 1230px) {

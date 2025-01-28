@@ -35,14 +35,14 @@
   padding: 0;
 }
 
-.category-item-list {
+.category-item-list a {
   margin-right: 30px;
   position: relative;
+  text-decoration: none;
 }
 
 .category-link-btn,
 .home-link-text {
-  text-decoration: none;
   color: #333;
   font-weight: 500;
   font-size: 16px;
@@ -149,6 +149,9 @@
   align-items: center;
   justify-content: center;
 }
+
+
+
 
 /* Mobile Menu Toggle */
 .navbar-toggle {
