@@ -1,9 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { incrementQty, decrementQty, removeFromCart, clearCart } from "../app/actions/actionsCart";
+import {
+  incrementQty,
+  decrementQty,
+  removeFromCart,
+  clearCart,
+} from "../app/actions/actionsCart";
 import { FaMinus, FaPlus } from "react-icons/fa"; // Importing the icons for increase and decrease
 import "../assets/css/Pages/cart.css";
-
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosClose } from "react-icons/io";
 const CollapsibleCart = ({ setCartOpen }) => {
   const cart = useSelector((state) => state.cart?.cart || []);
   const dispatch = useDispatch();
@@ -39,9 +45,9 @@ const CollapsibleCart = ({ setCartOpen }) => {
       <div className="cart-container">
         <div className="cart-header">
           <h2>Your Cart ({cartCount} items)</h2>
-          <button className="close-cart-btn" onClick={closeCart}>
-            X
-          </button>
+          <span className="close-cart-btn" onClick={closeCart}>
+            <IoIosCloseCircleOutline />
+          </span>
         </div>
 
         {cart.length > 0 ? (
@@ -60,7 +66,13 @@ const CollapsibleCart = ({ setCartOpen }) => {
                     <p>Color: {item.selectedColor}</p>
                     <div className="quantity-section">
                       <button
-                        onClick={() => handleDecrement(item.id, item.selectedSize, item.selectedColor)}
+                        onClick={() =>
+                          handleDecrement(
+                            item.id,
+                            item.selectedSize,
+                            item.selectedColor
+                          )
+                        }
                         className="quantity-btn"
                         aria-label="Decrease quantity"
                       >
@@ -68,7 +80,13 @@ const CollapsibleCart = ({ setCartOpen }) => {
                       </button>
                       <span className="quantity-value">{item.qty}</span>
                       <button
-                        onClick={() => handleIncrement(item.id, item.selectedSize, item.selectedColor)}
+                        onClick={() =>
+                          handleIncrement(
+                            item.id,
+                            item.selectedSize,
+                            item.selectedColor
+                          )
+                        }
                         className="quantity-btn"
                         aria-label="Increase quantity"
                       >
@@ -77,19 +95,38 @@ const CollapsibleCart = ({ setCartOpen }) => {
                     </div>
                     <p>Price: {item.price.toLocaleString()} PKR</p>
                   </div>
-                  <button className="remove-item-btn" onClick={() => handleRemove(item.id, item.selectedSize, item.selectedColor)}>X</button>
+                  <span
+                    className="remove-item-btn"
+                    onClick={() =>
+                      handleRemove(
+                        item.id,
+                        item.selectedSize,
+                        item.selectedColor
+                      )
+                    }
+                  >
+                    <IoIosClose className="remove-cart-icon" />
+                  </span>
                 </div>
               ))}
             </div>
 
             <div className="cart-footer">
               <div className="subtotal">
-                <p>Sub-Total: <span>{subtotal.toLocaleString()} PKR</span></p>
-                <p>VAT (20%): <span>{vat.toLocaleString()} PKR</span></p>
-                <p>Total: <span>{total.toLocaleString()} PKR</span></p>
+                <p>
+                  Sub-Total: <span>{subtotal.toLocaleString()} PKR</span>
+                </p>
+                <p>
+                  VAT (20%): <span>{vat.toLocaleString()} PKR</span>
+                </p>
+                <p>
+                  Total: <span>{total.toLocaleString()} PKR</span>
+                </p>
               </div>
               <div className="cart-actions">
-                <button className="clear-cart" onClick={handleClearCart}>Clear Cart</button>
+                <button className="clear-cart" onClick={handleClearCart}>
+                  Clear Cart
+                </button>
                 <button className="checkout-btn">Checkout</button>
               </div>
             </div>

@@ -137,6 +137,9 @@
   font-size: 16px;
   cursor: pointer;
 }
+.remove-item-btn  .remove-cart-icon{
+ font-size: 40px;
+}
 
 /* Keyframe animation for fading in each item */
 @keyframes fadeIn {
