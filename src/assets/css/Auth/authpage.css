@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #ffffff 50%, #f5bc00 50%);
+  background: linear-gradient(135deg, #ffffff 50%, #b8ffd5 50%);
   padding: 0 10px; /* Added for better alignment on smaller screens */
 }
 
@@ -30,17 +30,6 @@
   animation: zoomInLogo 1s ease-in-out;
 }
 
-.auth-logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.auth-logo {
-  width: 220px;
-  animation: fadeInLogo 1s ease-in-out;
-}
-
 .dashboard-content-container {
   text-align: left;
 }
@@ -48,13 +37,13 @@
 .dashboard-content-container h2 {
   font-size: 32px;
   font-weight: bold;
-  color: #161616;
+  color: #333;
   margin-bottom: 10px;
 }
 
 .dashboard-content-container p {
   font-size: 18px;
-  color: #161616;
+  color: #333;
   line-height: 1.6;
 }
 
@@ -99,7 +88,7 @@
   width: 100%;
   padding: 12px 12px 12px 36px;
   font-size: 16px;
-  border: 1px solid #444;
+  border: 1px solid #333;
   border-radius: 6px;
   background-color: #fff;
   color: #333;
@@ -108,8 +97,8 @@
 }
 
 .auth-input:focus {
-  border-color: #f5bc00;
-  box-shadow: 0 0 6px #f5bc00;
+  border-color: #01cf57;
+  box-shadow: 0 0 6px #01cf57;
 }
 
 .auth-icon {
@@ -158,7 +147,7 @@
 }
 
 .auth-password-toggle:hover {
-  color: #000;
+  color: #01cf57;
 }
 
 /* Button Styles */
@@ -168,8 +157,8 @@
   font-size: 16px;
   border: none;
   border-radius: 6px;
-  background-color: #f5bc00;
-  color: #333;
+  background-color: #01cf57;
+  color: #fff;
   cursor: pointer;
   transition: all ease-in-out 0.3s;
   margin-bottom: 20px;
@@ -177,7 +166,7 @@
 
 .auth-btn:hover {
   transform: scale(1.05);
-  background-color: #ffd000;
+  background-color: #01b746;
   color: #fff;
 }
 
@@ -196,7 +185,7 @@
 }
 
 .auth-forgot-password .auth-toggle:hover {
-  color: #f5bc00;
+  color: #01cf57;
 }
 
 /* Switch Between Sign In/Sign Up */
@@ -242,10 +231,6 @@
     text-align: center;
   }
 
-  .auth-logo {
-    width: 180px;
-  }
-
   .auth-right-container {
     width: 100%;
     padding: 20px;
@@ -284,10 +269,6 @@
 
   .auth-right-container {
     padding: 15px;
-  }
-
-  .auth-logo {
-    width: 150px;
   }
 
   .auth-btn {
@@ -330,4 +311,3 @@
     font-size: 12px;
   }
 }
-

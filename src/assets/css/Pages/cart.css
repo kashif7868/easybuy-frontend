@@ -10,7 +10,7 @@
   z-index: 1000;
   padding: 20px;
   overflow-y: auto;
-  animation: slideIn 0.5s ease-in-out forwards; /* Keyframe animation for sliding in */
+  animation: slideIn 0.5s ease-in-out forwards;
 }
 
 /* Slide-in effect when cart opens */

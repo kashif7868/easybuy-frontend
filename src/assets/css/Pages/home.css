@@ -142,6 +142,8 @@
 .product-card:hover img {
   opacity: 0.7;
 }
+
+/* Add to Cart Icon */
 .add-to-cart-icon {
   position: absolute;
   top: 50%;
@@ -166,18 +168,34 @@
 
 /* Loading Spinner Styles */
 .add-to-cart-icon .loading-spinner {
-  border: 3px solid rgba(255, 255, 255, 0.3); /* Light gray border */
-  border-top: 3px solid #000; /* Black border for the spinning effect */
+  border: 3px solid #333;
+  border-top: 3px solid #00fa68;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  animation: spin 1s linear infinite; /* Animation for spinning */
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
 }
 
 /* Spinner animation */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.add-to-cart-icon.loading {
+  justify-content: center; /* Center the spinner */
+}
+
+.add-to-cart-icon.loading span {
+  display: none; /* Hide the text when loading */
+}
+
+.add-to-cart-icon.loading .loading-spinner {
+  display: block; /* Show the spinner when loading */
 }
 
 .product-card h2 {

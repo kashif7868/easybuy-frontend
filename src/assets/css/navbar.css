@@ -1,61 +1,183 @@
-/* General Navbar Styles */
-.navbar {
+/* General Header Styles */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(184, 184, 184, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease-in-out;
 }
 
-.navbar-logo img {
+.logo-container .logo {
   max-height: 50px;
-  transition: transform 0.3s ease;
+  object-fit: contain;
 }
 
-.navbar-logo:hover img {
-  transform: scale(1.1); /* Subtle zoom effect */
+.search-bar-by-category {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
 }
 
-/* Menu Styles */
-.navbar-menu {
+.category-select {
+  font-size: 14px;
+  padding: 6px;
+  margin-right: 0; /* No margin between the dropdown and the input */
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
+.input-container {
+  position: relative;
+  flex-grow: 1;
+  color: #00e25e;
+}
+
+.search-input {
+  width: 100%;
+  font-size: 14px;
+  padding: 6px 30px 6px 10px;
+  border: none;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #00e25e;
+  cursor: pointer;
+}
+
+.search-input:focus,
+.category-select:focus {
+  border-color: #b8ffd5; /* Highlight color */
+}
+
+/* Header Icons Container */
+.header-icons-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-icons-items,
+.navbar-toggle-open {
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.navbar-icons-items .navbar-icons {
+  font-size: 26px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.navbar-icons-items:hover .navbar-icons {
+  color: #01cf57;
+}
+
+.navbar-icons-items .counter {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background-color: #b8ffd5;
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
 }
 
+/* Navbar Toggle Styles */
+.navbar-toggle-open,
+.navbar-toggle-close {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+}
+.navbar-toggle-close-icon,
+.navbar-toggle-open-icon {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Navbar Items Container */
 .navbar-items-container {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
+  align-items: center;
+  gap: 40px;
 }
 
-.category-item-list a {
-  margin-right: 30px;
+/* Hover Effect for Navbar Items */
+.navbar-icons-items:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Category Item Style */
+.category-item-list {
+  position: relative;
+}
+.category-item-list a{
   position: relative;
   text-decoration: none;
 }
 
+/* Individual Navbar Links (Home, Shop, Sale) */
 .category-link-btn,
 .home-link-text {
   color: #333;
-  font-weight: 500;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 17px;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
   text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px 0;
 }
 
 .category-link-btn:hover,
 .home-link-text:hover {
-  color: #008638;
+  color: #01cf57;
+  transform: translateY(-2px);
 }
 
+/* Underline Effect on Hover */
 .home-link-text::after,
 .category-link-btn::after {
   content: "";
@@ -74,115 +196,106 @@
   width: 100%;
 }
 
-/* Navbar Icons */
-.navbar-icons {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.navbar-icons a {
-  font-size: 22px;
-  color: #333;
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-.navbar-icons a:hover {
-  color: #01cf57;
-}
-
-/* Icon counters */
-.navbar-icons-container {
+/* Dropdown Menu Style */
+.category-item-list .category-link-btn {
   display: flex;
   align-items: center;
-  gap: 20px; /* Added gap for better icon spacing */
+  gap: 8px;
 }
 
-.navbar-icons-items {
-  display: flex;
-  align-items: center;
-  position: relative;
+.category-item-list .category-link-btn svg {
   font-size: 18px;
+  transition: transform 0.3s ease;
 }
 
-.navbar-icons-items .navbar-icons {
-  font-size: 24px; /* Adjusted icon size */
-  color: #333;
-  transition: color 0.3s ease;
+.category-item-list .category-link-btn:hover svg {
+  transform: rotate(180deg);
 }
 
-.navbar-icons-items:hover .navbar-icons {
-  color: #01cf57; /* Hover color for icons */
-}
-/* Language Counter */
-.language-counter {
-  font-size: 14px; /* Adjusted font size */
-  color: #333;
-  margin-left: 5px; /* Space between the icon and text */
-  display: flex;
-  align-items: center;
-  font-weight: 500;
+/* Dropdown Menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  width: 220px;
+  z-index: 999;
 }
 
-.language-counter span {
-  margin-left: 5px; /* Added space for the flag */
+.category-item-list:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 10px 20px;
+  white-space: nowrap;
   font-size: 16px;
 }
 
-.language-counter:hover {
-  color: #01cf57; /* Hover color for language counter */
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
 }
 
-.counter {
-  position: absolute;
-  top: -5px;
-  right: -8px;
-  background-color: #b8ffd5;
-  color: #ff0000;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
+.dropdown-menu li a:hover {
+  color: #01cf57;
+}
+
+/* Top Offer Button */
+.navbar-top-offer {
+  color: #333;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  position: absolute;
+  right: 30px;
 }
 
-
-
-
-/* Mobile Menu Toggle */
-.navbar-toggle {
-  display: none;
-  font-size: 28px;
-  cursor: pointer;
-  position: relative;
-  right: 10px;
-  top: 0px;
-  color: #333;
-  z-index: 2000;
+.navbar-top-offer-icon {
+  font-size: 20px;
+  margin-right: 8px;
 }
-
-.navbar-toggle-close-icon,
-.navbar-toggle-open-icon {
-  color: #333;
-  font-size: 24px;
-}
-
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+  /* Header */
+  .header {
+    flex-direction: row;
+  }
+
+  /* Hide search bar on small screens */
+  .search-bar-by-category {
+    display: none;
+  }
+
+  /* Navbar */
+  .navbar {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Navbar items container */
+  .navbar-items-container {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  /* Navbar menu */
   .navbar-menu {
     position: fixed;
     top: 0;
     right: 0;
-    background-color: #fff;
+    background-color: #ffffff;
     height: 100vh;
-    width: 340px;
+    width: 250px; /* Adjust width if necessary */
     z-index: 1001;
     flex-direction: column;
-    align-items: flex-start;
     padding-top: 60px;
     transform: translateX(100%);
     transition: transform 0.3s ease;
@@ -192,18 +305,89 @@
     transform: translateX(0);
   }
 
-  .navbar-items-container {
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+  /* Navbar toggle open button */
+  .navbar-toggle-open {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1100;
   }
 
-  .navbar-toggle {
+  /* Navbar toggle close button */
+  .navbar-toggle-close {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1100;
+  }
+
+  /* Navbar top offer button */
+  .navbar-top-offer {
+    display: none;
+  }
+
+  /* Navbar toggle close hover effect */
+  .navbar-toggle-close:hover {
+    color: #f44336;
+  }
+
+  /* Dropdown menu for collapsible items */
+  .category-item-list {
+    position: relative;
     display: block;
   }
 
-  .category-link-btn,
-  .home-link-text {
+  .category-item-list .category-link-btn {
     font-size: 18px;
+    color: #333;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .category-item-list .category-link-btn:hover {
+    color: #01cf57;
+  }
+
+  /* Hide dropdown menus by default */
+  .dropdown-menu {
+    display: none;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  /* Show dropdown on click or hover */
+  .category-item-list.active .dropdown-menu {
+    display: block;
+  }
+
+  /* Dropdown items */
+  .dropdown-menu li {
+    padding: 10px 0;
+  }
+
+  .dropdown-menu li a {
+    color: #333;
+    text-decoration: none;
+  }
+
+  .dropdown-menu li a:hover {
+    color: #01cf57;
+  }
+
+  /* Category link with dropdown toggle */
+  .category-item-list .category-link-btn svg {
+    font-size: 18px;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .category-item-list .category-link-btn:hover svg {
+    transform: rotate(180deg);
   }
 }

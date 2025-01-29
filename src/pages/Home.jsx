@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LuHeart } from "react-icons/lu"; // Heart icon for wishlist
-import { HiOutlineShoppingBag } from "react-icons/hi2"; // Shopping Bag icon for Add to Cart
+import { HiOutlineShoppingBag } from "react-icons/hi"; // Shopping Bag icon for Add to Cart
 import { useNavigate } from "react-router-dom"; // For navigating to product detail page
 import "../assets/css/Pages/home.css"; // Corrected path for your CSS file
 import Slider from "react-slick";
@@ -19,6 +19,7 @@ import { toast } from "react-toastify"; // Importing toast for notifications
 const Home = () => {
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [loading, setLoading] = useState(null); // State to track loading for add to cart
+  const [wishlistLoading, setWishlistLoading] = useState(null); // State for wishlist loading
   const navigate = useNavigate(); // Hook to handle page navigation
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites); // Accessing favorites state
@@ -27,17 +28,21 @@ const Home = () => {
     Array.isArray(favorites) && favorites.includes(productId);
 
   const handleFavoriteToggle = (product) => {
+    setWishlistLoading(product.id); // Show loading spinner for wishlist
     if (isFavorite(product.id)) {
-      dispatch(removeFromFavorites(product.id)); // Remove from favorites using product.id
+      dispatch(removeFromFavorites(product.id));
       toast.info(`${product.productName || "Product"} removed from favorites.`);
     } else {
-      dispatch(addToFavorites(product.id)); // Add to favorites using product.id
+      dispatch(addToFavorites(product.id));
       toast.success(`${product.productName || "Product"} added to favorites!`);
     }
+    setTimeout(() => {
+      setWishlistLoading(null); // Hide the spinner after some time
+    }, 1000);
   };
 
   const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`); // Navigate to the product view page
+    navigate(`/product/${productId}`); // Navigate to product detail page
   };
 
   const handleMouseEnter = (productId) => {
@@ -50,14 +55,10 @@ const Home = () => {
 
   const handleAddToCart = async (product) => {
     setLoading(product.id); // Set loading state to show loading indicator
-
     try {
-      // Ensure quantity and price exist, default to 1 and 0 if missing
       const qty = product.qty || 1;
       const price = product.price || 0;
-
-      // If the selectedSize exists, include it in the action
-      const selectedSize = product.selectedSize || "default"; // Ensure this value exists
+      const selectedSize = product.selectedSize || "default";
 
       const productWithQty = {
         ...product,
@@ -66,30 +67,29 @@ const Home = () => {
         total: qty * price,
       };
 
-      dispatch(addToCart(productWithQty)); // Dispatch action to add product to cart
-
-      toast.success(`${product.name || "Product"} added to cart!`); // Success message
+      dispatch(addToCart(productWithQty));
+      toast.success(`${product.name || "Product"} added to cart!`);
     } catch (error) {
       toast.error("Failed to add product to cart.");
     } finally {
-      setLoading(null); // Reset loading state after action
+      setTimeout(() => {
+        setLoading(null); // Reset loading state after action
+      }, 1000); // Simulate action time delay
     }
   };
 
-  // Flatten the product data from all categories and subcategories
   const allProducts = productData.flatMap((category) =>
     category.subCategories.flatMap((subCategory) => subCategory.products)
   );
 
   return (
     <div className="home-container">
-      {/* Slider Section using Slick Carousel */}
       <div className="carousel-container">
         <Slider
           dots={true}
           infinite={true}
           speed={500}
-          slidesToShow={2} // Show two images per row
+          slidesToShow={2}
           slidesToScroll={1}
           autoplay={true}
           autoplaySpeed={3000}
@@ -98,30 +98,25 @@ const Home = () => {
             {
               breakpoint: 1024,
               settings: {
-                slidesToShow: 2, // Two slides on medium screens
+                slidesToShow: 2,
               },
             },
             {
               breakpoint: 768,
               settings: {
-                slidesToShow: 1, // One slide on small screens
+                slidesToShow: 1,
               },
             },
           ]}
         >
           {SliderData.map((sliderItem) => (
             <div key={sliderItem.id} className="carousel-slide">
-              <img
-                src={sliderItem.image}
-                alt={`Slider ${sliderItem.id}`}
-                className="carousel-image"
-              />
+              <img src={sliderItem.image} alt={`Slider ${sliderItem.id}`} className="carousel-image" />
             </div>
           ))}
         </Slider>
       </div>
 
-      {/* Product Section */}
       <div className="products-container">
         <h1>Trending Products</h1>
         <div className="products-grid">
@@ -140,12 +135,16 @@ const Home = () => {
                 className="wishlist-icon"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleFavoriteToggle(product); // Correct function call for adding/removing from favorites
+                  handleFavoriteToggle(product);
                 }}
               >
-                <LuHeart
-                  color={isFavorite(product.id) ? "red" : "gray"} // Change icon color based on favorite state
-                />
+                {wishlistLoading === product.id ? (
+                  <div className="loading-spinner"></div> // Loader for wishlist
+                ) : (
+                  <LuHeart
+                    color={isFavorite(product.id) ? "red" : "gray"}
+                  />
+                )}
               </div>
               <img src={product.image} alt={product.name} />
               <h2>{product.name}</h2>
@@ -154,11 +153,11 @@ const Home = () => {
                   className="add-to-cart-icon"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleAddToCart(product); // Trigger add to cart
+                    handleAddToCart(product);
                   }}
                 >
                   {loading === product.id ? (
-                    <div className="loading-spinner"></div> // Show loading spinner when loading
+                    <div className="loading-spinner"></div> // Loader for add to cart
                   ) : (
                     <HiOutlineShoppingBag size={24} color="#000" />
                   )}
