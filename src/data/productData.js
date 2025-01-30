@@ -1,4 +1,5 @@
-// productData.js
+import menCategoryImage from "../assets/images/category/man.png";
+import womenCategoryImage from "../assets/images/category/woman.png";
 import productImage1 from "../assets/images/product/0USM2P24V354_2.png";
 import productImage2 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.52_455b025f.jpg";
 import productImage3 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_26864108.jpg";
@@ -7,17 +8,22 @@ import productImage5 from "../assets/images/product/WhatsApp Image 2025-01-16 at
 
 export const productData = [
   {
-    category: "Men",
+    id: 1, // Category ID
+    categoryName: "Men",
+    image: menCategoryImage, // Image for the category
     subCategories: [
       {
-        subCategory: "T-Shirts",
+        id: 1, // Subcategory ID
+        subCategoryName: "T-Shirts",
         products: [
           {
-            id: 1,
+            id: 1, // Product ID
+            categoryName: "Men", // Category Name
+            subCategoryName: "T-Shirts", // Subcategory Name
             name: "Example T-Shirt",
             color: "Red",
-            price: 20.0,
-            discountPrice: 18.0,
+            price: 6000, // Price in PKR
+            discountPrice: 5400, // Discount price in PKR
             rating: 5,
             reviews: 1,
             description:
@@ -34,16 +40,18 @@ export const productData = [
             sizes: ["S", "M", "L", "XL"],
             relatedProducts: [
               {
+                id: 1, // Related product ID
                 name: "Winter Jacket",
-                price: 50.0,
-                discountPrice: 45.0,
+                price: 15000, // Price in PKR
+                discountPrice: 13500, // Discount price in PKR
                 rating: 4,
                 image: productImage5,
               },
               {
+                id: 2, // Related product ID
                 name: "Sport Shoes",
-                price: 80.0,
-                discountPrice: 72.0,
+                price: 24000, // Price in PKR
+                discountPrice: 21600, // Discount price in PKR
                 rating: 5,
                 image: productImage5,
               },
@@ -53,14 +61,17 @@ export const productData = [
         ],
       },
       {
-        subCategory: "Jeans",
+        id: 2, // Subcategory ID
+        subCategoryName: "Jeans",
         products: [
           {
-            id: 2,
+            id: 2, // Product ID
+            categoryName: "Men", // Category Name
+            subCategoryName: "Jeans", // Subcategory Name
             name: "Slim Fit Jeans",
             color: "Blue",
-            price: 40.0,
-            discountPrice: 35.0,
+            price: 12000, // Price in PKR
+            discountPrice: 10500, // Discount price in PKR
             rating: 4.5,
             reviews: 12,
             description:
@@ -75,16 +86,18 @@ export const productData = [
             sizes: ["32", "34", "36", "38"],
             relatedProducts: [
               {
+                id: 3, // Related product ID
                 name: "Leather Belt",
-                price: 25.0,
-                discountPrice: 20.0,
+                price: 7500, // Price in PKR
+                discountPrice: 6000, // Discount price in PKR
                 rating: 4,
                 image: productImage3,
               },
               {
+                id: 4, // Related product ID
                 name: "Casual Sneakers",
-                price: 50.0,
-                discountPrice: 45.0,
+                price: 15000, // Price in PKR
+                discountPrice: 13500, // Discount price in PKR
                 rating: 5,
                 image: productImage4,
               },
@@ -96,17 +109,22 @@ export const productData = [
     ],
   },
   {
-    category: "Women",
+    id: 2, // Category ID
+    categoryName: "Women",
+    image: womenCategoryImage, // Image for the category
     subCategories: [
       {
-        subCategory: "Dresses",
+        id: 1, // Subcategory ID
+        subCategoryName: "Dresses",
         products: [
           {
-            id: 3,
+            id: 3, // Product ID
+            categoryName: "Women", // Category Name
+            subCategoryName: "Dresses", // Subcategory Name
             name: "Summer Dress",
             color: "Pink",
-            price: 30.0,
-            discountPrice: 28.0,
+            price: 9000, // Price in PKR
+            discountPrice: 8400, // Discount price in PKR
             rating: 5,
             reviews: 8,
             description:
@@ -121,16 +139,18 @@ export const productData = [
             sizes: ["S", "M", "L"],
             relatedProducts: [
               {
+                id: 5, // Related product ID
                 name: "High Heels",
-                price: 60.0,
-                discountPrice: 55.0,
+                price: 18000, // Price in PKR
+                discountPrice: 16500, // Discount price in PKR
                 rating: 4,
                 image: productImage4,
               },
               {
+                id: 6, // Related product ID
                 name: "Handbag",
-                price: 40.0,
-                discountPrice: 38.0,
+                price: 12000, // Price in PKR
+                discountPrice: 11400, // Discount price in PKR
                 rating: 5,
                 image: productImage5,
               },
@@ -140,14 +160,17 @@ export const productData = [
         ],
       },
       {
-        subCategory: "Blouses",
+        id: 2, // Subcategory ID
+        subCategoryName: "Blouses",
         products: [
           {
-            id: 4,
+            id: 4, // Product ID
+            categoryName: "Women", // Category Name
+            subCategoryName: "Blouses", // Subcategory Name
             name: "Silk Blouse",
             color: "White",
-            price: 35.0,
-            discountPrice: 30.0,
+            price: 10500, // Price in PKR
+            discountPrice: 9000, // Discount price in PKR
             rating: 4.5,
             reviews: 5,
             description:
@@ -161,9 +184,10 @@ export const productData = [
             sizes: ["M", "L", "XL"],
             relatedProducts: [
               {
+                id: 7, // Related product ID
                 name: "Slim Fit Pants",
-                price: 45.0,
-                discountPrice: 40.0,
+                price: 13500, // Price in PKR
+                discountPrice: 12000, // Discount price in PKR
                 rating: 4.5,
                 image: productImage5,
               },

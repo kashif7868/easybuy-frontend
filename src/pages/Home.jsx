@@ -1,58 +1,79 @@
 import React, { useState } from "react";
-import { LuHeart } from "react-icons/lu"; // Heart icon for wishlist
-import { HiOutlineShoppingBag } from "react-icons/hi"; // Shopping Bag icon for Add to Cart
-import { useNavigate } from "react-router-dom"; // For navigating to product detail page
-import "../assets/css/Pages/home.css"; // Corrected path for your CSS file
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import SliderData from "../data/SliderData"; // Importing the SliderData
-import { productData } from "../data/productData"; // Importing productData
+import { LuHeart } from "react-icons/lu";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
+import "../assets/css/Pages/home.css";
+import useSlider from "../hooks/useSlider";
+import SliderData, { bannerData } from "../data/SliderData";
+import { productData } from "../data/productData";
 import {
   addToFavorites,
   removeFromFavorites,
 } from "../app/reducer/favoritesSlice";
-import { addToCart } from "../app/actions/actionsCart"; 
-import { useDispatch, useSelector } from "react-redux"; // Added to use dispatch and selector
-import { toast } from "react-toastify"; // Importing toast for notifications
-
+import { addToCart } from "../app/actions/actionsCart";
+import { useDispatch, useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
+import {
+  MdOutlineKeyboardArrowRight,
+  MdOutlineKeyboardArrowLeft,
+} from "react-icons/md";
 const Home = () => {
-  const [hoveredProduct, setHoveredProduct] = useState(null);
-  const [loading, setLoading] = useState(null); // State to track loading for add to cart
-  const [wishlistLoading, setWishlistLoading] = useState(null); // State for wishlist loading
-  const navigate = useNavigate(); // Hook to handle page navigation
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.favorites); // Accessing favorites state
+  const totalSlides = SliderData.length;
+  const { currentSlide, goToSlide } = useSlider(totalSlides);
+  const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [loading, setLoading] = useState(null);
+  const [wishlistLoading, setWishlistLoading] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+  const favorites = useSelector((state) => state.favorites);
 
+  // Function to check if a product is a favorite
   const isFavorite = (productId) =>
     Array.isArray(favorites) && favorites.includes(productId);
-
+  // Function to handle favorite toggle
   const handleFavoriteToggle = (product) => {
     setWishlistLoading(product.id); // Show loading spinner for wishlist
     if (isFavorite(product.id)) {
       dispatch(removeFromFavorites(product.id));
-      toast.info(`${product.productName || "Product"} removed from favorites.`);
+      enqueueSnackbar(
+        `${product.productName || "Product"} removed from favorites.`,
+        { variant: "info" }
+      );
     } else {
       dispatch(addToFavorites(product.id));
-      toast.success(`${product.productName || "Product"} added to favorites!`);
+      enqueueSnackbar(
+        `${product.productName || "Product"} added to favorites!`,
+        { variant: "success" }
+      );
     }
     setTimeout(() => {
       setWishlistLoading(null); // Hide the spinner after some time
     }, 1000);
   };
-
+  // Function to handle product click
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`); // Navigate to product detail page
   };
+  // Function to handle category click
+  const handleCategoryClick = (categoryId) => {
+    navigate(`/category/${categoryId}`); // Navigate to category detail page
+  };
 
+  const handleBannerClick = (categoryId) => {
+    navigate(`/category/${categoryId}`);  // Navigate to the category page
+  };
+
+  // Function to handle mouse enter
   const handleMouseEnter = (productId) => {
     setHoveredProduct(productId);
   };
-
+  // Function to handle mouse leave
   const handleMouseLeave = () => {
     setHoveredProduct(null);
   };
 
+  // Add product to cart
   const handleAddToCart = async (product) => {
     setLoading(product.id); // Set loading state to show loading indicator
     try {
@@ -68,56 +89,102 @@ const Home = () => {
       };
 
       dispatch(addToCart(productWithQty));
-      toast.success(`${product.name || "Product"} added to cart!`);
+      enqueueSnackbar(`${product.name || "Product"} added to cart!`, {
+        variant: "success",
+      });
     } catch (error) {
-      toast.error("Failed to add product to cart.");
+      enqueueSnackbar("Failed to add product to cart.", { variant: "error" });
     } finally {
       setTimeout(() => {
-        setLoading(null); // Reset loading state after action
-      }, 1000); // Simulate action time delay
+        setLoading(null);
+      }, 1000);
     }
   };
-
+  // Extract all products from productData
   const allProducts = productData.flatMap((category) =>
     category.subCategories.flatMap((subCategory) => subCategory.products)
   );
 
   return (
     <div className="home-container">
-      <div className="carousel-container">
-        <Slider
-          dots={true}
-          infinite={true}
-          speed={500}
-          slidesToShow={2}
-          slidesToScroll={1}
-          autoplay={true}
-          autoplaySpeed={3000}
-          arrows={true}
-          responsive={[
-            {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 2,
-              },
-            },
-            {
-              breakpoint: 768,
-              settings: {
-                slidesToShow: 1,
-              },
-            },
-          ]}
-        >
-          {SliderData.map((sliderItem) => (
-            <div key={sliderItem.id} className="carousel-slide">
-              <img src={sliderItem.image} alt={`Slider ${sliderItem.id}`} className="carousel-image" />
+      {/* ***************************************************/}
+      {/* ****************  banner section  *****************/}
+      {/* ***************************************************/}
+      <div className="slider-container">
+        {/* Main Slider */}
+        <div className="main-slider">
+          <div className="slider-content">
+            <img
+              src={SliderData[currentSlide].image}
+              alt={SliderData[currentSlide].title}
+              className="slider-image"
+            />
+          </div>
+          <div className="slider-dots">
+            {SliderData.map((slide, index) => (
+              <div
+                key={slide.id}
+                className={`dot ${index === currentSlide ? "active" : ""}`}
+                onClick={() => goToSlide(index)}
+              ></div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Product Cards */}
+        <div className="banner-cards">
+          {bannerData.map((banner) => (
+            <div
+              key={banner.id}
+              className="banner-card"
+              onClick={() => handleBannerClick(banner.categoryId)}
+            >
+              <img
+                src={banner.image}
+                alt={banner.title}
+                className="banner-image"
+              />
             </div>
           ))}
-        </Slider>
+        </div>
       </div>
+      {/* ***************************************************/}
+      {/* **************** category section *****************/}
+      {/* ***************************************************/}
+      <section className="category-container-main">
+        <div className="category-arrow-left">
+          <span>
+            <MdOutlineKeyboardArrowLeft />
+          </span>{" "}
+          {/* Left arrow icon */}
+        </div>
+        {productData.map((category) => (
+          <div key={category.id} className="category-container">
+            <div
+              onClick={() => handleCategoryClick(category.id)}
+              className="category-item"
+            >
+              <img
+                src={category.image}
+                alt={category.categoryName}
+                className="category-image"
+              />
+              <div className="category-name">{category.categoryName}</div>
+            </div>
+          </div>
+        ))}
+        <div className="category-arrow-right">
+          <span>
+            <MdOutlineKeyboardArrowRight />
+          </span>{" "}
+          {/* Right arrow icon */}
+        </div>
+      </section>
 
-      <div className="products-container">
+      {/* ***************************************************/}
+      {/* ****************  Product Section  *****************/}
+      {/* ***************************************************/}
+      <section className="products-container">
         <h1>Trending Products</h1>
         <div className="products-grid">
           {allProducts.map((product) => (
@@ -141,9 +208,7 @@ const Home = () => {
                 {wishlistLoading === product.id ? (
                   <div className="loading-spinner"></div> // Loader for wishlist
                 ) : (
-                  <LuHeart
-                    color={isFavorite(product.id) ? "red" : "gray"}
-                  />
+                  <LuHeart color={isFavorite(product.id) ? "red" : "gray"} />
                 )}
               </div>
               <img src={product.image} alt={product.name} />
@@ -165,7 +230,11 @@ const Home = () => {
               )}
               <div
                 className="product-color"
-                style={{ backgroundColor: product.color ? product.color.toLowerCase() : "gray" }}
+                style={{
+                  backgroundColor: product.color
+                    ? product.color.toLowerCase()
+                    : "gray",
+                }}
               ></div>
               <div className="rating">
                 {"★".repeat(product.rating)}
@@ -179,14 +248,12 @@ const Home = () => {
                     ₨ {product.discountPrice}
                   </span>
                 )}
-                <span className="original-price">
-                  ₨ {product.price || 0}
-                </span>
+                <span className="original-price">₨ {product.price || 0}</span>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 };

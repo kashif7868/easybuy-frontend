@@ -1,87 +1,166 @@
-/* General styling for the carousel */
-.carousel-container {
-  width: 100%;
-  margin: 20px auto; /* Centering the carousel */
-  padding: 0 15px; /* Adding padding on both sides */
+/* General Styles for Product Cards */
+.main-slider {
+  flex: 0 0 50%;
+  position: relative;
+}
+.banner-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for larger screens */
+  gap: 20px;
+  cursor: pointer;
 }
 
-.carousel-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+.banner-card {
+  text-align: center;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+.banner-card:hover {
+  transform: scale(1.05);
 }
 
-.carousel-image {
+.banner-image {
   width: 100%;
   height: auto;
+  border-radius: 8px;
+  transition: opacity 0.3s ease-in-out;
   object-fit: cover;
-  border-radius: 8px; /* Rounded corners for images */
 }
-
-/* Make the images fully responsive */
-@media (max-width: 1024px) {
-  .carousel-image {
-    width: 100%;
-    height: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .carousel-container {
-    padding: 0 10px; /* Padding on smaller screens */
-  }
-
-  .carousel-image {
-    width: 100%;
-    height: auto;
-  }
-}
-
-/* Slick Carousel Arrows */
-.slick-prev,
-.slick-next {
-  font-size: 30px;
-  color: #fff; /* White color for the arrows */
+.banner-card:hover .banner-image {
   opacity: 0.8;
-  z-index: 1; /* Ensure arrows are above the images */
+}
+/* Slider Image */
+.slider-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 8px;
+}
+.slider-image:hover {
+  opacity: 0.8;
 }
 
-.slick-prev:hover,
-.slick-next:hover {
-  color: #ff6347; /* Change arrow color on hover */
-  opacity: 1; /* Full opacity on hover */
-}
-
-/* Customizing the Dots */
-.slick-dots {
-  position: absolute;
-  bottom: 10px; /* Positioning dots near the bottom */
-  width: 100%; /* Ensures dots cover full width */
+/* Main Slider Styles */
+.slider-container {
   display: flex;
-  justify-content: center; /* Centers the dots horizontally */
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+}
+.slider-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
-.slick-dots li {
-  margin: 0 5px; /* Space between dots */
+/* Slider Navigation Dots */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  bottom: 30px;
 }
 
-.slick-dots li button:before {
-  font-size: 12px;
-  color: #fff; /* Default white color for dots */
-  transition: color 0.3s ease; /* Smooth transition for active dot */
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #bbb;
+  cursor: pointer;
 }
 
-.slick-dots li.slick-active button:before {
-  color: #ff6347; /* Active dot color */
+.dot.active {
+  background-color: #e44e31;
 }
 
-/* Make the dots more visible on smaller screens */
-@media (max-width: 768px) {
-  .slick-dots li button:before {
-    font-size: 10px; /* Smaller dots on small screens */
+/* Media Queries */
+
+/* For screens 1200px and below */
+@media (max-width: 1200px) {
+  .slider-container {
+    flex-direction: column; /* Stack items vertically */
+  }
+
+  .main-slider {
+    flex: 0 0 100%; /* Take full width on smaller screens */
+  }
+
+  .banner-cards {
+    grid-template-columns: 1fr; /* One column for smaller screens */
   }
 }
+
+/* For screens 250px and below */
+@media (max-width: 250px) {
+  .slider-container {
+    padding: 10px; /* Reduce padding for very small screens */
+  }
+
+  .slider-image {
+    max-width: 100%; /* Ensure image is not too wide */
+  }
+
+  .dot {
+    width: 8px; /* Smaller dots */
+    height: 8px;
+  }
+}
+/* Category Container */
+.category-container-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  overflow-x: auto; /* Allows scrolling */
+  justify-content: center;
+}
+
+.category-arrow-left,
+.category-arrow-right {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ffa500; /* Orange color for the arrows */
+}
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px; /* Adjust width of each category container */
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.category-container:hover {
+  transform: scale(1.05);
+}
+
+.category-image {
+  width: 100%;
+  height: 100px; /* Adjust the size of category images */
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  transition: transform 0.3s ease-in-out;
+}
+
+.category-container:hover .category-image {
+  transform: scale(1.1);
+}
+
+.category-name {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Carousel Container */
 
 /* Styling for the product color circle */
 .product-color {

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import ProductView from "../pages/ProductView";
 import AuthPage from "../components/auth/AuthPage ";
 import WishListProduct from "../pages/WishListProduct";
+import Categories from "../pages/Category/Categories"; // Import Categories page
 import NotFound from "./NotFound";
 
 const AllPages = () => {
@@ -11,7 +12,7 @@ const AllPages = () => {
       <Route path="/product/:id" element={<ProductView />} />
       <Route path="/user" element={<AuthPage />} />
       <Route path="/wishlist" element={<WishListProduct />} />
-      {/* Fallback Route */}
+      <Route path="/category/:categoryId" element={<Categories />} /> {/* Route for categories by ID */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

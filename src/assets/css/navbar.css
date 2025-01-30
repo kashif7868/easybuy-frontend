@@ -1,6 +1,16 @@
+.navbar-page {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+  flex: 1;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
 /* General Header Styles */
 .header {
   display: flex;
+  background-color: #fff;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
@@ -62,6 +72,24 @@
 .category-select:focus {
   border-color: #b8ffd5; /* Highlight color */
 }
+/* Add this in your CSS */
+.search-loader {
+  border: 4px solid #333;
+  border-top: 4px solid #00fa68;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 /* Header Icons Container */
 .header-icons-container {
@@ -69,7 +97,17 @@
   align-items: center;
   gap: 20px;
 }
+.navbar-icons-items {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  right: 20px;
+}
 
+.navbar-icons-items span {
+  margin-left: 8px;
+}
 .navbar-icons-items,
 .navbar-toggle-open {
   display: flex;
@@ -105,6 +143,60 @@
   justify-content: center;
 }
 
+.profile-dropdown {
+  position: absolute;
+  top: 40px;
+  right: -22px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 20px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.navbar-icons-items:hover .profile-dropdown,
+.profile-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.profile-dropdown .logout-btn {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  background-color: #b8ffd5;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.profile-dropdown .logout-btn:hover {
+  background-color: #63e699;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .profile-dropdown {
+    width: 100%;
+    right: 0;
+    top: 40px;
+  }
+}
+
 /* Navbar Toggle Styles */
 .navbar-toggle-open,
 .navbar-toggle-close {
@@ -126,10 +218,9 @@
   align-items: center;
   padding: 15px 30px;
   background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 10;
   transition: background-color 0.3s ease-in-out;
 }
 
@@ -153,7 +244,7 @@
 .category-item-list {
   position: relative;
 }
-.category-item-list a{
+.category-item-list a {
   position: relative;
   text-decoration: none;
 }

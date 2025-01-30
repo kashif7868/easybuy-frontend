@@ -6,7 +6,10 @@ import Home from "./pages/Home";
 import CartPage from "./pages/CartPage";
 import AllPages from "./components/AllPages";
 import Preloader from "./components/Preloader";
+import { AuthProvider } from "./context/authContext";
 import useNavigationLoader from "./hooks/useNavigationLoader";
+import SearchResults from "./pages/SearchResults";
+import Test from "./pages/Test";
 const AppContent = () => {
   const loading = useNavigationLoader();
 
@@ -19,7 +22,9 @@ const AppContent = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/cart" component={CartPage} />
+            <Route path="/search-results" element={<SearchResults />} />
+            <Route path="/test" element={<Test />} />
+            <Route path="/cart" element={<CartPage />} />
             <Route path="/*" element={<AllPages />} />
           </Routes>
           <Footer />
@@ -29,4 +34,12 @@ const AppContent = () => {
   );
 };
 
-export default AppContent;
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
+
+export default App;

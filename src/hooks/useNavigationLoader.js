@@ -9,6 +9,13 @@ const useNavigationLoader = () => {
     // List of regex patterns for routes requiring a loader
     const routesWithLoader = [
       /^\/$/, // Home
+      /^\/search-results$/, // Search Results
+      /^\/cart$/, // Cart
+      /^\/product\/\d+$/, // Product with ID
+      /^\/user$/, // User
+      /^\/wishlist$/, // Wishlist
+      /^\/category\/[\w-]+$/, // Category with categoryId
+      /^\/.*/ // Catch-all for all other routes
     ];
 
     // Check if the current route matches any of the patterns
