@@ -28,7 +28,18 @@ const useHorizontalScroll = () => {
     }
   }, []);
 
-  return { containerRef };
+  // Function to scroll left or right
+  const scroll = (direction) => {
+    const container = containerRef.current;
+    if (container) {
+      container.scrollBy({
+        left: direction === "left" ? -250 : 250, // Adjust the number for scroll distance
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return { containerRef, scroll };
 };
 
 export default useHorizontalScroll;

@@ -1,11 +1,11 @@
 // Import the images 
-import sliderImage1 from "../assets/images/sliders/wild-honey.png";
-import sliderImage2 from "../assets/images/sliders/WhatsApp Image 2025-01-25 at 15.27.09_76db852a.jpg";
-import sliderImage3 from "../assets/images/sliders/WhatsApp Image 2025-01-02 at 14.45.32_a08731b0.jpg";
-import rightbanner1 from "../assets/images/sliders/sub-banner1.png"; 
-import rightbanner2 from "../assets/images/sliders/sub-banner2.png"; 
-import rightbanner3 from "../assets/images/sliders/sub-banner03.png"; 
-import rightbanner4 from "../assets/images/sliders/sub-banner4.png"; 
+import sliderImage1 from "../assets/images/sliders/slider-1.png";
+import sliderImage2 from "../assets/images/sliders/slider-2.png";
+import sliderImage3 from "../assets/images/sliders/slider-3.png";
+import rightbanner1 from "../assets/images/sliders/banner-51.png"; 
+import rightbanner2 from "../assets/images/sliders/banner-52.png"; 
+import rightbanner3 from "../assets/images/sliders/banner-53.png"; 
+import rightbanner4 from "../assets/images/sliders/h2-img-3.png"; 
 
 const SliderData = [
   {

@@ -1,5 +1,11 @@
 import menCategoryImage from "../assets/images/category/man.png";
 import womenCategoryImage from "../assets/images/category/woman.png";
+import electronicsCategoryImage from "../assets/images/category/Techhub.png";
+import booksCategoryImage from "../assets/images/category/Bedding.png";
+import beautyCategoryImage from "../assets/images/category/GIrl.png";
+import sportsCategoryImage from "../assets/images/category/Food.png";
+import toysCategoryImage from "../assets/images/category/children.png";
+import groceriesCategoryImage from "../assets/images/category/Healthcare.png";
 import productImage1 from "../assets/images/product/0USM2P24V354_2.png";
 import productImage2 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.52_455b025f.jpg";
 import productImage3 from "../assets/images/product/WhatsApp Image 2025-01-16 at 11.52.53_26864108.jpg";
@@ -8,22 +14,22 @@ import productImage5 from "../assets/images/product/WhatsApp Image 2025-01-16 at
 
 export const productData = [
   {
-    id: 1, // Category ID
+    id: 1,
     categoryName: "Men",
-    image: menCategoryImage, // Image for the category
+    image: menCategoryImage,
     subCategories: [
       {
-        id: 1, // Subcategory ID
+        id: 1,
         subCategoryName: "T-Shirts",
         products: [
           {
-            id: 1, // Product ID
-            categoryName: "Men", // Category Name
-            subCategoryName: "T-Shirts", // Subcategory Name
+            id: 1,
+            categoryName: "Men",
+            subCategoryName: "T-Shirts",
             name: "Example T-Shirt",
             color: "Red",
-            price: 6000, // Price in PKR
-            discountPrice: 5400, // Discount price in PKR
+            price: 6000,
+            discountPrice: 5400,
             rating: 5,
             reviews: 1,
             description:
@@ -38,165 +44,572 @@ export const productData = [
             ],
             colors: ["Red", "Blue", "Black"],
             sizes: ["S", "M", "L", "XL"],
+            itemsStock: 10,
             relatedProducts: [
               {
-                id: 1, // Related product ID
+                id: 1,
                 name: "Winter Jacket",
-                price: 15000, // Price in PKR
-                discountPrice: 13500, // Discount price in PKR
+                price: 15000,
+                discountPrice: 13500,
                 rating: 4,
-                image: productImage5,
-              },
-              {
-                id: 2, // Related product ID
-                name: "Sport Shoes",
-                price: 24000, // Price in PKR
-                discountPrice: 21600, // Discount price in PKR
-                rating: 5,
                 image: productImage5,
               },
             ],
           },
-          // Add more T-shirt products here
         ],
       },
       {
-        id: 2, // Subcategory ID
+        id: 2,
         subCategoryName: "Jeans",
         products: [
           {
-            id: 2, // Product ID
-            categoryName: "Men", // Category Name
-            subCategoryName: "Jeans", // Subcategory Name
+            id: 2,
+            categoryName: "Men",
+            subCategoryName: "Jeans",
             name: "Slim Fit Jeans",
             color: "Blue",
-            price: 12000, // Price in PKR
-            discountPrice: 10500, // Discount price in PKR
+            price: 12000,
+            discountPrice: 10500,
             rating: 4.5,
             reviews: 12,
             description:
               "Stylish and comfortable slim fit jeans made from high-quality denim.",
             image: productImage2,
-            additionalImages: [
-              productImage2,
-              productImage3,
-              productImage4,
-            ],
+            additionalImages: [productImage2, productImage3, productImage4],
             colors: ["Blue", "Black", "Gray"],
             sizes: ["32", "34", "36", "38"],
+            itemsStock: 25,
             relatedProducts: [
               {
-                id: 3, // Related product ID
+                id: 7,
                 name: "Leather Belt",
-                price: 7500, // Price in PKR
-                discountPrice: 6000, // Discount price in PKR
+                price: 7500,
+                discountPrice: 6000,
                 rating: 4,
                 image: productImage3,
               },
-              {
-                id: 4, // Related product ID
-                name: "Casual Sneakers",
-                price: 15000, // Price in PKR
-                discountPrice: 13500, // Discount price in PKR
-                rating: 5,
-                image: productImage4,
-              },
             ],
           },
-          // Add more jeans products here
         ],
       },
     ],
   },
   {
-    id: 2, // Category ID
+    id: 2,
     categoryName: "Women",
-    image: womenCategoryImage, // Image for the category
+    image: womenCategoryImage,
     subCategories: [
       {
-        id: 1, // Subcategory ID
+        id: 1,
         subCategoryName: "Dresses",
         products: [
           {
-            id: 3, // Product ID
-            categoryName: "Women", // Category Name
-            subCategoryName: "Dresses", // Subcategory Name
+            id: 3,
+            categoryName: "Women",
+            subCategoryName: "Dresses",
             name: "Summer Dress",
             color: "Pink",
-            price: 9000, // Price in PKR
-            discountPrice: 8400, // Discount price in PKR
+            price: 9000,
+            discountPrice: 8400,
             rating: 5,
             reviews: 8,
             description:
               "Elegant and comfortable summer dress perfect for any occasion.",
             image: productImage3,
-            additionalImages: [
-              productImage3,
-              productImage4,
-              productImage5,
-            ],
+            additionalImages: [productImage3, productImage4, productImage5],
             colors: ["Pink", "Red", "White"],
             sizes: ["S", "M", "L"],
+            itemsStock: 20,
             relatedProducts: [
               {
-                id: 5, // Related product ID
+                id: 13,
                 name: "High Heels",
-                price: 18000, // Price in PKR
-                discountPrice: 16500, // Discount price in PKR
+                price: 18000,
+                discountPrice: 16500,
                 rating: 4,
                 image: productImage4,
               },
-              {
-                id: 6, // Related product ID
-                name: "Handbag",
-                price: 12000, // Price in PKR
-                discountPrice: 11400, // Discount price in PKR
-                rating: 5,
-                image: productImage5,
-              },
             ],
           },
-          // Add more dresses here
         ],
       },
       {
-        id: 2, // Subcategory ID
-        subCategoryName: "Blouses",
+        id: 2,
+        subCategoryName: "Casual Wear",
         products: [
           {
-            id: 4, // Product ID
-            categoryName: "Women", // Category Name
-            subCategoryName: "Blouses", // Subcategory Name
-            name: "Silk Blouse",
-            color: "White",
-            price: 10500, // Price in PKR
-            discountPrice: 9000, // Discount price in PKR
+            id: 4,
+            categoryName: "Women",
+            subCategoryName: "Casual Wear",
+            name: "Casual Blue Top",
+            color: "Blue",
+            price: 5000,
+            discountPrice: 4500,
             rating: 4.5,
-            reviews: 5,
+            reviews: 10,
             description:
-              "Luxurious silk blouse perfect for both casual and formal occasions.",
-            image: productImage4,
-            additionalImages: [
-              productImage4,
-              productImage5,
-            ],
-            colors: ["White", "Black", "Cream"],
-            sizes: ["M", "L", "XL"],
+              "A comfortable and casual blue top made for everyday use.",
+            image: productImage2,
+            additionalImages: [productImage2, productImage5],
+            colors: ["Blue", "Gray"],
+            sizes: ["S", "M", "L"],
+            itemsStock: 15,
             relatedProducts: [
               {
-                id: 7, // Related product ID
-                name: "Slim Fit Pants",
-                price: 13500, // Price in PKR
-                discountPrice: 12000, // Discount price in PKR
-                rating: 4.5,
+                id: 14,
+                name: "Flat Sandals",
+                price: 4000,
+                discountPrice: 3500,
+                rating: 4,
                 image: productImage5,
               },
             ],
           },
-          // Add more blouses here
         ],
       },
     ],
   },
-  // You can continue with more categories like "Kids", "Food", etc.
+  {
+    id: 3,
+    categoryName: "Electronics",
+    image: electronicsCategoryImage,
+    subCategories: [
+      {
+        id: 1,
+        subCategoryName: "Smartphones",
+        products: [
+          {
+            id: 5,
+            categoryName: "Electronics",
+            subCategoryName: "Smartphones",
+            name: "Smartphone XYZ",
+            color: "Black",
+            price: 50000,
+            discountPrice: 45000,
+            rating: 4.7,
+            reviews: 20,
+            description: "A high-performance smartphone with excellent features.",
+            image: productImage3,
+            additionalImages: [productImage4, productImage5],
+            colors: ["Black", "White"],
+            sizes: ["128GB", "256GB"],
+            itemsStock: 30,
+            relatedProducts: [
+              {
+                id: 15,
+                name: "Bluetooth Headphones",
+                price: 10000,
+                discountPrice: 9000,
+                rating: 4.5,
+                image: productImage2,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        subCategoryName: "Laptops",
+        products: [
+          {
+            id: 6,
+            categoryName: "Electronics",
+            subCategoryName: "Laptops",
+            name: "Laptop Pro 2025",
+            color: "Silver",
+            price: 80000,
+            discountPrice: 75000,
+            rating: 4.9,
+            reviews: 15,
+            description: "A powerful laptop for gaming and professional use.",
+            image: productImage4,
+            additionalImages: [productImage5],
+            colors: ["Silver", "Gray"],
+            sizes: ["15.6 inch", "17 inch"],
+            itemsStock: 20,
+            relatedProducts: [
+              {
+                id: 16,
+                name: "Laptop Bag",
+                price: 3000,
+                discountPrice: 2700,
+                rating: 4.3,
+                image: productImage3,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 4,
+    categoryName: "Books",
+    image: booksCategoryImage,
+    subCategories: [
+      {
+        id: 1,
+        subCategoryName: "Fiction",
+        products: [
+          {
+            id: 7,
+            categoryName: "Books",
+            subCategoryName: "Fiction",
+            name: "The Great Gatsby",
+            color: "Green",
+            price: 1500,
+            discountPrice: 1400,
+            rating: 5,
+            reviews: 30,
+            description:
+              "A classic novel about the American Dream and its disillusionment.",
+            image: productImage2,
+            additionalImages: [productImage3],
+            colors: ["Green", "Blue"],
+            sizes: ["Paperback", "Hardcover"],
+            itemsStock: 25,
+            relatedProducts: [
+              {
+                id: 17,
+                name: "1984",
+                price: 1200,
+                discountPrice: 1100,
+                rating: 4.8,
+                image: productImage5,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        subCategoryName: "Non-Fiction",
+        products: [
+          {
+            id: 8,
+            categoryName: "Books",
+            subCategoryName: "Non-Fiction",
+            name: "Sapiens",
+            color: "Black",
+            price: 2000,
+            discountPrice: 1800,
+            rating: 4.7,
+            reviews: 10,
+            description: "A brief history of humankind.",
+            image: productImage3,
+            additionalImages: [productImage5],
+            colors: ["Black", "White"],
+            sizes: ["Paperback", "E-Book"],
+            itemsStock: 20,
+            relatedProducts: [
+              {
+                id: 18,
+                name: "Homo Deus",
+                price: 1800,
+                discountPrice: 1600,
+                rating: 4.5,
+                image: productImage4,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 5,
+    categoryName: "Beauty",
+    image: beautyCategoryImage,
+    subCategories: [
+      {
+        id: 1,
+        subCategoryName: "Skin Care",
+        products: [
+          {
+            id: 9,
+            categoryName: "Beauty",
+            subCategoryName: "Skin Care",
+            name: "Anti-Aging Cream",
+            color: "White",
+            price: 2500,
+            discountPrice: 2300,
+            rating: 4.8,
+            reviews: 20,
+            description:
+              "A cream that helps reduce signs of aging and boosts skin health.",
+            image: productImage5,
+            additionalImages: [productImage4],
+            colors: ["White"],
+            sizes: ["50ml", "100ml"],
+            itemsStock: 30,
+            relatedProducts: [
+              {
+                id: 19,
+                name: "Moisturizing Lotion",
+                price: 2000,
+                discountPrice: 1800,
+                rating: 4.5,
+                image: productImage3,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        subCategoryName: "Makeup",
+        products: [
+          {
+            id: 10,
+            categoryName: "Beauty",
+            subCategoryName: "Makeup",
+            name: "Lipstick",
+            color: "Red",
+            price: 1200,
+            discountPrice: 1000,
+            rating: 4.6,
+            reviews: 15,
+            description: "A vibrant red lipstick that enhances your beauty.",
+            image: productImage2,
+            additionalImages: [productImage3],
+            colors: ["Red", "Pink"],
+            sizes: ["Small", "Large"],
+            itemsStock: 25,
+            relatedProducts: [
+              {
+                id: 20,
+                name: "Lip Gloss",
+                price: 800,
+                discountPrice: 700,
+                rating: 4.2,
+                image: productImage4,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 6,
+    categoryName: "Sports",
+    image: sportsCategoryImage,
+    subCategories: [
+      {
+        id: 1,
+        subCategoryName: "Football",
+        products: [
+          {
+            id: 11,
+            categoryName: "Sports",
+            subCategoryName: "Football",
+            name: "Football",
+            color: "White",
+            price: 1500,
+            discountPrice: 1400,
+            rating: 5,
+            reviews: 18,
+            description: "A high-quality football for professional matches.",
+            image: productImage1,
+            additionalImages: [productImage2],
+            colors: ["White"],
+            sizes: ["Size 5"],
+            itemsStock: 20,
+            relatedProducts: [
+              {
+                id: 21,
+                name: "Football Shoes",
+                price: 8000,
+                discountPrice: 7500,
+                rating: 4.9,
+                image: productImage5,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        subCategoryName: "Badminton",
+        products: [
+          {
+            id: 12,
+            categoryName: "Sports",
+            subCategoryName: "Badminton",
+            name: "Badminton Racket",
+            color: "Red",
+            price: 2000,
+            discountPrice: 1800,
+            rating: 4.5,
+            reviews: 10,
+            description:
+              "A durable and lightweight badminton racket for professional players.",
+            image: productImage3,
+            additionalImages: [productImage4],
+            colors: ["Red", "Black"],
+            sizes: ["One Size"],
+            itemsStock: 15,
+            relatedProducts: [
+              {
+                id: 22,
+                name: "Badminton Shuttlecock",
+                price: 500,
+                discountPrice: 450,
+                rating: 4.6,
+                image: productImage2,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 7,
+    categoryName: "Toys",
+    image: toysCategoryImage,
+    subCategories: [
+      {
+        id: 1,
+        subCategoryName: "Action Figures",
+        products: [
+          {
+            id: 13,
+            categoryName: "Toys",
+            subCategoryName: "Action Figures",
+            name: "Superhero Action Figure",
+            color: "Multicolor",
+            price: 2000,
+            discountPrice: 1800,
+            rating: 4.8,
+            reviews: 30,
+            description: "A collectible superhero action figure.",
+            image: productImage4,
+            additionalImages: [productImage5],
+            colors: ["Multicolor"],
+            sizes: ["One Size"],
+            itemsStock: 25,
+            relatedProducts: [
+              {
+                id: 23,
+                name: "Superhero Shield",
+                price: 1500,
+                discountPrice: 1300,
+                rating: 4.7,
+                image: productImage2,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        subCategoryName: "Dolls",
+        products: [
+          {
+            id: 14,
+            categoryName: "Toys",
+            subCategoryName: "Dolls",
+            name: "Doll with Accessories",
+            color: "Pink",
+            price: 1000,
+            discountPrice: 900,
+            rating: 4.6,
+            reviews: 20,
+            description: "A cute doll with accessories for kids.",
+            image: productImage3,
+            additionalImages: [productImage5],
+            colors: ["Pink"],
+            sizes: ["One Size"],
+            itemsStock: 30,
+            relatedProducts: [
+              {
+                id: 24,
+                name: "Doll House",
+                price: 3000,
+                discountPrice: 2700,
+                rating: 4.3,
+                image: productImage2,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 8,
+    categoryName: "Groceries",
+    image: groceriesCategoryImage,
+    subCategories: [
+      {
+        id: 1,
+        subCategoryName: "Fresh Vegetables",
+        products: [
+          {
+            id: 15,
+            categoryName: "Groceries",
+            subCategoryName: "Fresh Vegetables",
+            name: "Tomatoes",
+            color: "Red",
+            price: 200,
+            discountPrice: 180,
+            rating: 4.9,
+            reviews: 50,
+            description: "Fresh and organic tomatoes.",
+            image: productImage1,
+            additionalImages: [productImage2],
+            colors: ["Red"],
+            sizes: ["1kg", "500g"],
+            itemsStock: 40,
+            relatedProducts: [
+              {
+                id: 25,
+                name: "Onions",
+                price: 150,
+                discountPrice: 130,
+                rating: 4.7,
+                image: productImage3,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        subCategoryName: "Beverages",
+        products: [
+          {
+            id: 16,
+            categoryName: "Groceries",
+            subCategoryName: "Beverages",
+            name: "Orange Juice",
+            color: "Orange",
+            price: 500,
+            discountPrice: 450,
+            rating: 4.8,
+            reviews: 30,
+            description: "Freshly squeezed orange juice.",
+            image: productImage3,
+            additionalImages: [productImage5],
+            colors: ["Orange"],
+            sizes: ["1L", "500ml"],
+            itemsStock: 20,
+            relatedProducts: [
+              {
+                id: 26,
+                name: "Apple Juice",
+                price: 550,
+                discountPrice: 500,
+                rating: 4.6,
+                image: productImage4,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
+
+export default productData;
