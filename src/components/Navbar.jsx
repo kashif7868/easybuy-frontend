@@ -7,9 +7,11 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { LuHeart } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 import { IoIosClose } from "react-icons/io";
+import { MdOutlineAddIcCall } from "react-icons/md";
 import { CiSearch, CiLogout } from "react-icons/ci";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { HiMiniBars2 } from "react-icons/hi2";
+import { HiBars3 } from "react-icons/hi2";
 import { productData } from "../data/productData";
 import CollapsibleCart from "../pages/CollapsibleCart ";
 import TopOfferProduct from "../pages/TopOfferProduct";
@@ -92,8 +94,8 @@ const Navbar = () => {
           >
             <option>All Categories</option>
             {productData.map((item, index) => (
-              <option key={index} value={item.category}>
-                {item.category}
+              <option key={index} value={item.categoryName}>
+                {item.categoryName}
               </option>
             ))}
           </select>
@@ -157,7 +159,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      <nav className="navbar">
+      <nav className="navbar-container">
         {menuOpen && (
           <div
             className="navbar-toggle-close"
@@ -167,19 +169,18 @@ const Navbar = () => {
           </div>
         )}
 
-        <div className={`navbar-menu ${menuOpen ? "active" : ""}`}>
-          <ul className={`navbar-items-container ${menuOpen ? "active" : ""}`}>
-            <li className="category-item-list">
-              <Link to="/">
-                <span className="home-link-text">Home</span>
-              </Link>
-            </li>
-
-            <li className="category-item-list">
-              <span className="category-link-btn">
-                Shop
-                <RiArrowDropDownLine />
-              </span>
+        <div className="navbar-menu">
+          {/* Left side - Sale Items */}
+          <div className="navbar-left">
+            <span
+              className="category-link-btn"
+              onClick={() => setMenuOpen(!menuOpen)} // Toggle menu on click
+            >
+              <HiBars3 className="hamburger-icon" />
+              Shop By Categories
+              <RiArrowDropDownLine className="dropdown-icon" />
+            </span>
+            {menuOpen && (
               <ul className="dropdown-menu">
                 {categoryStatus === "loading" ? (
                   <li>Loading categories...</li>
@@ -187,7 +188,7 @@ const Navbar = () => {
                   productData.map((item) => (
                     <li key={item.id}>
                       <Link
-                        to={`/category/${item.id}`} // Correctly linking to the category by ID
+                        to={`/category/${item.id}`}
                         className="category-link-btn"
                       >
                         {item.categoryName}
@@ -198,37 +199,52 @@ const Navbar = () => {
                   <li>No categories available</li>
                 )}
               </ul>
-            </li>
+            )}
+          </div>
 
-            <li className="category-item-list">
-              <span className="category-link-btn">
-                Sale
-                <RiArrowDropDownLine />
+          {/* Center - Navbar Menu */}
+          <div className="navbar-center">
+            <ul className="navbar-items-container">
+              <li className="category-item-list">
+                <Link to="/">
+                  <span className="home-link-text">Home</span>
+                </Link>
+              </li>
+              <li className="category-item-list">
+                <Link to="/featured-products">
+                  <span className="home-link-text">Featured Products</span>
+                </Link>
+              </li>
+              <li className="category-item-list">
+                <Link to="/deals-of-the-day">
+                  <span className="home-link-text">Deals of the Day</span>
+                </Link>
+              </li>
+              <li className="category-item-list">
+                <Link to="/our-best-seller">
+                  <span className="home-link-text">Our Best Seller</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Right side - Help container and Top offer */}
+          <div className="navbar-right">
+            <span className="help-container">
+              <MdOutlineAddIcCall className="call-icon" />
+              <span className="help-call">
+                Need Help? <br />
+                <a href="tel:+923241687082" className="phone-link">
+                  0324-1687082
+                </a>
               </span>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link to="/sale" className="category-link-btn">
-                    Hot Sale
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/sale/new-arrivals" className="category-link-btn">
-                    New Arrivals
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/sale/clearance" className="category-link-btn">
-                    Clearance
-                  </Link>
-                </li>
-              </ul>
-            </li>
+            </span>
 
             <span className="navbar-top-offer" onClick={toggleOfferPage}>
               <HiMiniBars2 className="navbar-top-offer-icon" />
               Top Offer
             </span>
-          </ul>
+          </div>
         </div>
       </nav>
 

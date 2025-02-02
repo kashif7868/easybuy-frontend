@@ -28,24 +28,23 @@ const Home = () => {
   const [wishlistLoading, setWishlistLoading] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const favorites = useSelector((state) => state.favorites);
-  const containerRef = useRef(null); // Reference to the scrollable container
+  const containerRef = useRef(null); 
 
-  // Handle scrolling
+
   const scroll = (direction) => {
     if (containerRef.current) {
-      const scrollAmount = 200; // Adjust the scroll step
+      const scrollAmount = 200;
       const container = containerRef.current;
 
-      // Check if scrolling is left or right and move accordingly
       if (direction === "left") {
         container.scrollBy({
-          left: -scrollAmount, // Scroll left
-          behavior: "smooth", // Smooth scroll
+          left: -scrollAmount,
+          behavior: "smooth", 
         });
       } else if (direction === "right") {
         container.scrollBy({
-          left: scrollAmount, // Scroll right
-          behavior: "smooth", // Smooth scroll
+          left: scrollAmount, 
+          behavior: "smooth", 
         });
       }
     }

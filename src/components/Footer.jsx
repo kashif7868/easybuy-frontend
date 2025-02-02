@@ -124,12 +124,6 @@ const Footer = () => {
                   <li>
                     <Link to="/signin">Sign In</Link>
                   </li>
-                  <li>
-                    <Link to="/shipping-info">Shipping Info</Link>
-                  </li>
-                  <li>
-                    <Link to="/help-center">Help Center</Link>
-                  </li>
                 </ul>
               </div>
             </motion.div>
@@ -151,12 +145,6 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link to="/signin">Sign In</Link>
-                  </li>
-                  <li>
-                    <Link to="/shipping-info">Shipping Info</Link>
-                  </li>
-                  <li>
-                    <Link to="/help-center">Help Center</Link>
                   </li>
                 </ul>
               </div>
@@ -182,12 +170,6 @@ const Footer = () => {
               <div className={`footer-details ${isAccountOpen ? "open" : ""}`}>
                 <ul>
                   <li>
-                    <Link to="/about">About EasyBuy</Link>
-                  </li>
-                  <li>
-                    <Link to="/contact">Contact Us</Link>
-                  </li>
-                  <li>
                     <Link to="/returns">Returns & Exchanges</Link>
                   </li>
                 </ul>
@@ -204,19 +186,10 @@ const Footer = () => {
               <div className={`footer-details ${isAccountOpen ? "open" : ""}`}>
                 <ul>
                   <li>
-                    <Link to="/about">About EasyBuy</Link>
-                  </li>
-                  <li>
-                    <Link to="/faqs">FAQs</Link>
-                  </li>
-                  <li>
                     <Link to="/contact">Contact Us</Link>
                   </li>
                   <li>
                     <Link to="/returns">Returns & Exchanges</Link>
-                  </li>
-                  <li>
-                    <Link to="/store-locator">Store Locator</Link>
                   </li>
                 </ul>
               </div>
@@ -260,7 +233,7 @@ const Footer = () => {
         <div className="footer-right">
           <img src={jashcashImage} alt="JazzCash" />
           <img src={easypaisaImage} alt="EasyPaisa" />
-          <img src={bankalfalahImage }alt="BankAlFalah" />
+          <img src={bankalfalahImage} alt="BankAlFalah" />
         </div>
       </div>
     </div>

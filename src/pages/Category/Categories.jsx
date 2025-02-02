@@ -4,44 +4,36 @@ import { productData } from "../../data/productData";
 import "../../assets/css/Pages/customCategories.css";
 
 const Categories = () => {
-  const { categoryId, subCategoryId } = useParams(); // Adjusting for category and subcategory params
-  const [categoryProducts, setCategoryProducts] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState([]); // Initially show all products
+  const { categoryId } = useParams(); // Get categoryId from URL
+  const [categoryData, setCategoryData] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [filterOptions, setFilterOptions] = useState({
     minPrice: 0,
     maxPrice: 10000,
     rating: 0,
   });
-  const [sortOption, setSortOption] = useState("price"); // Adding sortOption state
+  const [sortOption, setSortOption] = useState("topSale");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [subCategoryOpen, setSubCategoryOpen] = useState({});
 
-  // Filter products based on selected category and subcategory ID
+  // Load the category data based on categoryId from URL
   useEffect(() => {
-    const category = productData.find((item) => item.id === parseInt(categoryId));
+    const category = productData.find((cat) => cat.id === parseInt(categoryId));
     if (category) {
-      setCategoryProducts(category);
-      setSelectedCategory(categoryId); // Update selected category
-      // Set initial products (show all products in the selected category)
-      if (subCategoryId) {
-        const subCategory = category.subCategories.find(
-          (sub) => sub.id === parseInt(subCategoryId)
-        );
-        if (subCategory) {
-          setFilteredProducts(subCategory.products); // Show all products initially
-        }
-      } else {
-        // If no subcategory is selected, show products from the category
-        const allProducts = category.subCategories.reduce((acc, sub) => {
-          return [...acc, ...sub.products];
-        }, []);
-        setFilteredProducts(allProducts);
-      }
+      setCategoryData(category);
+      setFilteredProducts(
+        category.subCategories.flatMap((subCat) => subCat.products)
+      );
+      setSelectedCategory(categoryId);
+    } else {
+      setCategoryData(null);
+      setFilteredProducts([]);
     }
-  }, [categoryId, subCategoryId]);
+  }, [categoryId]);
 
-  // Apply filters and sorting after initial products are loaded
+  // Apply filters and sorting
   useEffect(() => {
-    if (filteredProducts.length > 0) {
+    if (categoryData && filteredProducts.length > 0) {
       let filtered = filteredProducts.filter(
         (product) =>
           product.discountPrice >= filterOptions.minPrice &&
@@ -49,69 +41,105 @@ const Categories = () => {
           product.rating >= filterOptions.rating
       );
 
-      // Apply sorting
-      if (sortOption === "price") {
+      if (sortOption === "highToLowPrice") {
+        filtered.sort((a, b) => b.discountPrice - a.discountPrice);
+      } else if (sortOption === "lowToHighPrice") {
         filtered.sort((a, b) => a.discountPrice - b.discountPrice);
-      } else if (sortOption === "rating") {
-        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (sortOption === "topSale") {
+        filtered.sort((a, b) => b.sales - a.sales); // Assuming 'sales' field exists for top sale sorting
       }
 
       setFilteredProducts(filtered);
     }
-  }, [filterOptions, sortOption, filteredProducts]); // Fixed the dependency array
+  }, [filterOptions, sortOption, categoryData, filteredProducts]);
 
-  if (!categoryProducts) {
+  // Handle subcategory click
+  const handleSubCategoryClick = (subCategoryId) => {
+    const subCategory = categoryData.subCategories.find(
+      (sub) => sub.id === subCategoryId
+    );
+    if (subCategory) {
+      setFilteredProducts(subCategory.products);
+    }
+  };
+
+  // Toggle the visibility of subcategories
+  const toggleSubCategory = (subCategoryId) => {
+    setSubCategoryOpen((prev) => ({
+      ...prev,
+      [subCategoryId]: !prev[subCategoryId],
+    }));
+  };
+
+  if (!categoryData) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="categories-page">
-      <div className="left-sidebar">
+      {/* Left Sidebar: Categories with Filters */}
+      <div className="professional left-sidebar">
         <h3>Categories</h3>
-        <ul>
-          {productData.map((category) => (
-            <li key={category.id}>
-              <span
-                style={{
-                  cursor: "pointer",
-                  fontWeight: selectedCategory === category.id ? "bold" : "normal",
-                }}
-                onClick={() => setSelectedCategory(category.id)}
-              >
-                {category.categoryName}
-              </span>
-              {selectedCategory === category.id && (
-                <ul>
-                  {category.subCategories.map((subCategory) => (
-                    <li key={subCategory.id}>
-                      <span
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          setFilteredProducts(subCategory.products);
-                        }}
-                      >
-                        {subCategory.subCategoryName}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+        {/* Category list with subcategories */}
+        <ul className="category-manu-container">
+          {productData
+            .filter((category) => category.id === parseInt(categoryId))
+            .map((category) => (
+              <li key={category.id}>
+                <span
+                  style={{
+                    cursor: "pointer",
+                    fontWeight:
+                      selectedCategory === category.id ? "bold" : "normal",
+                  }}
+                  onClick={() => setSelectedCategory(category.id)}
+                >
+                  {category.categoryName}
+                </span>
+                {selectedCategory === category.id && (
+                  <ul>
+                    {category.subCategories.map((subCategory) => (
+                      <li key={subCategory.id}>
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleSubCategoryClick(subCategory.id)}
+                        >
+                          {subCategory.subCategoryName}
+                        </span>
+                        <button onClick={() => toggleSubCategory(subCategory.id)}>
+                          {subCategoryOpen[subCategory.id] ? "-" : "+"}
+                        </button>
+                        {subCategoryOpen[subCategory.id] && (
+                          <ul>
+                            {subCategory.products.map((product) => (
+                              <li key={product.id}>{product.name}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
         </ul>
-      </div>
 
-      <div className="right-content">
-        <div className="filter-sort-container">
-          <div className="filters">
-            <h4>Filters</h4>
-            <label>Price Range</label>
+        {/* Filters */}
+        <div className="filter-options">
+          <h4>Filters</h4>
+          
+          {/* Price Range Filter */}
+          <label>Price Range</label>
+          <div className="price-filter">
             <input
               type="number"
               placeholder="Min Price"
               value={filterOptions.minPrice}
               onChange={(e) =>
-                setFilterOptions({ ...filterOptions, minPrice: parseInt(e.target.value) })
+                setFilterOptions({
+                  ...filterOptions,
+                  minPrice: parseInt(e.target.value),
+                })
               }
             />
             <input
@@ -119,46 +147,68 @@ const Categories = () => {
               placeholder="Max Price"
               value={filterOptions.maxPrice}
               onChange={(e) =>
-                setFilterOptions({ ...filterOptions, maxPrice: parseInt(e.target.value) })
-              }
-            />
-            <label>Minimum Rating</label>
-            <input
-              type="number"
-              min="0"
-              max="5"
-              value={filterOptions.rating}
-              onChange={(e) =>
-                setFilterOptions({ ...filterOptions, rating: parseInt(e.target.value) })
+                setFilterOptions({
+                  ...filterOptions,
+                  maxPrice: parseInt(e.target.value),
+                })
               }
             />
           </div>
 
-          <div className="sorting">
-            <h4>Sort By</h4>
-            <select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
-              <option value="price">Price</option>
-              <option value="rating">Rating</option>
-            </select>
+          {/* Rating Filter */}
+          <label>Minimum Rating</label>
+          <div className="rating-filter">
+            {[...Array(5)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() =>
+                  setFilterOptions({ ...filterOptions, rating: index + 1 })
+                }
+                style={{
+                  color: filterOptions.rating > index ? "gold" : "gray",
+                }}
+              >
+                ★
+              </button>
+            ))}
           </div>
         </div>
+      </div>
 
-        <div className="product-container">
+      {/* Top Section: Sorting Options */}
+      <div className="professional top-section">
+        <h4>Sort By</h4>
+        <div className="sorting">
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="topSale">Top Sale</option>
+            <option value="highToLowPrice">High to Low Price</option>
+            <option value="lowToHighPrice">Low to High Price</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Product Container: Display Products in Grid */}
+      <div className="professional product-container">
+        <h2>{categoryData.categoryName}</h2>
+        <div className="product-list">
           {filteredProducts.length === 0 ? (
             <div>No products found with applied filters.</div>
           ) : (
-            <div className="product-list">
-              {filteredProducts.map((product) => (
-                <div key={product.id} className="product-card">
-                  <img src={product.image} alt={product.name} />
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                  <p>Price: {product.discountPrice} PKR</p>
-                  <p>Rating: {product.rating} ({product.reviews} reviews)</p>
-                  <button>Add to Cart</button>
-                </div>
-              ))}
-            </div>
+            filteredProducts.map((product) => (
+              <div key={product.id} className="product-card">
+                <img src={product.image} alt={product.name} />
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
+                <p>Price: ₨{product.discountPrice}</p>
+                <p>
+                  Rating: {product.rating} ({product.reviews} reviews)
+                </p>
+                <button>Add to Cart</button>
+              </div>
+            ))
           )}
         </div>
       </div>

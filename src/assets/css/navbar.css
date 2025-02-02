@@ -1,3 +1,4 @@
+/* Navbar Container */
 .navbar-page {
   margin: 0;
   padding: 0;
@@ -7,6 +8,7 @@
   top: 0;
   z-index: 999;
 }
+
 /* General Header Styles */
 .header {
   display: flex;
@@ -20,11 +22,13 @@
   transition: all 0.3s ease-in-out;
 }
 
+/* Logo Styles */
 .logo-container .logo {
   max-height: 50px;
   object-fit: contain;
 }
 
+/* Search Bar Styles */
 .search-bar-by-category {
   display: flex;
   align-items: center;
@@ -33,12 +37,13 @@
   border-radius: 10px;
   width: 100%;
   max-width: 800px;
+  background-color: #f9f9f9; /* subtle background color */
 }
 
 .category-select {
   font-size: 14px;
   padding: 6px;
-  margin-right: 0; /* No margin between the dropdown and the input */
+  margin-right: 10px;
   border-radius: 4px;
   border: none;
   outline: none;
@@ -56,6 +61,8 @@
   padding: 6px 30px 6px 10px;
   border: none;
   outline: none;
+  background-color: #fff;
+  border-radius: 4px;
 }
 
 .search-icon {
@@ -72,7 +79,8 @@
 .category-select:focus {
   border-color: #b8ffd5; /* Highlight color */
 }
-/* Add this in your CSS */
+
+/* Search Loader Animation */
 .search-loader {
   border: 4px solid #333;
   border-top: 4px solid #00fa68;
@@ -96,18 +104,21 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  position: relative;
 }
+
+/* Navbar Icon Items */
 .navbar-icons-items {
   position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
-  right: 20px;
 }
 
 .navbar-icons-items span {
   margin-left: 8px;
 }
+
 .navbar-icons-items,
 .navbar-toggle-open {
   display: flex;
@@ -117,6 +128,7 @@
   cursor: pointer;
 }
 
+/* Navbar Icon Styles */
 .navbar-icons-items .navbar-icons {
   font-size: 26px;
   color: #333;
@@ -124,7 +136,7 @@
 }
 
 .navbar-icons-items:hover .navbar-icons {
-  color: #01cf57;
+  color: #01cf57; /* green color on hover */
 }
 
 .navbar-icons-items .counter {
@@ -143,6 +155,7 @@
   justify-content: center;
 }
 
+/* Profile Dropdown */
 .profile-dropdown {
   position: absolute;
   top: 40px;
@@ -168,6 +181,7 @@
   transform: translateY(0);
 }
 
+/* Logout Button in Profile */
 .profile-dropdown .logout-btn {
   width: 100%;
   padding: 10px 14px;
@@ -212,7 +226,7 @@
 }
 
 /* Navbar Container */
-.navbar {
+.navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -224,8 +238,110 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-/* Navbar Items Container */
-.navbar-items-container {
+/* Navbar Menu */
+.navbar-menu {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Left side (Shop By Categories with Dropdown Menu) */
+/* Left side (Shop By Categories with Dropdown Menu) */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+
+.navbar-left .category-link-btn {
+  color: #333;
+  font-size: 14px;
+  position: relative;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px 0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hamburger Icon (Bar) */
+.hamburger-icon {
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-left .category-link-btn:hover .hamburger-icon {
+  transform: rotate(90deg); /* Rotate icon on hover */
+}
+
+/* Dropdown Menu for Left Side */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none; /* Hidden by default */
+  background-color: #ffffff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 10px 0;
+  min-width: 180px;
+  z-index: 20;
+}
+
+.navbar-left:hover .dropdown-menu,
+.navbar-left .dropdown-menu.open {
+  display: block; /* Show dropdown when hovering or if menuOpen state is true */
+}
+
+/* Dropdown Menu List */
+.dropdown-menu li {
+  list-style: none;
+  padding: 8px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu li:hover,
+.dropdown-menu li:active {
+  background-color: #f0f0f0;
+  color: #01cf57; /* Change text color when hovering */
+}
+
+/* Category Link Button Hover */
+.category-link-btn:hover,
+.category-link-btn:active {
+  color: #01cf57;
+  transform: translateY(-2px);
+}
+
+/* Dropdown Arrow Icon */
+.dropdown-icon {
+  font-size: 18px;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-left .category-link-btn:hover .dropdown-icon {
+  transform: rotate(180deg); /* Rotate the dropdown arrow when hovering */
+}
+
+/* Center side (Navbar Links like Home, New Arrivals, etc.) */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+}
+
+.navbar-center .navbar-items-container {
   list-style: none;
   display: flex;
   margin: 0;
@@ -234,109 +350,62 @@
   gap: 40px;
 }
 
-/* Hover Effect for Navbar Items */
-.navbar-icons-items:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Category Item Style */
-.category-item-list {
-  position: relative;
-}
-.category-item-list a {
-  position: relative;
-  text-decoration: none;
-}
-
-/* Individual Navbar Links (Home, Shop, Sale) */
-.category-link-btn,
-.home-link-text {
-  color: #333;
-  font-weight: 600;
-  font-size: 17px;
-  position: relative;
-  transition: color 0.3s ease, transform 0.2s ease;
-  text-transform: uppercase;
-  cursor: pointer;
+.navbar-center .navbar-items-container li {
   padding: 8px 0;
 }
 
-.category-link-btn:hover,
-.home-link-text:hover {
+.navbar-center .category-link-btn {
+  text-decoration: none; /* Ensure no underlines on links */
+}
+
+.navbar-center .category-link-btn:hover,
+.navbar-center .category-link-btn:active {
   color: #01cf57;
   transform: translateY(-2px);
 }
 
-/* Underline Effect on Hover */
-.home-link-text::after,
-.category-link-btn::after {
-  content: "";
-  display: block;
-  height: 2px;
-  background-color: #01cf57;
-  position: absolute;
-  width: 0;
-  left: 0;
-  bottom: -5px;
-  transition: width 0.3s ease;
-}
-
-.home-link-text:hover::after,
-.category-link-btn:hover::after {
-  width: 100%;
-}
-
-/* Dropdown Menu Style */
-.category-item-list .category-link-btn {
+/* Right side (Help, Top Offer) */
+.navbar-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex: 1;
+  text-align: center;
 }
 
-.category-item-list .category-link-btn svg {
-  font-size: 18px;
-  transition: transform 0.3s ease;
-}
-
-.category-item-list .category-link-btn:hover svg {
-  transform: rotate(180deg);
-}
-
-/* Dropdown Menu */
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
+.navbar-right .help-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px 0;
-  width: 220px;
-  z-index: 999;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 40px;
 }
 
-.category-item-list:hover .dropdown-menu {
-  display: block;
+.navbar-right .call-icon {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-right: 10px;
 }
 
-.dropdown-menu li {
-  padding: 10px 20px;
-  white-space: nowrap;
+.navbar-right .help-call {
   font-size: 16px;
-}
-
-.dropdown-menu li a {
   color: #333;
-  text-decoration: none;
+  font-weight: 500;
 }
 
-.dropdown-menu li a:hover {
-  color: #01cf57;
+.navbar-right .phone-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.navbar-right .phone-link:hover {
+  color: #1e88e5;
 }
 
 /* Top Offer Button */
-.navbar-top-offer {
+.navbar-right .navbar-top-offer {
   color: #333;
   padding: 10px 20px;
   font-size: 16px;
@@ -347,46 +416,35 @@
   right: 30px;
 }
 
-.navbar-top-offer-icon {
+.navbar-right .navbar-top-offer-icon {
   font-size: 20px;
   margin-right: 8px;
 }
+
+.navbar-right .navbar-top-offer:hover {
+  color: #01cf57;
+  transform: translateY(-2px); /* Adds slight movement on hover */
+}
+
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  /* Header */
-  .header {
-    flex-direction: row;
-  }
-
-  /* Hide search bar on small screens */
-  .search-bar-by-category {
-    display: none;
-  }
-
-  /* Navbar */
   .navbar {
     padding: 20px;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  /* Navbar items container */
-  .navbar-items-container {
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-  }
-
-  /* Navbar menu */
+  /* Navbar Menu */
   .navbar-menu {
+    flex-direction: column;
     position: fixed;
     top: 0;
     right: 0;
     background-color: #ffffff;
     height: 100vh;
-    width: 250px; /* Adjust width if necessary */
+    width: 250px;
     z-index: 1001;
-    flex-direction: column;
     padding-top: 60px;
     transform: translateX(100%);
     transition: transform 0.3s ease;
@@ -396,7 +454,7 @@
     transform: translateX(0);
   }
 
-  /* Navbar toggle open button */
+  /* Navbar Toggle Open Button */
   .navbar-toggle-open {
     display: block;
     font-size: 30px;
@@ -404,7 +462,7 @@
     z-index: 1100;
   }
 
-  /* Navbar toggle close button */
+  /* Navbar Toggle Close Button */
   .navbar-toggle-close {
     display: block;
     position: absolute;
@@ -416,69 +474,29 @@
     z-index: 1100;
   }
 
-  /* Navbar top offer button */
   .navbar-top-offer {
     display: none;
   }
 
-  /* Navbar toggle close hover effect */
-  .navbar-toggle-close:hover {
-    color: #f44336;
-  }
-
-  /* Dropdown menu for collapsible items */
   .category-item-list {
-    position: relative;
     display: block;
   }
 
   .category-item-list .category-link-btn {
     font-size: 18px;
-    color: #333;
     padding: 10px 20px;
-    cursor: pointer;
     text-transform: uppercase;
     font-weight: 600;
   }
 
-  .category-item-list .category-link-btn:hover {
-    color: #01cf57;
-  }
-
-  /* Hide dropdown menus by default */
+  /* Dropdown menu for collapsible items */
   .dropdown-menu {
     display: none;
     position: relative;
     padding-left: 20px;
   }
 
-  /* Show dropdown on click or hover */
   .category-item-list.active .dropdown-menu {
     display: block;
-  }
-
-  /* Dropdown items */
-  .dropdown-menu li {
-    padding: 10px 0;
-  }
-
-  .dropdown-menu li a {
-    color: #333;
-    text-decoration: none;
-  }
-
-  .dropdown-menu li a:hover {
-    color: #01cf57;
-  }
-
-  /* Category link with dropdown toggle */
-  .category-item-list .category-link-btn svg {
-    font-size: 18px;
-    margin-left: auto;
-    transition: transform 0.3s ease;
-  }
-
-  .category-item-list .category-link-btn:hover svg {
-    transform: rotate(180deg);
   }
 }
