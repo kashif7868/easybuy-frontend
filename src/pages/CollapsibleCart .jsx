@@ -10,6 +10,7 @@ import { FaMinus, FaPlus } from "react-icons/fa"; // Importing the icons for inc
 import "../assets/css/Pages/cart.css";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+
 const CollapsibleCart = ({ setCartOpen }) => {
   const cart = useSelector((state) => state.cart?.cart || []);
   const dispatch = useDispatch();
@@ -17,8 +18,6 @@ const CollapsibleCart = ({ setCartOpen }) => {
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
   const subtotal = cart.reduce((acc, item) => acc + item.qty * item.price, 0);
-  const vat = subtotal * 0.2; // Assuming VAT is 20%
-  const total = subtotal + vat;
 
   const closeCart = () => {
     setCartOpen(false);
@@ -40,6 +39,8 @@ const CollapsibleCart = ({ setCartOpen }) => {
     dispatch(clearCart()); // Dispatch the clearCart action
   };
 
+  const deliveryCharges = 0; // You can update this as per your delivery charges logic
+
   return (
     <div className="cart-page">
       <div className="cart-container">
@@ -52,77 +53,86 @@ const CollapsibleCart = ({ setCartOpen }) => {
 
         {cart.length > 0 ? (
           <>
-            <div className="cart-items">
-              {cart.map((item, index) => (
-                <div key={index} className="cart-item">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="cart-item-img"
-                  />
-                  <div className="cart-item-details">
-                    <h3>{item.name}</h3>
-                    <p>Size: {item.selectedSize}</p>
-                    <p>Color: {item.selectedColor}</p>
-                    <div className="quantity-section">
-                      <button
-                        onClick={() =>
-                          handleDecrement(
-                            item.id,
-                            item.selectedSize,
-                            item.selectedColor
-                          )
-                        }
-                        className="quantity-btn"
-                        aria-label="Decrease quantity"
-                      >
-                        <FaMinus />
-                      </button>
-                      <span className="quantity-value">{item.qty}</span>
-                      <button
-                        onClick={() =>
-                          handleIncrement(
-                            item.id,
-                            item.selectedSize,
-                            item.selectedColor
-                          )
-                        }
-                        className="quantity-btn"
-                        aria-label="Increase quantity"
-                      >
-                        <FaPlus />
-                      </button>
+            <div className="cart-items-container">
+              <div className="cart-items">
+                {cart.map((item, index) => (
+                  <div key={index} className="cart-item">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="cart-item-img"
+                    />
+                    <div className="cart-item-details">
+                      <h3>{item.name}</h3>
+                      <p>Size: {item.selectedSize}</p>
+                      <p>Color: {item.selectedColor}</p>
+                      <div className="quantity-section">
+                        <button
+                          onClick={() =>
+                            handleDecrement(
+                              item.id,
+                              item.selectedSize,
+                              item.selectedColor
+                            )
+                          }
+                          className="quantity-btn"
+                          aria-label="Decrease quantity"
+                        >
+                          <FaMinus />
+                        </button>
+                        <span className="quantity-value">{item.qty}</span>
+                        <button
+                          onClick={() =>
+                            handleIncrement(
+                              item.id,
+                              item.selectedSize,
+                              item.selectedColor
+                            )
+                          }
+                          className="quantity-btn"
+                          aria-label="Increase quantity"
+                        >
+                          <FaPlus />
+                        </button>
+                      </div>
+                      <p>Price: {item.price.toLocaleString()} PKR</p>
                     </div>
-                    <p>Price: {item.price.toLocaleString()} PKR</p>
+                    <span
+                      className="remove-item-btn"
+                      onClick={() =>
+                        handleRemove(
+                          item.id,
+                          item.selectedSize,
+                          item.selectedColor
+                        )
+                      }
+                    >
+                      <IoIosClose className="remove-cart-icon" />
+                    </span>
                   </div>
-                  <span
-                    className="remove-item-btn"
-                    onClick={() =>
-                      handleRemove(
-                        item.id,
-                        item.selectedSize,
-                        item.selectedColor
-                      )
-                    }
-                  >
-                    <IoIosClose className="remove-cart-icon" />
-                  </span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="cart-footer">
-              <div className="subtotal">
+              <div className="cart-summary">
                 <p>
-                  Sub-Total: <span>{subtotal.toLocaleString()} PKR</span>
+                  <strong>Subtotal:</strong> ₨ {subtotal.toLocaleString()}
                 </p>
                 <p>
-                  VAT (20%): <span>{vat.toLocaleString()} PKR</span>
+                  <strong>Delivery Charges:</strong>{" "}
+                  {deliveryCharges === 0 ? (
+                    <span>Delivery is Free</span>
+                  ) : (
+                    `₨ ${deliveryCharges.toLocaleString()}`
+                  )}
                 </p>
                 <p>
-                  Total: <span>{total.toLocaleString()} PKR</span>
+                  <strong>Total:</strong>{" "}
+                  ₨ {(subtotal + deliveryCharges).toLocaleString()}
                 </p>
               </div>
+
               <div className="cart-actions">
                 <button className="clear-cart" onClick={handleClearCart}>
                   Clear Cart

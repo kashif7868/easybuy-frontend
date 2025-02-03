@@ -88,7 +88,7 @@ const TopOfferProduct = () => {
           <div className="top-offer-header">
             <h1>Top Offer</h1>
             <button className="top-offer-close-btn" onClick={closeTopOffer}>
-              <IoIosClose size={30} />
+              <IoIosClose size={30} className="top-offer-close-icon" />
             </button>
           </div>
           <div className="top-offer-page-content">

@@ -48,13 +48,15 @@ body {
   width: 100%;
 }
 
-.close-btn {
+.top-offer-close-btn{
   background: none;
   border: none;
   cursor: pointer;
   font-size: 24px;
 }
-
+.top-offer-close-icon{
+  color: #d10000;
+}
 /* Product Grid Layout */
 .top-offer-products-grid {
   display: grid;
