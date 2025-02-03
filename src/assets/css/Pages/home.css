@@ -21,7 +21,7 @@
 
 .banner-image {
   width: 100%;
-  height:220px;
+  height: 220px;
   border-radius: 8px;
   transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
   object-fit: cover;
@@ -143,7 +143,7 @@
   z-index: 10;
   color: #333;
   padding: 5px 5px;
-  background-color: #b8ffd5;  /* Custom color for background */
+  background-color: #b8ffd5; /* Custom color for background */
   border-radius: 19%;
   transition: all 0.3s ease;
   display: flex;
@@ -173,7 +173,6 @@
   width: 100%;
   scroll-behavior: smooth;
 }
-
 
 .category-container {
   flex: 0 0 auto;
@@ -230,7 +229,6 @@
 .category-scroll-wrapper::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
-
 
 /* Responsive Styles */
 @media (max-width: 1024px) {
@@ -337,20 +335,19 @@
 }
 
 .categories-nav-list button:hover {
-  border-bottom: 2px solid  #00fa68; /* Hover color updated */
-  color:  #00fa68; /* Text color on hover updated */
+  border-bottom: 2px solid #00fa68; /* Hover color updated */
+  color: #00fa68; /* Text color on hover updated */
   transform: translateY(-3px);
 }
 
 .categories-nav-list button.active {
-  border-bottom: 2px solid  #00ee63 ; /* Active color updated */
+  border-bottom: 2px solid #00ee63; /* Active color updated */
   color: #1bc562; /* Text color when active updated */
 }
 
 .categories-nav-list button:focus {
   outline: none;
 }
-
 
 /* Styling for the product color circle */
 .product-color {
@@ -410,6 +407,53 @@
 
 .product-card:hover img {
   opacity: 0.7;
+}
+/* Styling for the product images container */
+.product-images-container {
+  position: relative;
+}
+
+.product-images-list {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  gap: 10px;
+  top: 35px;
+  left: -200px;
+  z-index: 2;
+  transition: left 0.5s ease-out;
+}
+
+.product-card:hover .product-images-list {
+  display: flex;
+  left: 10px;
+}
+
+@keyframes listImageSlideIn {
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 10px;
+  }
+}
+
+.product-images-list .list-images {
+  width: 100%;
+  max-width: 40px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-images-list .list-images:hover {
+  transform: scale(1.1);
+}
+
+.product-card:hover .product-images-list {
+  animation: listImageSlideIn  0.5s ease-out forwards;
 }
 
 /* Add to Cart Icon */
@@ -524,9 +568,6 @@
   display: block;
 }
 
-.wishlist-icon:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-}
 
 .cart-info {
   text-align: center;
@@ -814,8 +855,6 @@
   }
 }
 
-
-
 /* SAB Banner Section */
 .sab-banner-section {
   display: grid;
@@ -867,8 +906,6 @@
   background-color: #e64a4a; /* Slightly darker shade on hover */
 }
 
-
-
 /* Blog Section */
 .blog-section {
   padding: 40px 20px;
@@ -885,7 +922,10 @@
 
 .blog-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  ); /* Responsive grid */
   grid-gap: 30px;
 }
 

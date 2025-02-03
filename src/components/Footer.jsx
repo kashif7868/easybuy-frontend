@@ -170,6 +170,12 @@ const Footer = () => {
               <div className={`footer-details ${isAccountOpen ? "open" : ""}`}>
                 <ul>
                   <li>
+                    <Link to="/about">About Us</Link>
+                  </li>
+                  <li>
+                    <Link to="/contact">Contact Us</Link>
+                  </li>
+                  <li>
                     <Link to="/returns">Returns & Exchanges</Link>
                   </li>
                 </ul>
@@ -185,6 +191,9 @@ const Footer = () => {
               </div>
               <div className={`footer-details ${isAccountOpen ? "open" : ""}`}>
                 <ul>
+                <li>
+                    <Link to="/about">About Us</Link>
+                  </li>
                   <li>
                     <Link to="/contact">Contact Us</Link>
                   </li>

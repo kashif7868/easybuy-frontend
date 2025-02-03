@@ -28,8 +28,7 @@ const Home = () => {
   const [wishlistLoading, setWishlistLoading] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const favorites = useSelector((state) => state.favorites);
-  const containerRef = useRef(null); 
-
+  const containerRef = useRef(null);
 
   const scroll = (direction) => {
     if (containerRef.current) {
@@ -39,12 +38,12 @@ const Home = () => {
       if (direction === "left") {
         container.scrollBy({
           left: -scrollAmount,
-          behavior: "smooth", 
+          behavior: "smooth",
         });
       } else if (direction === "right") {
         container.scrollBy({
-          left: scrollAmount, 
-          behavior: "smooth", 
+          left: scrollAmount,
+          behavior: "smooth",
         });
       }
     }
@@ -303,6 +302,21 @@ const Home = () => {
                   <LuHeart color={isFavorite(product.id) ? "red" : "gray"} />
                 )}
               </div>
+              <div className="product-images-container">
+                <span className="product-images-list">
+                  {(product.additionalImages || [])
+                    .slice(0, 3)
+                    .map((img, index) => (
+                      <img
+                        key={index}
+                        src={img}
+                        alt={`Product ${index}`}
+                        className="list-images"
+                      />
+                    ))}
+                </span>
+              </div>
+
               <img src={product.image} alt={product.name} />
               <h2>{product.name}</h2>
               {hoveredProduct === product.id && (
