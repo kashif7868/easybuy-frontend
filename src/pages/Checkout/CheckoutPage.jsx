@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { clearCart } from "../../app/actions/actionsCart";
-import { postOrder } from "../../app/reducers/orderSlice";
-import "../../assets/css/checkout.css";
+import { postOrder } from "../../app/reducer/orderSlice";
+import "../../assets/css/Pages/checkout.css";
 import cityData from "../../data/cityData.json";
 
 const CheckoutPage = () => {
@@ -17,11 +17,8 @@ const CheckoutPage = () => {
   const cartFromState = location.state?.cart || [];
   const cart = cartFromState.length > 0 ? cartFromState : reduxCart;
 
-  // Generate orderId starting with "MHB"
-  const orderId = `MHB-${Math.random()
-    .toString(36)
-    .substr(2, 9)
-    .toUpperCase()}`;
+  // Generate orderId starting with "EB"
+  const orderId = `EB-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -337,52 +334,26 @@ const CheckoutPage = () => {
               {cart.map((item) => (
                 <li key={item.id} className="checkout-product-item">
                   <img
-                    src={
-                      item.images && item.images.length > 0
-                        ? `https://api.mhbstore.com/${item.images[0]}`
-                        : "default_image_url"
-                    }
+                    src={item.image || "default_image_url"}
                     alt={item.productName}
                     className="checkout-product-image"
                   />
                   <div className="checkout-product-info">
                     <p>
-                      <strong>Product Code:</strong> {item.id}
+                      <strong>Name:</strong> {item.name}
                     </p>
                     <p>
-                      <strong>Name:</strong> {item.productName}
+                      <strong>Size:</strong> {item.selectedSize}
                     </p>
-                    {item.selectedColor && (
-                      <p>
-                        <strong>Color:</strong>
-                        <span
-                          className="product-color-circle"
-                          style={{
-                            backgroundColor: item.selectedColor.toLowerCase(),
-                          }}
-                          title={item.selectedColor}
-                        />
-                      </p>
-                    )}
-                    {item.selectedSize && (
-                      <p>
-                        <strong>Size:</strong> {item.selectedSize}
-                      </p>
-                    )}
-                    {item.selectedMeter && (
-                      <p>
-                        <strong>Meterage:</strong> {item.selectedMeter}m
-                      </p>
-                    )}
+                    <p>
+                      <strong>Color:</strong> {item.selectedColor}
+                    </p>
                     <p>
                       <strong>Qty:</strong> {item.qty}
                     </p>
                     <p>
-                      <strong>Price:</strong> ₨{item.salePrice || item.price}
-                    </p>
-                    <p>
-                      <strong>Total:</strong> ₨
-                      {(item.salePrice || item.price) * item.qty}
+                      <strong>Total:</strong> ₨{" "}
+                      {(item.price || item.salePrice) * item.qty}
                     </p>
                   </div>
                 </li>
@@ -433,7 +404,7 @@ const CheckoutPage = () => {
                   <p>
                     <strong>Bank Alfalah</strong>
                     <br />
-                    Account Name: MHB Store <br />
+                    Account Name: Easy Buy <br />
                     Account Number: 01611009686863
                   </p>
                 )}
@@ -441,7 +412,7 @@ const CheckoutPage = () => {
                   <p>
                     <strong>Meezan Bank</strong>
                     <br />
-                    Account Name: MHB Store <br />
+                    Account Name: Easy Buy <br />
                     Account Number: 02540108520675
                   </p>
                 )}
@@ -449,16 +420,16 @@ const CheckoutPage = () => {
                   <p>
                     <strong>JazzCash</strong>
                     <br />
-                    Account Name: Mazhar Hussain <br />
-                    Account Number: 0300-4645503
+                    Account Name: Mr.Rizwan <br />
+                    Account Number: 0324-1687082
                   </p>
                 )}
                 {selectedBank === "easyPaisa" && (
                   <p>
                     <strong>EasyPaisa</strong>
                     <br />
-                    Account Name: Mazhar Hussain <br />
-                    Account Number: 0300-4645503
+                    Account Name: Mr.Rizwan <br />
+                    Account Number:0324-1687082
                   </p>
                 )}
                 <p>
@@ -467,7 +438,7 @@ const CheckoutPage = () => {
                     <li>Make your payment directly into our bank account.</li>
                     <li>
                       Share the screenshot of the transaction on{" "}
-                      <strong>Whatsapp</strong> (+92300-4233378).
+                      <strong>Whatsapp</strong> (+92324-1687082).
                     </li>
                     <li>
                       Please share your <strong>Order ID</strong> as Payment
@@ -485,7 +456,9 @@ const CheckoutPage = () => {
           onClick={handlePlaceOrder}
           disabled={isLoading} // Disable the button when order is being placed
         >
-          {isLoading ? `Placing Order...` : `Place Order (Total: PKR ${grandTotal.toFixed(2)})`}
+          {isLoading
+            ? `Placing Order...`
+            : `Place Order (Total: PKR ${grandTotal.toFixed(2)})`}
         </button>
       </div>
     </div>

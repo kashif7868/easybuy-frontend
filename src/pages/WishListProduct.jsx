@@ -6,34 +6,34 @@ import { IoHeartDislikeOutline } from "react-icons/io5";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { productData } from "../data/productData";
 import "../assets/css/Pages/wishlist.css";
-import { useNavigate } from "react-router-dom";  // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useSnackbar } from "notistack"; // Import useSnackbar
 
 const WishListProduct = () => {
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [loading, setLoading] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
   const favorites = useSelector((state) => state.favorites);
   const cart = useSelector((state) => state.cart.cart); // Access cart from Redux
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize navigate
+  const { enqueueSnackbar } = useSnackbar(); // Initialize useSnackbar
 
   const isFavorite = (productId) => favorites.includes(productId);
 
   const handleFavoriteToggle = async (product) => {
     setLoading(product.id);
-    setSuccessMessage("");
 
     try {
       if (isFavorite(product.id)) {
         await dispatch(removeFromFavorites(product.id)); // Remove from favorites
-        setSuccessMessage("Product removed from favorites!");
+        enqueueSnackbar("Product removed from favorites!", { variant: "info" }); // Show Snackbar
       } else {
         await dispatch(addToFavorites(product.id)); // Add to favorites
-        setSuccessMessage("Product added to favorites!");
+        enqueueSnackbar("Product added to favorites!", { variant: "success" }); // Show Snackbar
       }
     } catch (error) {
       console.error("Error updating favorites:", error);
-      setSuccessMessage("An error occurred while updating favorites.");
+      enqueueSnackbar("An error occurred while updating favorites.", { variant: "error" }); // Error Snackbar
     } finally {
       setLoading(null);
     }
@@ -60,7 +60,7 @@ const WishListProduct = () => {
       dispatch(addToCart({ ...product, selectedSize, qty: 1 }));
     }
 
-    console.log("Product added to cart:", product.id);
+    enqueueSnackbar("Product added to cart!", { variant: "success" }); // Show Snackbar
   };
 
   return (
@@ -98,11 +98,6 @@ const WishListProduct = () => {
               </div>
               {loading === product.id && (
                 <div className="wishlist-loading-spinner">Loading...</div>
-              )}
-              {successMessage && (
-                <div className="wishlist-success-message">
-                  {successMessage}
-                </div>
               )}
 
               <img src={product.image} alt={product.name} />
