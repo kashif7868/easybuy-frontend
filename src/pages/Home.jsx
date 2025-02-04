@@ -6,6 +6,8 @@ import "../assets/css/Pages/home.css";
 import useSlider from "../hooks/useSlider";
 import SliderData, { bannerData } from "../data/SliderData";
 import { productData } from "../data/productData";
+import blogData from "../data/blogData";
+import { HiOutlineMail } from "react-icons/hi";
 import {
   addToFavorites,
   removeFromFavorites,
@@ -28,6 +30,9 @@ const Home = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("All"); // Track the selected category
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [email, setEmail] = useState("");
   // Function to check if a product is a favorite
   const isFavorite = (productId) =>
     Array.isArray(favorites) && favorites.includes(productId);
@@ -135,7 +140,38 @@ const Home = () => {
   const handleCategoryFilterChange = (categoryName) => {
     setSelectedCategory(categoryName); // Update selected category
   };
+  // Pagination logic: Get products for the current page
+  const currentProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
+  const loadMoreProducts = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setCurrentPage(currentPage + 1); // Increment page number
+      setLoading(false);
+    }, 1000); // Simulate loading time
+  };
+
+  const handleSubscription = async () => {
+    setLoading(true);
+    try {
+      // Here, you can send the email to your API for subscription handling
+      // For now, let's simulate a successful subscription
+      enqueueSnackbar(
+        "Subscription successful! You will receive the latest updates.",
+        { variant: "success" }
+      );
+      setEmail(""); // Clear email input after subscription
+    } catch (error) {
+      enqueueSnackbar("Failed to subscribe. Please try again.", {
+        variant: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="home-container">
       {/* ***************************************************/}
@@ -209,7 +245,6 @@ const Home = () => {
           ))}
         </div>
       </section>
-
       {/* ***************************************************/}
       {/* ****************  Product Section  *****************/}
       {/* ***************************************************/}
@@ -242,7 +277,7 @@ const Home = () => {
         </section>
 
         <div className="products-grid">
-          {filteredProducts.map((product) => (
+          {currentProducts.map((product) => (
             <div
               key={product.id}
               className="product-card"
@@ -322,6 +357,58 @@ const Home = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Show More Button */}
+        {filteredProducts.length > currentPage * itemsPerPage && (
+          <div className="show-more-button" onClick={loadMoreProducts}>
+            {loading ? "Loading..." : "Show More"}
+          </div>
+        )}
+      </section>
+      {/* Blog Section */}
+      <section className="blog-section">
+        <div className="section-header">
+          <h2>Latest Blogs</h2>
+        </div>
+        <div className="blog-cards">
+          {blogData.map((blog) => (
+            <div
+              key={blog.id}
+              className="blog-card"
+              onClick={() => navigate(blog.link)}
+            >
+              <img src={blog.image} alt={blog.title} className="blog-image" />
+              <h3 className="blog-title">{blog.title}</h3>
+              <p className="blog-excerpt">{blog.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      {/* Subscribe to Newsletter Section */}
+      <section className="newsletter-section">
+        <div className="section-header">
+          <h2>Subscribe to our Newsletter</h2>
+        </div>
+        <div className="newsletter-content">
+          <p>Get the latest deals, updates, and special offers from EasyBuy.</p>
+          <div className="newsletter-form">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="newsletter-input"
+            />
+            <button
+              onClick={handleSubscription}
+              disabled={loading || !email}
+              className="newsletter-btn"
+            >
+              {loading ? "Subscribing..." : "Subscribe"}
+              <HiOutlineMail size={20} />
+            </button>
+          </div>
         </div>
       </section>
     </div>
