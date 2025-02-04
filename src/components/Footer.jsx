@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FaFacebook,
-  FaTwitter,
   FaInstagram,
   FaPinterest,
-  FaYoutube,
 } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 import { motion } from "framer-motion";
@@ -122,7 +120,7 @@ const Footer = () => {
                     <Link to="/wishlist">Wishlist</Link>
                   </li>
                   <li>
-                    <Link to="/signin">Sign In</Link>
+                    <Link to="/user">Sign In</Link>
                   </li>
                 </ul>
               </div>
@@ -144,7 +142,7 @@ const Footer = () => {
                     <Link to="/wishlist">Wishlist</Link>
                   </li>
                   <li>
-                    <Link to="/signin">Sign In</Link>
+                  <Link to="/user">Sign In</Link>
                   </li>
                 </ul>
               </div>
@@ -219,16 +217,10 @@ const Footer = () => {
                 <FaFacebook size={24} color="#000" />
               </Link>
               <Link to="#">
-                <FaTwitter size={24} color="#000" />
-              </Link>
-              <Link to="#">
                 <FaInstagram size={24} color="#000" />
               </Link>
               <Link to="#">
                 <FaPinterest size={24} color="#000" />
-              </Link>
-              <Link to="#">
-                <FaYoutube size={24} color="#000" />
               </Link>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { productData } from '../data/productData'; // Import productData
+import { productData } from '../data/productData'; 
 import '../assets/css/Pages/searchResults.css';
 
 const SearchResults = () => {
@@ -13,14 +13,11 @@ const SearchResults = () => {
   useEffect(() => {
     const filterProducts = () => {
       if (!searchQuery) {
-        setFilteredProducts([]); // If no search query, show no results
+        setFilteredProducts([]); 
         setLoading(false);
         return;
       }
 
-      console.log("Search Query:", searchQuery); // Debugging log for query
-
-      // Flatten the product categories and filter by search query
       const products = productData
         .map(category => category.subCategories)
         .flat()
@@ -30,30 +27,24 @@ const SearchResults = () => {
           const productName = product.name || "";
           const productDescription = product.description || "";
           const productColor = product.color || "";
-
-          const match = 
+          return (
             productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
             productDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            productColor.toLowerCase().includes(searchQuery.toLowerCase());
-
-          console.log("Product Match:", match, product.name); // Debugging log for each product
-          return match;
+            productColor.toLowerCase().includes(searchQuery.toLowerCase())
+          );
         });
 
-      console.log("Filtered Products:", products); // Debugging log for filtered products
       setFilteredProducts(products);
       setLoading(false);
     };
 
-    filterProducts(); // Execute the filter function
-
-  }, [searchQuery]); // Re-run when searchQuery changes
+    filterProducts();
+  }, [searchQuery]);
 
   if (loading) {
     return (
       <div className="loader-container">
         <p>Searching...</p>
-        {/* You can replace the text with an actual spinner or a loading animation */}
       </div>
     );
   }

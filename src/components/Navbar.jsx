@@ -23,10 +23,10 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [offerOpen, setOfferOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false); // New state to control visibility of search bar
 
   const navigate = useNavigate();
 
@@ -64,10 +64,6 @@ const Navbar = () => {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-  };
-
   const toggleOfferPage = () => {
     setOfferOpen(!offerOpen);
   };
@@ -75,6 +71,10 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
     navigate("/user");
+  };
+
+  const toggleSearchBar = () => {
+    setIsSearchBarVisible(!isSearchBarVisible); // Toggle visibility of search bar
   };
 
   return (
@@ -86,35 +86,33 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="search-bar-by-category">
-          <select
-            className="category-select"
-            value={selectedCategory}
-            onChange={(e) => handleCategorySelect(e.target.value)}
-          >
-            <option>All Categories</option>
-            {productData.map((item, index) => (
-              <option key={index} value={item.categoryName}>
-                {item.categoryName}
-              </option>
-            ))}
-          </select>
-          <div className="input-container">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              onBlur={handleSearchSubmit}
-            />
-            <span className="search-icon" onClick={handleSearchSubmit}>
-              {isLoading ? <div className="search-loader"></div> : <CiSearch />}
-            </span>
-          </div>
+        {/* Search Bar Toggle */}
+        <div className="search-bar">
+          {isSearchBarVisible && (
+            <div className="input-container">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+              />
+              <span className="search-icon" onClick={handleSearchSubmit}>
+                {isLoading ? (
+                  <div className="search-loader"></div>
+                ) : (
+                  <CiSearch />
+                )}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="header-icons-container">
+          <div className="navbar-icons-items" onClick={toggleSearchBar}>
+            <span className="navbar-icons" > {isSearchBarVisible ? <IoIosClose /> : <CiSearch />} </span>
+          </div>
           <Link to="/wishlist" className="navbar-icons-items">
             <LuHeart className="navbar-icons" />
             <span className="counter">{favoriteCount}</span>

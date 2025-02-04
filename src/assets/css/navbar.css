@@ -29,15 +29,11 @@
 }
 
 /* Search Bar Styles */
-.search-bar-by-category {
+.search-bar {
   display: flex;
   align-items: center;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
   width: 100%;
   max-width: 800px;
-  background-color: #f9f9f9; /* subtle background color */
 }
 
 .category-select {
@@ -58,8 +54,9 @@
 .search-input {
   width: 100%;
   font-size: 14px;
-  padding: 6px 30px 6px 10px;
-  border: none;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
   outline: none;
   background-color: #fff;
   border-radius: 4px;
@@ -352,8 +349,37 @@
 
 .navbar-center .navbar-items-container li {
   padding: 8px 0;
+  position: relative; /* Needed for absolute positioning of the ::before */
 }
 
+.navbar-center .navbar-items-container li a {
+  text-decoration: none;
+  color: #000; /* Default color */
+  position: relative; /* Ensure the ::before is positioned relative to the link */
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-center .navbar-items-container li a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 1px; /* Adjust height as needed */
+  background-color: #01cf57; /* Hover color */
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-center .navbar-items-container li a:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.navbar-center .navbar-items-container li a:hover {
+  color: #01cf57; /* Hover color */
+}
 .navbar-center .category-link-btn {
   text-decoration: none; /* Ensure no underlines on links */
 }
@@ -428,75 +454,75 @@
 
 
 /* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 20px;
+@media screen and (max-width: 768px) {
+  .navbar-page {
+    flex-direction: column;
+  }
+
+  .header {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  /* Navbar Menu */
-  .navbar-menu {
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    background-color: #ffffff;
-    height: 100vh;
-    width: 250px;
-    z-index: 1001;
-    padding-top: 60px;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
+  .search-bar {
+    width: 100%;
+    margin-top: 10px;
   }
 
-  .navbar-menu.active {
-    transform: translateX(0);
+  .search-input {
+    width: 100%;
   }
 
-  /* Navbar Toggle Open Button */
+  .navbar-icons-container {
+    display: none;
+  }
+
   .navbar-toggle-open {
     display: block;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 1100;
   }
 
-  /* Navbar Toggle Close Button */
-  .navbar-toggle-close {
+  .navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .navbar-menu {
     display: block;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 20px;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 1100;
+    width: 100%;
   }
 
-  .navbar-top-offer {
-    display: none;
+  .navbar-left {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
   .category-item-list {
-    display: block;
+    width: 100%;
+    text-align: center;
   }
 
-  .category-item-list .category-link-btn {
-    font-size: 18px;
-    padding: 10px 20px;
-    text-transform: uppercase;
-    font-weight: 600;
+  .profile-dropdown {
+    top: 20px;
+    right: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .search-input {
+    width: 100%;
   }
 
-  /* Dropdown menu for collapsible items */
-  .dropdown-menu {
-    display: none;
-    position: relative;
-    padding-left: 20px;
+  .category-item-list {
+    font-size: 14px;
   }
 
-  .category-item-list.active .dropdown-menu {
-    display: block;
+  .navbar-icons {
+    font-size: 20px;
+  }
+
+  .navbar-top-offer {
+    font-size: 14px;
   }
 }
