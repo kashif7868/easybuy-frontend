@@ -8,7 +8,6 @@ import {
 } from "../app/actions/actionsCart";
 import { FaMinus, FaPlus } from "react-icons/fa"; // Importing the icons for increase and decrease
 import "../assets/css/Pages/cart.css";
-import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom"; // Importing useNavigate for routing
 import { useSnackbar } from "notistack"; // Importing useSnackbar for notifications
@@ -61,7 +60,7 @@ const CollapsibleCart = ({ setCartOpen }) => {
         <div className="cart-header">
           <h2>Your Cart ({cartCount} items)</h2>
           <span className="close-cart-btn" onClick={closeCart}>
-            <IoIosCloseCircleOutline />
+            <IoIosClose/>
           </span>
         </div>
 

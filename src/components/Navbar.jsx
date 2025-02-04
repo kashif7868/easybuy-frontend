@@ -16,23 +16,25 @@ import { productData } from "../data/productData";
 import CollapsibleCart from "../pages/CollapsibleCart ";
 import TopOfferProduct from "../pages/TopOfferProduct";
 import { useAuth } from "../context/authContext";
+import { useMediaQuery } from "react-responsive";
 import "../assets/css/navbar.css";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // Ensure it's used here
   const [cartOpen, setCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [offerOpen, setOfferOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false); // New state to control visibility of search bar
+  const [sidebarOpen, setSidebarOpen] = useState(false); // State for mobile sidebar
 
   const navigate = useNavigate();
-
   const categoryStatus = useSelector(
     (state) => state.category?.status || "idle"
   );
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   const favorites = useSelector((state) => state.favorites || []);
   const cart = useSelector((state) => state.cart?.cart || []);
@@ -77,6 +79,10 @@ const Navbar = () => {
     setIsSearchBarVisible(!isSearchBarVisible); // Toggle visibility of search bar
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen); // Toggle sidebar open state
+  };
+
   return (
     <div className="navbar-page">
       <header className="header">
@@ -111,7 +117,9 @@ const Navbar = () => {
 
         <div className="header-icons-container">
           <div className="navbar-icons-items" onClick={toggleSearchBar}>
-            <span className="navbar-icons" > {isSearchBarVisible ? <IoIosClose /> : <CiSearch />} </span>
+            <span className="navbar-icons">
+              {isSearchBarVisible ? <IoIosClose /> : <CiSearch />}
+            </span>
           </div>
           <Link to="/wishlist" className="navbar-icons-items">
             <LuHeart className="navbar-icons" />
@@ -150,23 +158,14 @@ const Navbar = () => {
 
           <div
             className="navbar-toggle-open"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={toggleSidebar} // Open the sidebar
           >
-            {!menuOpen && <FaBars className="navbar-toggle-open-icon" />}
+            {!sidebarOpen && <FaBars className="navbar-toggle-open-icon" />}
           </div>
         </div>
       </header>
 
       <nav className="navbar-container">
-        {menuOpen && (
-          <div
-            className="navbar-toggle-close"
-            onClick={() => setMenuOpen(false)}
-          >
-            <IoIosClose className="navbar-toggle-close-icon" />
-          </div>
-        )}
-
         <div className="navbar-menu">
           {/* Left side - Sale Items */}
           <div className="navbar-left">
@@ -245,6 +244,35 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
+      {/* Mobile Sidebar */}
+      {isMobile && sidebarOpen && (
+        <>
+          <div className="navbar-toggle-close" onClick={toggleSidebar}>
+            <IoIosClose className="navbar-toggle-close-icon" />
+          </div>
+          <ul
+            className={`mobile-sidebar-categories ${sidebarOpen ? "open" : ""}`}
+          >
+            {categoryStatus === "loading" ? (
+              <li>Loading categories...</li>
+            ) : productData.length > 0 ? (
+              productData.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={`/category/${item.id}`}
+                    className="category-link-btn"
+                  >
+                    {item.categoryName}
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li>No categories available</li>
+            )}
+          </ul>
+        </>
+      )}
 
       {cartOpen && <CollapsibleCart setCartOpen={setCartOpen} />}
       {offerOpen && <TopOfferProduct setOfferOpen={setOfferOpen} />}
