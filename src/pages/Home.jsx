@@ -13,10 +13,6 @@ import {
 import { addToCart } from "../app/actions/actionsCart";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
-import {
-  MdOutlineKeyboardArrowRight,
-  MdOutlineKeyboardArrowLeft,
-} from "react-icons/md";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,25 +25,6 @@ const Home = () => {
   const { enqueueSnackbar } = useSnackbar();
   const favorites = useSelector((state) => state.favorites);
   const containerRef = useRef(null);
-
-  const scroll = (direction) => {
-    if (containerRef.current) {
-      const scrollAmount = 200;
-      const container = containerRef.current;
-
-      if (direction === "left") {
-        container.scrollBy({
-          left: -scrollAmount,
-          behavior: "smooth",
-        });
-      } else if (direction === "right") {
-        container.scrollBy({
-          left: scrollAmount,
-          behavior: "smooth",
-        });
-      }
-    }
-  };
 
   const [selectedCategory, setSelectedCategory] = useState("All"); // Track the selected category
 
@@ -207,13 +184,8 @@ const Home = () => {
       {/* **************** category section *****************/}
       {/* ***************************************************/}
       <section className="category-container-main">
-        <div
-          className="category-arrow-left"
-          onClick={() => scroll("left")} // Scroll left when clicked
-        >
-          <span>
-            <MdOutlineKeyboardArrowLeft />
-          </span>
+        <div className="category-header">
+          <h2>Explore Categories</h2>
         </div>
         <div ref={containerRef} className="category-scroll-wrapper">
           {/* Loop through categories to render them */}
@@ -235,14 +207,6 @@ const Home = () => {
               </div>
             </div>
           ))}
-        </div>
-        <div
-          className="category-arrow-right"
-          onClick={() => scroll("right")} // Scroll right when clicked
-        >
-          <span>
-            <MdOutlineKeyboardArrowRight />
-          </span>
         </div>
       </section>
 

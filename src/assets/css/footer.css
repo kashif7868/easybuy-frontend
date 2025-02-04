@@ -1,12 +1,14 @@
+/* Footer Container */
 .footer-container {
-  background-color: #b8ffd5; /* Light background */
-  color: #000; /* Black text */
+  background-color: #008d3f; /* Green background */
+  color: #fff; /* White text */
   padding: 40px 20px;
   font-family: "Arial", sans-serif;
   margin-top: 40px;
   border-top: 1px solid #333;
 }
 
+/* Footer Content */
 .footer-content {
   display: flex;
   flex-wrap: wrap;
@@ -14,6 +16,7 @@
   justify-content: space-between;
 }
 
+/* Footer Columns */
 .footer-column {
   flex: 1;
   min-width: 250px;
@@ -21,22 +24,75 @@
   margin: 10px;
 }
 
-/* Social Media Icons */
+/* Footer Column Header */
+.footer-column .footer-header  {
+  font-size: 20px; /* Slightly larger font size */
+  font-weight: bold;
+  margin-bottom: 18px;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Improved readability */
+}
+
+.footer-column h4::after {
+  content: "";
+  width: 80px;
+  height: 2px;
+  background-color: #fff; /* White underline */
+  display: block;
+  margin-top: 5px;
+}
+
+/* Footer Links */
+.footer-column ul li a {
+  text-decoration: none;
+  color: #fff; /* White text color */
+  font-size: 16px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #17eb6f; /* Light Green on hover */
+  cursor: pointer;
+}
+
+/* Underline effect for links */
+.footer-column ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 1px; /* Adjust height as needed */
+  background-color: #17eb6f; /* Light Green for hover */
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-in-out;
+}
+
+.footer-column ul li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Social Media Links */
 .social-links {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   justify-content: center;
 }
 
 .social-links a {
-  margin-right: 10px;
-  color: #000;
+  color: #fff; /* White icon color */
   font-size: 20px;
-  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .social-links a:hover {
-  color: #006d2d /* Golden color on hover */
+  color: #17eb6f; /* Light Green on hover */
 }
 
 /* Payment Icons */
@@ -49,6 +105,7 @@
   padding: 10px 5px;
   border-radius: 10px;
 }
+
 .payment-icons img {
   width: 100%;
   max-width: 50px;
@@ -57,115 +114,7 @@
   margin: 1em 0em;
 }
 
-/* Footer Sections Title */
-.footer-column h4 {
-  font-size: 18px;
-  margin-bottom: 15px;
-  font-weight: bold;
-  position: relative;
-  padding-bottom: 10px; /* Space for the underline */
-}
-
-.footer-column h4::after {
-  content: "";
-  width: 80px;
-  height: 2px;
-  background-color: #006d2d; /* Golden underline */
-  display: block;
-  margin-top: 5px;
-}
-
-/* Category List */
-.footer-category-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-category-item {
-  margin-bottom: 10px;
-}
-
-.footer-category-link-btn {
-  background: none;
-  border: none;
-  text-align: left;
-  padding: 5px 0;
-  width: 100%;
-  cursor: pointer;
-}
-
-.footer-category-name {
-  color: #333;
-  font-size: 16px;
-  transition: color 0.3s ease;
-}
-
-.footer-category-link-btn:hover .footer-category-name {
-  color: #006d2d; /* Hover color */
-}
-
-/* Footer Section Text and Links */
-.footer-column p,
-.footer-column ul {
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.footer-column ul {
-  list-style: none;
-  padding: 0;
-  line-height: 2.5;
-}
-
-.footer-column ul li {
-  margin-bottom: 10px;
-}
-
-.footer-column ul li a {
-  text-decoration: none;
-  color: #000; /* Updated link color */
-  font-size: 16px;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.footer-column ul li a::before {
-  content: "→ ";
-  color: #17eb6f;
-  transition: transform 0.3s ease, color 0.3s ease;
-  position: absolute;
-  left: -20px;
-  opacity: 0;
-}
-
-.footer-column ul li a:hover {
-  color: #006d2d; /* Hover color */
-  cursor: pointer;
-}
-
-.footer-column ul li a:hover::before {
-  transform: translateX(10px);
-  opacity: 1;
-}
-
-/* Mobile Version Toggle + and - */
-.footer-header {
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 0;
-}
-
-.footer-header span {
-  display: inline-block;
-  margin-left: 10px;
-  font-size: 18px;
-}
-
-/* Footer details for mobile */
+/* Footer Details (Mobile) */
 .footer-details {
   margin-top: 10px;
 }
@@ -182,79 +131,127 @@
   margin-bottom: 10px;
 }
 
-
 /* Stay Updated Section */
-.footer-column .footer-header {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #333;
-  position: relative;
-  padding-bottom: 10px;
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .footer-column .footer-description {
-  font-size: 14px;
-  color: #333;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  font-size: 16px;
+  color: #dcdcdc;
+  line-height: 1.8;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+}
+
+.subscrive-form-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
 }
 
 .footer-column input[type="email"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  width: 100%; /* Full width */
+  padding: 12px;
+  margin-bottom: 0;
   border: 1px solid #fff;
   border-radius: 5px;
   font-size: 14px;
   color: #333;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
 }
 
-.footer-column input[type="email"]::placeholder {
-  color: #aaa;
+.footer-column input[type="email"]:focus {
+  border-color: #00bcd4;
+  outline: none;
 }
 
-.footer-column button {
-  width: 100%;
-  padding: 10px;
-  background-color: #00c451; /* Green button */
+.footer-column .subscribe-btn {
+  width: 100%; /* Full width */
+  max-width: 100px; /* Limit max-width to 100px */
+  padding: 12px;
+  background-color: #00bcd4;
   color: #fff;
+  font-size: 14px;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.footer-column button:hover {
-  background-color: #009e3b; /* Darker green on hover */
+.footer-column .subscribe-btn:hover {
+  background-color: #0097a7;
 }
 
-/* Social Icons */
 .social-icons {
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  gap: 10px;
   margin-top: 20px;
 }
 
-.social-icons a {
-  color: #000;
-  font-size: 24px;
+.social-link {
+  display: inline-block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
-.social-icons a:hover {
-  color: #00c451; /* Green color on hover */
+.social-link:hover {
+  transform: scale(1.1);
 }
+
+.fb-icon, .ig-icon, .pin-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff !important;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fb-icon {
+  background-color: #1877f2 !important;
+}
+
+.ig-icon {
+  background-color: #e4405f !important;
+}
+
+.pin-icon {
+  background-color: #ff1e47 !important;
+}
+
+.social-link:hover .fb-icon {
+  background-color: #165f99 !important;
+  box-shadow: 0 0 10px rgba(24, 119, 242, 0.6) !important;
+  color: #00d9e9 !important;
+}
+
+.social-link:hover .ig-icon {
+  background-color: #c13584 !important;
+  box-shadow: 0 0 10px rgba(228, 64, 95, 0.6) !important;
+}
+
+.social-link:hover .pin-icon {
+  background-color: #b61f4e !important;
+  box-shadow: 0 0 10px rgba(255, 30, 71, 0.6) !important;
+}
+
+/* Footer Bottom Section */
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #fff; /* You can change this background color */
-  border-top: 1px solid #ddd; /* Optional: Add a border at the top */
+  background-color: #fff; /* White background for bottom */
+  border-top: 1px solid #ddd; /* Optional border at the top */
 }
 
 .footer-left {
@@ -271,7 +268,7 @@
 
 .footer-right img {
   width: 50px; /* Adjust the size of the payment method logos */
-  margin-left: 15px; /* Space between the logos */
+  margin-left: 15px;
   max-height: 40px; /* Optional: to ensure logos maintain a consistent height */
 }
 
@@ -279,12 +276,11 @@
   margin-left: 0; /* Remove the left margin for the first image */
 }
 
-
-/* Mobile Styles (1024px and below) */
+/* Mobile Version Styles */
 @media screen and (max-width: 1024px) {
   .footer-container {
-    background-color: #00c451; /* Light background */
-    color: #000; /* Black text */
+    background-color: #008d3f; /* Green background */
+    color: #fff; /* White text */
     padding: 20px;
   }
 
@@ -340,19 +336,6 @@
   /* Show the content when expanded */
   .footer-column.open .footer-details {
     display: block;
-  }
-
-  /* Show the + and - toggle only on mobile */
-  .footer-header span {
-    display: inline-block;
-    margin-left: 10px;
-  }
-
-  /* Hide the + and - for desktop */
-  @media screen and (min-width: 1025px) {
-    .footer-header span {
-      display: none;
-    }
   }
 }
 

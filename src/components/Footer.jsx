@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaPinterest,
-} from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaPinterest } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 import { motion } from "framer-motion";
 import "../assets/css/footer.css";
-import jashcashImage from "../assets//images/payment/jazzcash.png";
-import easypaisaImage from "../assets//images/payment/easypaisa.png";
-import bankalfalahImage from "../assets//images/payment/bank-alfalah.png";
+import jashcashImage from "../assets/images/payment/jazzcash.png";
+import easypaisaImage from "../assets/images/payment/easypaisa.png";
+import bankalfalahImage from "../assets/images/payment/bank-alfalah.png";
+import { productData } from "../data/productData";
 
-const Footer = () => {
+const Footer = ({ categoryStatus }) => {
   const [isCompanyOpen, setIsCompanyOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
@@ -47,21 +44,22 @@ const Footer = () => {
               </div>
               <div className={`footer-details ${isCompanyOpen ? "open" : ""}`}>
                 <ul>
-                  <li>
-                    <Link to="/electronics">Electronics</Link>
-                  </li>
-                  <li>
-                    <Link to="/clothing">Clothing</Link>
-                  </li>
-                  <li>
-                    <Link to="/groceries">Groceries</Link>
-                  </li>
-                  <li>
-                    <Link to="/home-appliances">Home Appliances</Link>
-                  </li>
-                  <li>
-                    <Link to="/toys">Toys & Games</Link>
-                  </li>
+                  {categoryStatus === "loading" ? (
+                    <li>Loading categories...</li>
+                  ) : productData.length > 0 ? (
+                    productData.map((item) => (
+                      <li key={item.id}>
+                        <Link
+                          to={`/category/${item.id}`}
+                          className="category-link-btn"
+                        >
+                          {item.categoryName}
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No categories available</li>
+                  )}
                 </ul>
               </div>
             </motion.div>
@@ -75,21 +73,22 @@ const Footer = () => {
               </div>
               <div className={`footer-details ${isCompanyOpen ? "open" : ""}`}>
                 <ul>
-                  <li>
-                    <Link to="/electronics">Electronics</Link>
-                  </li>
-                  <li>
-                    <Link to="/clothing">Clothing</Link>
-                  </li>
-                  <li>
-                    <Link to="/groceries">Groceries</Link>
-                  </li>
-                  <li>
-                    <Link to="/home-appliances">Home Appliances</Link>
-                  </li>
-                  <li>
-                    <Link to="/toys">Toys & Games</Link>
-                  </li>
+                  {categoryStatus === "loading" ? (
+                    <li>Loading categories...</li>
+                  ) : productData.length > 0 ? (
+                    productData.map((item) => (
+                      <li key={item.id}>
+                        <Link
+                          to={`/category/${item.id}`}
+                          className="category-link-btn"
+                        >
+                          {item.categoryName}
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No categories available</li>
+                  )}
                 </ul>
               </div>
             </div>
@@ -142,7 +141,7 @@ const Footer = () => {
                     <Link to="/wishlist">Wishlist</Link>
                   </li>
                   <li>
-                  <Link to="/user">Sign In</Link>
+                    <Link to="/user">Sign In</Link>
                   </li>
                 </ul>
               </div>
@@ -189,7 +188,7 @@ const Footer = () => {
               </div>
               <div className={`footer-details ${isAccountOpen ? "open" : ""}`}>
                 <ul>
-                <li>
+                  <li>
                     <Link to="/about">About Us</Link>
                   </li>
                   <li>
@@ -210,17 +209,19 @@ const Footer = () => {
               Subscribe to our newsletter to get the latest deals, updates, and
               special offers from EasyBuy.
             </p>
-            <input type="email" placeholder="Enter your email" />
-            <button>Subscribe</button>
+            <div className="subscrive-form-container">
+              <input type="email" placeholder="Enter your email" />
+              <button className="subscribe-btn">Subscribe</button>
+            </div>
             <div className="social-icons">
-              <Link to="#">
-                <FaFacebook size={24} color="#000" />
+              <Link to="#" className="social-link">
+                <FaFacebook size={24} color="#000" className="fb-icon" />
               </Link>
-              <Link to="#">
-                <FaInstagram size={24} color="#000" />
+              <Link to="#" className="social-link">
+                <FaInstagram size={24} color="#000" className="ig-icon" />
               </Link>
-              <Link to="#">
-                <FaPinterest size={24} color="#000" />
+              <Link to="#" className="social-link">
+                <FaPinterest size={24} color="#000" className="pin-icon" />
               </Link>
             </div>
           </div>

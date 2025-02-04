@@ -1,0 +1,18 @@
+ const scroll = (direction) => {
+    if (containerRef.current) {
+      const scrollAmount = 200;
+      const container = containerRef.current;
+
+      if (direction === "left") {
+        container.scrollBy({
+          left: -scrollAmount,
+          behavior: "smooth",
+        });
+      } else if (direction === "right") {
+        container.scrollBy({
+          left: scrollAmount,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
