@@ -10,7 +10,6 @@ import DealsOfTheDay from "../pages/Products/DealOfDay";
 import Contact from "../pages/EasyBuy/Contact";
 import ReturnPolicy from "../pages/EasyBuy/ReturnPolicy";
 import About from "../pages/EasyBuy/About";
-import BlogPage from "../pages/EasyBuy/BlogPage";
 import NotFound from "./NotFound";
 
 const AllPages = () => {
@@ -24,7 +23,6 @@ const AllPages = () => {
       <Route path="/deals-of-the-day" element={<DealsOfTheDay />} />
       <Route path="/our-best-seller" element={<BestSaleProducts />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/blog" element={<BlogPage />} />
       <Route path="/returns" element={<ReturnPolicy  />} />
       <Route path="/about" element={<About  />} />
 

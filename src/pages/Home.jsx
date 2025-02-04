@@ -4,9 +4,9 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/Pages/home.css";
 import useSlider from "../hooks/useSlider";
-import SliderData, { bannerData } from "../data/SliderData";
+import SliderData from "../data/SliderData";
+import bannerData from "../data/BannerData";
 import { productData } from "../data/productData";
-import blogData from "../data/blogData";
 import { HiOutlineMail } from "react-icons/hi";
 import {
   addToFavorites,
@@ -365,25 +365,6 @@ const Home = () => {
             {loading ? "Loading..." : "Show More"}
           </div>
         )}
-      </section>
-      {/* Blog Section */}
-      <section className="blog-section">
-        <div className="section-header">
-          <h2>Latest Blogs</h2>
-        </div>
-        <div className="blog-cards">
-          {blogData.map((blog) => (
-            <div
-              key={blog.id}
-              className="blog-card"
-              onClick={() => navigate(blog.link)}
-            >
-              <img src={blog.image} alt={blog.title} className="blog-image" />
-              <h3 className="blog-title">{blog.title}</h3>
-              <p className="blog-excerpt">{blog.description}</p>
-            </div>
-          ))}
-        </div>
       </section>
       {/* Subscribe to Newsletter Section */}
       <section className="newsletter-section">
