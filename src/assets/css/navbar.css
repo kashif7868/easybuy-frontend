@@ -518,9 +518,8 @@
     display: flex;
     justify-content: flex-end;
     position: relative;
-    bottom: 63px;
+    bottom: 57px;
     z-index: 200001;
-    right: 100px;
   }
 
   .navbar-toggle-close-icon {

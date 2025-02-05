@@ -34,7 +34,7 @@ const Navbar = () => {
   const categoryStatus = useSelector(
     (state) => state.category?.status || "idle"
   );
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1200px)" });
 
   const favorites = useSelector((state) => state.favorites || []);
   const cart = useSelector((state) => state.cart?.cart || []);
