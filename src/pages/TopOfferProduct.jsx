@@ -74,10 +74,14 @@ const TopOfferProduct = () => {
 
   useEffect(() => {
     // Sorting the products by price or any other condition you prefer
-    const sorted = productData.flatMap((category) =>
-      category.subCategories.flatMap((subCategory) => subCategory.products)
-    ).sort((a, b) => a.price - b.price); // Sort by price in ascending order (you can change this logic)
-    
+    const sorted = productData
+      .flatMap((category) =>
+        category.subCategories.flatMap((subCategory) =>
+          subCategory.smallCategories.flatMap((smallCategory) => smallCategory.products)
+        )
+      )
+      .sort((a, b) => a.price - b.price); // Sort by price in ascending order (you can change this logic)
+
     setSortedProducts(sorted); // Update state with sorted products
   }, []); // This effect runs once on mount, as there's no dependency array
 

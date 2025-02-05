@@ -1,9 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import SliderPage from "../pages/Slider/SliderPage";
+import ExploreCategory from "../pages/Category/ExploreCategory";
 import ProductView from "../pages/ProductView";
 import AuthPage from "../components/auth/AuthPage ";
 import WishListProduct from "../pages/WishListProduct";
 import Categories from "../pages/Category/Categories";
+import PapularProducts from "../pages/Products/PapularProducts";
 import FeatureProducts from "../pages/Products/FeatureProducts";
 import BestSaleProducts from "../pages/Products/BestSaleProducts";
 import DealsOfTheDay from "../pages/Products/DealOfDay";
@@ -15,6 +18,9 @@ import NotFound from "./NotFound";
 const AllPages = () => {
   return (
     <Routes>
+      <Route path="/sliders-page" element={<SliderPage />} />
+      <Route path="/explore-categories" element={<ExploreCategory />} />
+      <Route path="/popular-products" element={<PapularProducts />} />
       <Route path="/product/:id" element={<ProductView />} />
       <Route path="/user" element={<AuthPage />} />
       <Route path="/wishlist" element={<WishListProduct />} />

@@ -5,7 +5,7 @@ import { addToFavorites, removeFromFavorites } from "../../app/reducer/favorites
 import { addToCart } from "../../app/actions/actionsCart";
 import { enqueueSnackbar } from "notistack"; // Assuming you're using this for notifications
 import { LuHeart } from "react-icons/lu";
-import productData from '../../data/productData'; 
+import productData from "../../data/productData"; 
 import { HiOutlineShoppingBag } from "react-icons/hi";
 
 const BestSaleProducts = () => {
@@ -62,10 +62,16 @@ const BestSaleProducts = () => {
     }
   };
 
+  // Get products from all categories, subcategories, and small categories, and filter those with a discount
   const bestSaleProducts = productData
-    .flatMap(category => category.subCategories.flatMap(subCategory => subCategory.products))
+    .flatMap(category =>
+      category.subCategories.flatMap(subCategory =>
+        subCategory.smallCategories.flatMap(smallCategory => smallCategory.products)
+      )
+    )
+    .filter((product) => product.discountPrice)
     .sort((a, b) => (b.discountPrice || 0) - (a.discountPrice || 0))
-    .slice(0, 5);
+    .slice(0, 5); // Display top 5 best-selling products
 
   return (
     <div className="products-grid">

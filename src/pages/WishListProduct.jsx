@@ -71,8 +71,10 @@ const WishListProduct = () => {
         productData
           .flatMap((category) =>
             category.subCategories.flatMap((subCategory) =>
-              subCategory.products.filter((product) =>
-                favorites.includes(product.id)
+              subCategory.smallCategories.flatMap((smallCategory) =>
+                smallCategory.products.filter((product) =>
+                  favorites.includes(product.id)
+                )
               )
             )
           )

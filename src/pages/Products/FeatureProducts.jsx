@@ -62,9 +62,12 @@ const FeatureProducts = () => {
     }
   };
 
+  // Updated filteredProducts to include small categories
   const filteredProducts = productData.flatMap(category =>
     category.subCategories.flatMap(subCategory =>
-      subCategory.products
+      subCategory.smallCategories.flatMap(smallCategory =>
+        smallCategory.products
+      )
     )
   );
 

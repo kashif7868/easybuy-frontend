@@ -1,0 +1,267 @@
+.df-deals-of-the-day {
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  
+  .df-deals-of-the-day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .df-hurry-up {
+    color: #e74c3c;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .df-deals-of-the-day-grid {
+    padding: 1px 10px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+  }
+  
+  .df-products-grid {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+  }
+  
+  .df-product-card {
+    width: 220px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .df-product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .df-sale-banner {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #b8ffd5;
+    color: #000;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 2;
+  }
+  
+  .df-product-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .df-product-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 15px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .df-product-card p {
+    padding-left: 15px;
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .df-rating {
+    padding-left: 15px;
+    font-size: 14px;
+    color: #f5a623;
+  }
+  
+  .df-rating span {
+    color: #888;
+  }
+  
+  .df-price {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .df-discount-price {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #b8ffd5;
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .df-original-price {
+    font-size: 14px;
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  .df-product-images-container {
+    position: relative;
+  }
+  
+  .df-product-images-list {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    gap: 10px;
+    top: 35px;
+    left: -200px;
+    z-index: 2;
+    transition: left 0.5s ease-out;
+  }
+  
+  .df-product-card:hover .df-product-images-list {
+    display: flex;
+    left: 10px;
+  }
+  
+  @keyframes df-listImageSlideIn {
+    0% {
+      left: -200px;
+    }
+    100% {
+      left: 10px;
+    }
+  }
+  
+  .df-product-images-list .df-list-images {
+    width: 100%;
+    max-width: 40px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .df-product-images-list .df-list-images:hover {
+    transform: scale(1.1);
+  }
+  
+  .df-product-card:hover .df-product-images-list {
+    animation: df-listImageSlideIn 0.5s ease-out forwards;
+  }
+  
+  /* Add to Cart Icon */
+  .df-add-to-cart-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Show Add to Cart button when product card is hovered */
+  .df-product-card:hover .df-add-to-cart-icon {
+    opacity: 1;
+  }
+  
+  /* Loading Spinner Styles */
+  .df-add-to-cart-icon .df-loading-spinner {
+    border: 3px solid #333;
+    border-top: 3px solid #00fa68;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: df-spin 1s linear infinite;
+  }
+  
+  /* Spinner animation */
+  @keyframes df-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .df-add-to-cart-icon.df-loading {
+    justify-content: center; /* Center the spinner */
+  }
+  
+  .df-add-to-cart-icon.df-loading span {
+    display: none; /* Hide the text when loading */
+  }
+  
+  .df-add-to-cart-icon.df-loading .df-loading-spinner {
+    display: block; /* Show the spinner when loading */
+  }
+  
+  /* Wishlist Icon */
+  .df-wishlist-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 6px 6px;
+    cursor: pointer;
+    z-index: 3;
+    display: block;
+  }
+  
+  /* Countdown Timer */
+  .df-hurry-up {
+    color: #e74c3c;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Cart Info */
+  .df-cart-info {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .df-cart-info p {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  /* Product Card Hover Effects */
+  .df-product-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Responsive Design for Mobile */
+  @media (max-width: 768px) {
+    .df-deals-of-the-day-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .df-product-card {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  

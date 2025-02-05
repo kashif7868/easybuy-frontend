@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { addToCart } from "../app/actions/actionsCart";
 import { useDispatch } from "react-redux";
-import { productData } from "../data/productData";
+import { productData } from "../data/productData"; // Import productData
 import { useSnackbar } from "notistack"; // Import useSnackbar
 import "../assets/css/Pages/productView.css";
 
@@ -23,7 +23,8 @@ const ProductView = () => {
     const fetchProduct = () => {
       const foundProduct = productData
         .flatMap((category) => category.subCategories)
-        .flatMap((subCategory) => subCategory.products)
+        .flatMap((subCategory) => subCategory.smallCategories)
+        .flatMap((smallCategory) => smallCategory.products)
         .find((product) => product.id === parseInt(id));
 
       if (foundProduct) {
