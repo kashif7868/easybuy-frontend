@@ -25,6 +25,7 @@ const Categories = () => {
   const [subCategoryStatus, setSubCategoryStatus] = useState("loading");
   const [subcategories, setSubcategories] = useState([]);
   const [openSubCategory, setOpenSubCategory] = useState(null); // Handle which subcategory is open
+  const [filterLoading, setFilterLoading] = useState(false); // State for filtering loading
 
   // Define state variables for sorting and layout
   const [sortOption, setSortOption] = useState("topSale");
@@ -82,7 +83,8 @@ const Categories = () => {
   const searchFilteredProducts = filteredProducts.slice(startIndex, endIndex);
 
   // Handle small category click
-  const handleSmallCategoryClick = (smallCategoryId) => {
+  const handleSmallCategoryClick = async (smallCategoryId) => {
+    setFilterLoading(true); // Show loading spinner
     const selectedSmallCategory = categoryData.subCategories
       .flatMap((sub) => sub.smallCategories)
       .find((smallCat) => smallCat.id === smallCategoryId);
@@ -97,6 +99,9 @@ const Categories = () => {
         });
       }
     }
+    setTimeout(() => {
+      setFilterLoading(false); // Hide loading spinner after filtering
+    }, 1000);
   };
 
   // Toggle the visibility of subcategories
@@ -171,7 +176,7 @@ const Categories = () => {
     }
   };
 
-  if (!categoryData || subCategoryStatus === "loading") {
+  if (!categoryData || subCategoryStatus === "loading" || filterLoading) {
     return <div>Loading...</div>;
   }
 
@@ -246,7 +251,7 @@ const Categories = () => {
         <div className="cg-shop-product-container-main">
           <div className="cg-shop-filter-navbar-container">
             <div className="cg-shop-filter-nav-list">
-              {/* total display prodyct  */}
+              {/* total display product */}
               <div className="product-count-display">
                 <span>
                   Show Results {startIndex}-{endIndex} of{" "}
@@ -293,12 +298,12 @@ const Categories = () => {
               layout === "grid" ? "grid-layout" : `grid-${layout}`
             }`}
           >
-            {filteredProducts.length === 0 ? (
+            {filterLoading ? (
+              <div className="cg-shop-loading-spinner"></div> // Loader is here
+            ) : filteredProducts.length === 0 ? (
               <div>No products available in this small category.</div>
             ) : (
-              <div
-                className={`cg-shop-products-grid grid-${layout}`} // Dynamically set grid class
-              >
+              <div className={`cg-shop-products-grid grid-${layout}`}>
                 {searchFilteredProducts.map((product) => (
                   <div
                     key={product.id}

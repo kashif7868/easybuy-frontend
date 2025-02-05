@@ -164,21 +164,30 @@ body {
 }
 
 /* Wishlist Icon */
-.top-offer-wishlist-icon {
+.top-offer-wishlist-icon{
   position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: #b8ffd5;
-  border-radius: 8px;
-  padding: 6px 6px;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
-  z-index: 3;
-  display: block;
+  z-index: 1;
+  border-radius: 50%;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+.loading-spinner {
+  border: 3px solid #333;
+  border-top: 3px solid #00fa68;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: wishSpin 1s linear infinite;
 }
 
-.top-offer-wishlist-icon:hover {
-  background-color: rgba(255, 255, 255, 1);
+@keyframes wishSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
+
 
 /* Loader Styles */
 .top-offer-loading-spinner {

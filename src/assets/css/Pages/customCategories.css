@@ -222,6 +222,26 @@
 }
 
 /* Main Product Container */
+/* Loader Style */
+.cg-shop-loading-spinner {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid #333; /* Light gray border */
+  border-top: 4px solid #3fdf81; /* Blue color for the spinner */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: filterspin 1s linear infinite;
+}
+
+/* Spinner Animation */
+@keyframes filterspin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 .cg-shop-product-container-main {
   width: 100%;
   max-width: calc(80% - 90px);
