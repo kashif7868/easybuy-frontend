@@ -1,0 +1,152 @@
+/* Main container for the slider */
+.slider-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 1600px;
+    gap: 20px; /* Add space between the slider and the cards */
+}
+
+/* Main slider styling */
+.main-slider {
+    flex: 1;
+    margin-right: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+/* Slider content styling */
+.slider-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%; 
+    height: 490px !important;  
+}
+
+/* Fixed size for the slider images with cover fit */
+.slider-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px; 
+}
+
+/* Dots navigation */
+.slick-dots {
+    position: absolute;
+    bottom: 10px !important;  /* Set the position of the dots to 20px from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+}
+
+.slick-dots li button:before {
+    color: #fff !important;
+    font-size: 18px !important;
+    opacity: 0.7 !important;
+}
+
+.slick-dots .slick-active button:before {
+    color: #b8ffd5!important;
+}
+
+/* Banner Cards */
+.banner-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.banner-card {
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+.banner-card:hover {
+    transform: scale(1.05);
+}
+
+.banner-image {
+    width: 100%;
+    height: 220px;
+    border-radius: 8px;
+    transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    object-fit: cover;
+}
+
+.banner-card:hover .banner-image {
+    opacity: 0.8;
+}
+
+/* Add overlay on hover */
+.banner-card:hover .banner-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    border-radius: 8px;
+}
+
+/* Responsive Design for 1200px to 250px */
+@media screen and (max-width: 1200px) {
+    .slider-container {
+        max-width: 100%; /* Adjust to full width */
+        padding: 10px; /* Reduce padding */
+    }
+
+    .main-slider {
+        flex: 1;
+        margin-right: 10px; /* Reduce the space between slider and cards */
+    }
+
+    .banner-cards {
+        grid-template-columns: repeat(1, 1fr); /* Single column for smaller screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .slider-content {
+        height: 350px !important; /* Adjust the height for smaller screens */
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .slider-image {
+        object-fit: contain; /* Adjust image to fit the container */
+    }
+
+    .banner-image {
+        height: 180px; /* Adjust banner height */
+    }
+}
+
+@media screen and (max-width: 250px) {
+    .slider-content {
+        height: 250px !important; /* Adjust the height for very small screens */
+    }
+
+    .banner-image {
+        height: 150px; /* Adjust banner height for very small screens */
+    }
+
+    .slick-dots {
+        bottom: 5px !important; /* Adjust dots position for smaller screens */
+    }
+}

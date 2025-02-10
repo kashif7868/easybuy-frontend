@@ -18,6 +18,7 @@ const ProductView = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
     const fetchProduct = () => {
@@ -30,6 +31,14 @@ const ProductView = () => {
       if (foundProduct) {
         setProduct(foundProduct);
         setSelectedImage(foundProduct.image);
+        // Find related products by the same category
+        const related = productData
+          .flatMap((category) => category.subCategories)
+          .flatMap((subCategory) => subCategory.smallCategories)
+          .flatMap((smallCategory) => smallCategory.products)
+          .filter((relatedProduct) => relatedProduct.categoryName === foundProduct.categoryName && relatedProduct.id !== foundProduct.id);
+
+        setRelatedProducts(related);
       }
     };
 
@@ -54,7 +63,6 @@ const ProductView = () => {
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
-      // Use the snackbar for error message
       enqueueSnackbar("Please select size and color", { variant: "error" });
       return;
     }
@@ -75,7 +83,6 @@ const ProductView = () => {
     setTimeout(() => {
       dispatch(addToCart(productToAdd));
       setIsLoading(false);
-      // Use snackbar for success message
       enqueueSnackbar("Product added to cart successfully!", { variant: "success" });
       console.log("Product added to cart", productToAdd);
     }, 1000);
@@ -83,7 +90,6 @@ const ProductView = () => {
 
   const handleBuyNow = () => {
     if (!selectedSize || !selectedColor) {
-      // Use the snackbar for error message
       enqueueSnackbar("Please select size and color", { variant: "error" });
       return;
     }
@@ -205,10 +211,11 @@ const ProductView = () => {
           </div>
         )}
       </div>
+
       <div className="related-products-section">
         <h3>Related Products</h3>
         <div className="related-products-grid">
-          {product.relatedProducts.map((relatedProduct, index) => (
+          {relatedProducts.map((relatedProduct, index) => (
             <div
               key={index}
               onClick={() => navigate(`/product/${relatedProduct.id}`)}

@@ -2,6 +2,7 @@
 import sliderImage1 from "../assets/images/sliders/slider-1.png";
 import sliderImage2 from "../assets/images/sliders/slider-2.png";
 import sliderImage3 from "../assets/images/sliders/slider-3.png";
+import sliderImage4 from "../assets/images/sliders/slider-4.png";
 
 const SliderData = [
   {
@@ -18,7 +19,7 @@ const SliderData = [
   },
   {
     id: 4,
-    image: sliderImage1,
+    image: sliderImage4,
   },
 ];
 
