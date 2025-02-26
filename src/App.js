@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/Checkout/CheckoutPage";
+import OrderDetailsPage from "./pages/Checkout/OrderDetailsPage";
 import AllPages from "./components/AllPages";
 import Preloader from "./components/Preloader";
 import { AuthProvider } from "./context/authContext";
@@ -27,6 +28,10 @@ const AppContent = () => {
             <Route path="/test" element={<Test />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route
+              path="/order-details/:orderId"
+              element={<OrderDetailsPage />}
+            />
             <Route path="/*" element={<AllPages />} />
           </Routes>
           <Footer />

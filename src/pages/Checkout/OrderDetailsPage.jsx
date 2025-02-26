@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrderById } from "../../app/reducers/orderSlice";
-import "../../assets/css/order-details.css";
+import { fetchOrderById } from "../../app/reducer/orderSlice";
+import "../../assets/css/Order/order-details.css";
 
 const OrderDetailsPage = () => {
   const { orderId } = useParams();
@@ -18,7 +18,12 @@ const OrderDetailsPage = () => {
   }, [dispatch, orderId]);
 
   const formatCurrency = (amount) => {
-    return `₨${amount.toFixed(2)}`;
+    // Ensure the amount is a number
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount)) {
+      return `₨0.00`; // Return a default value if the amount is not a valid number
+    }
+    return `₨${numericAmount.toFixed(2)}`; // Format to 2 decimal places
   };
 
   const handleContinueShopping = () => {
@@ -72,7 +77,6 @@ const OrderDetailsPage = () => {
             </div>
             <div className="address-info">
               <h3 className="section-title">Shipping Address</h3>
-
               <p className="address">
                 <strong>Country/Region:</strong> {order.userDetails.country}
               </p>
@@ -100,6 +104,7 @@ const OrderDetailsPage = () => {
               </p>
             </div>
           </div>
+
           {/* Left Section - Product Details */}
           <div className="order-details-section product-details">
             <div className="sp-container">
@@ -151,6 +156,7 @@ const OrderDetailsPage = () => {
                 )}
               </div>
             </div>
+
             <div className="product-info-section">
               <table className="product-info-table">
                 <thead>
@@ -168,11 +174,11 @@ const OrderDetailsPage = () => {
                         <div className="product-item">
                           <img
                             src={
-                              product.images && product.images.length > 0
-                                ? `https://api.mhbstore.com/${product.images[0]}`
+                              product.image
+                                ? `/storage/products/${product.image}`
                                 : "default_image_url"
                             }
-                            alt={product.productName}
+                            alt={product.name}
                             className="product-image"
                           />
                           <span className="product-name">
@@ -198,6 +204,7 @@ const OrderDetailsPage = () => {
                 </tbody>
               </table>
             </div>
+
             <div className="sp-container">
               <div className="payment-summary">
                 <h3 className="section-title">Payment Summary</h3>
@@ -211,6 +218,7 @@ const OrderDetailsPage = () => {
                   <h4>Total: {formatCurrency(order.grandTotal)}</h4>
                 </div>
               </div>
+
               <div className="shipping-info">
                 <h3 className="section-title">Shipping</h3>
                 <p className="shipping-method">Method: Standard</p>
@@ -222,6 +230,7 @@ const OrderDetailsPage = () => {
           </div>
         </div>
       </div>
+
       {/* Continue Shopping Button */}
       <div className="order-details__continue-shopping-container">
         <button
