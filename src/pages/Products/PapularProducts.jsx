@@ -1,29 +1,44 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { LuHeart } from "react-icons/lu";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/Pages/products/ProductPage.css";
-import { productData } from "../../data/productData";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../app/reducer/categorySlice";
+import { fetchProducts } from "../../app/reducer/productSlice";
 import {
   addToFavorites,
   removeFromFavorites,
 } from "../../app/reducer/favoritesSlice";
 import { addToCart } from "../../app/actions/actionsCart";
-import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
 
-const PapularProducts = () => {
+const PopularProducts = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [loading, setLoading] = useState(null);
   const [wishlistLoading, setWishlistLoading] = useState(null);
-  const { enqueueSnackbar } = useSnackbar();
-  const favorites = useSelector((state) => state.favorites);
+
+  // Redux state
+  const {
+    products,
+    loading: productsLoading,
+  } = useSelector((state) => state.product);
+  const { categories } = useSelector((state) => state.category);
+  const { favorites } = useSelector((state) => state.favorites);
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Fetch categories and products when component mounts
+    dispatch(fetchCategories());
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const isFavorite = (productId) =>
     Array.isArray(favorites) && favorites.includes(productId);
@@ -32,16 +47,14 @@ const PapularProducts = () => {
     setWishlistLoading(product.id); // Show loading spinner for wishlist
     if (isFavorite(product.id)) {
       dispatch(removeFromFavorites(product.id));
-      enqueueSnackbar(
-        `${product.productName || "Product"} removed from favorites.`,
-        { variant: "info" }
-      );
+      enqueueSnackbar(`${product.name || "Product"} removed from favorites.`, {
+        variant: "info",
+      });
     } else {
       dispatch(addToFavorites(product.id));
-      enqueueSnackbar(
-        `${product.productName || "Product"} added to favorites!`,
-        { variant: "success" }
-      );
+      enqueueSnackbar(`${product.name || "Product"} added to favorites!`, {
+        variant: "success",
+      });
     }
     setTimeout(() => {
       setWishlistLoading(null); // Hide the spinner after some time
@@ -60,35 +73,17 @@ const PapularProducts = () => {
     setHoveredProduct(null);
   };
 
-  // Define handleCategoryFilterChange function
   const handleCategoryFilterChange = (categoryName) => {
     setSelectedCategory(categoryName);
     setCurrentPage(1); // Reset page to 1 when category changes
   };
 
-  // Define currentProducts based on selected category
   const currentProducts =
     selectedCategory === "All"
-      ? productData
-      : productData.filter(
-          (category) =>
-            category.categoryName === selectedCategory ||
-            category.subCategories.some(
-              (subCategory) =>
-                subCategory.smallCategories.some(
-                  (smallCategory) =>
-                    smallCategory.products.some(
-                      (product) => product.categoryName === selectedCategory
-                    )
-                )
-            )
-        );
+      ? products
+      : products.filter((product) => product.categoryName === selectedCategory);
 
-  // Define filteredProducts based on pagination
-  const filteredProducts = currentProducts.slice(
-    0,
-    currentPage * itemsPerPage
-  );
+  const filteredProducts = currentProducts.slice(0, currentPage * itemsPerPage);
 
   const loadMoreProducts = () => {
     setCurrentPage(currentPage + 1); // Increment currentPage to load more products
@@ -124,7 +119,7 @@ const PapularProducts = () => {
   return (
     <div>
       <section className="products-container">
-        <section className="categori-sub-navbar-container" ref={containerRef}>
+        <section className="categori-sub-navbar-container">
           <div className="categori-sub-navbar">
             <h2 className="popular-products">Popular Products</h2>
             <nav className="categories-nav-list">
@@ -134,17 +129,15 @@ const PapularProducts = () => {
               >
                 All
               </button>
-              {productData.map((category) => (
+              {categories.map((category) => (
                 <button
                   key={category.id}
-                  className={
-                    selectedCategory === category.categoryName ? "active" : ""
-                  }
+                  className={selectedCategory === category.category_name ? "active" : ""}
                   onClick={() =>
-                    handleCategoryFilterChange(category.categoryName)
+                    handleCategoryFilterChange(category.category_name)
                   }
                 >
-                  {category.categoryName}
+                  {category.category_name}
                 </button>
               ))}
             </nav>
@@ -152,102 +145,96 @@ const PapularProducts = () => {
         </section>
 
         <div className="products-grid">
-          {filteredProducts.map((category) =>
-            category.subCategories.map((subCategory) =>
-              subCategory.smallCategories.map((smallCategory) =>
-                smallCategory.products.map((product) => (
-                  <div
-                    key={product.id}
-                    className="product-card"
-                    onClick={() => handleProductClick(product.id)}
-                    onMouseEnter={() => handleMouseEnter(product.id)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {product.discountPrice && (
-                      <div className="sale-banner">10% Off</div>
-                    )}
-                    <div
-                      className="wishlist-icon"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleFavoriteToggle(product);
-                      }}
-                    >
-                      {wishlistLoading === product.id ? (
-                        <div className="loading-spinner"></div>
-                      ) : (
-                        <LuHeart
-                          color={isFavorite(product.id) ? "red" : "gray"}
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="product-card"
+              onClick={() => handleProductClick(product.id)}
+              onMouseEnter={() => handleMouseEnter(product.id)}
+              onMouseLeave={handleMouseLeave}
+            >
+              {product.discountPrice && (
+                <div className="sale-banner">10% Off</div>
+              )}
+              <div
+                className="wishlist-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFavoriteToggle(product);
+                }}
+              >
+                {wishlistLoading === product.id ? (
+                  <div className="loading-spinner"></div>
+                ) : (
+                  <LuHeart color={isFavorite(product.id) ? "red" : "gray"} />
+                )}
+              </div>
+              <div className="product-images-container">
+                <span className="product-images-list">
+                  {product.additional_images &&
+                    product.additional_images
+                      .slice(0, 3)
+                      .map((img, index) => (
+                        <img
+                          key={index}
+                          src={`http://localhost:8000/storage/${img}`}
+                          alt={`Product ${index}`}
+                          className="list-images"
                         />
-                      )}
-                    </div>
-                    <div className="product-images-container">
-                      <span className="product-images-list">
-                        {(product.additionalImages || [])
-                          .slice(0, 3)
-                          .map((img, index) => (
-                            <img
-                              key={index}
-                              src={img}
-                              alt={`Product ${index}`}
-                              className="list-images"
-                            />
-                          ))}
-                      </span>
-                    </div>
+                      ))}
+                </span>
+              </div>
 
-                    <img src={product.image} alt={product.name} />
-                    <h2>{product.name}</h2>
-                    {hoveredProduct === product.id && (
-                      <div
-                        className="add-to-cart-icon"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleAddToCart(product);
-                        }}
-                      >
-                        {loading === product.id ? (
-                          <div className="loading-spinner"></div>
-                        ) : (
-                          <HiOutlineShoppingBag size={24} color="#000" />
-                        )}
-                      </div>
-                    )}
-                    <div
-                      className="product-color"
-                      style={{
-                        backgroundColor: product.color
-                          ? product.color.toLowerCase()
-                          : "gray",
-                      }}
-                    ></div>
-                    <div className="rating">
-                      {"★".repeat(product.rating)}
-                      <span>
-                        ({product.reviews} Review{product.reviews > 1 ? "s" : ""})
-                      </span>
-                    </div>
-                    <div className="price">
-                      {product.discountPrice && (
-                        <span className="discount-price">
-                          ₨ {product.discountPrice}
-                        </span>
-                      )}
-                      <span className="original-price">
-                        ₨ {product.price || 0}
-                      </span>
-                    </div>
-                  </div>
-                ))
-              )
-            )
-          )}
+              <img
+                src={`http://localhost:8000/storage/${product.images}`}
+                alt={product.name}
+              />
+              <h2>{product.name}</h2>
+              {hoveredProduct === product.id && (
+                <div
+                  className="add-to-cart-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart(product);
+                  }}
+                >
+                  {loading === product.id ? (
+                    <div className="loading-spinner"></div>
+                  ) : (
+                    <HiOutlineShoppingBag size={24} color="#000" />
+                  )}
+                </div>
+              )}
+              <div
+                className="product-color"
+                style={{
+                  backgroundColor: product.color
+                    ? product.color.toLowerCase()
+                    : "gray",
+                }}
+              ></div>
+              <div className="rating">
+                {"★".repeat(product.rating)}
+                <span>
+                  ({product.reviews} Review{product.reviews > 1 ? "s" : ""})
+                </span>
+              </div>
+              <div className="price">
+                {product.discountPrice && (
+                  <span className="discount-price">
+                    ₨ {product.discountPrice}
+                  </span>
+                )}
+                <span className="original-price">₨ {product.price || 0}</span>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Show More Button */}
         {currentProducts.length > filteredProducts.length && (
           <div className="show-more-button" onClick={loadMoreProducts}>
-            {loading ? "Loading..." : "Show More"}
+            {productsLoading ? "Loading..." : "Show More"}
           </div>
         )}
       </section>
@@ -255,4 +242,4 @@ const PapularProducts = () => {
   );
 };
 
-export default PapularProducts;
+export default PopularProducts;
