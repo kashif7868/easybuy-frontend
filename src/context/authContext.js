@@ -78,27 +78,29 @@ export const AuthProvider = ({ children }) => {
   };
 
   // SignUp API call
-  const signUp = async (userData) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/auth/",
-        userData
-      );
-      const { user, tokens } = response.data;
+// SignUp API call
+const signUp = async (userData) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/api/auth/register", // Full URL with localhost
+      userData // Ensure password_confirmation is included here
+    );
+    const { user, tokens } = response.data;
 
-      setUser(user);
-      saveTokens(tokens);
+    setUser(user);
+    saveTokens(tokens);
 
-      localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
 
-      enqueueSnackbar(`Welcome ${user.fullName}! You have successfully signed up.`, { variant: 'success' });
+    enqueueSnackbar(`Welcome ${user.fullName}! You have successfully signed up.`, { variant: 'success' });
 
-      navigate("/"); // Redirect to dashboard after signup
-    } catch (error) {
-      setError(error.response?.data?.message || "Signup failed"); // Set error message
-      enqueueSnackbar(error.response?.data?.message || "Signup failed", { variant: 'error' });
-    }
-  };
+    navigate("/"); // Redirect to dashboard after signup
+  } catch (error) {
+    setError(error.response?.data?.message || "Signup failed"); // Set error message
+    enqueueSnackbar(error.response?.data?.message || "Signup failed", { variant: 'error' });
+  }
+};
+
 
   // Login API call
   const login = async ({ email, password }) => {
@@ -131,7 +133,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:8000/api/auth/logout",
+        "http://localhost:8000/api/logout",
         { refreshToken: refreshToken || "" },
         {
           headers: {
@@ -151,39 +153,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Forgot Password API call
-  const forgotPassword = async (email) => {
-    try {
-      await axios.post("http://localhost:8000/api/auth/forgot-password", {
-        email,
-      });
-
-      enqueueSnackbar("Please check your email to reset your password.", { variant: 'success' });
-    } catch (error) {
-      setError("Failed to send reset email");
-      enqueueSnackbar("Failed to send reset email.", { variant: 'error' });
-    }
-  };
-
-  // Reset Password API call
-  const resetPassword = async (resetPasswordToken, newPassword) => {
-    try {
-      await axios.post(
-        "http://localhost:8000/api/auth/reset-password",
-        {
-          resetPasswordToken,
-          newPassword,
-        }
-      );
-
-      enqueueSnackbar("Your password has been reset successfully.", { variant: 'success' });
-
-      navigate("/signIn"); // Redirect to login after password reset
-    } catch (error) {
-      setError("Failed to reset password");
-      enqueueSnackbar("Failed to reset password.", { variant: 'error' });
-    }
-  };
 
   // Get user by ID
   const getUserById = async (userId) => {
@@ -232,8 +201,6 @@ export const AuthProvider = ({ children }) => {
         signUp,
         login,
         logout,
-        forgotPassword,
-        resetPassword,
         getUserById,
         updateProfile,
         dispatch, // Provide dispatch for actions like addSignUpBonus
