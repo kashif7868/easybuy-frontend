@@ -73,16 +73,22 @@ const PopularProducts = () => {
     setHoveredProduct(null);
   };
 
-  const handleCategoryFilterChange = (categoryName) => {
-    setSelectedCategory(categoryName);
+  const handleCategoryFilterChange = (category_name) => {
+    setSelectedCategory(category_name);
     setCurrentPage(1); // Reset page to 1 when category changes
   };
 
+  // Filter products based on selected category
   const currentProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.categoryName === selectedCategory);
-
+  selectedCategory === "All"
+    ? products
+    : products.filter(
+        (product) =>
+          product.category.category_name &&
+          product.category.category_name
+            .toLowerCase()
+            .trim() === selectedCategory.toLowerCase().trim()
+      );
   const filteredProducts = currentProducts.slice(0, currentPage * itemsPerPage);
 
   const loadMoreProducts = () => {
@@ -93,8 +99,8 @@ const PopularProducts = () => {
     setLoading(product.id); // Set loading state to show loading indicator
     try {
       const qty = product.qty || 1;
-      const price = product.price || 0;
-      const selectedSize = product.selectedSize || "default";
+      const price = product.discount_price || product.price || 0;
+      const selectedSize = product.size || "default";
 
       const productWithQty = {
         ...product,
@@ -153,8 +159,8 @@ const PopularProducts = () => {
               onMouseEnter={() => handleMouseEnter(product.id)}
               onMouseLeave={handleMouseLeave}
             >
-              {product.discountPrice && (
-                <div className="sale-banner">10% Off</div>
+              {product.discount_price && (
+                <div className="sale-banner">{product.discount_percentage}% Off</div>
               )}
               <div
                 className="wishlist-icon"
@@ -208,9 +214,7 @@ const PopularProducts = () => {
               <div
                 className="product-color"
                 style={{
-                  backgroundColor: product.color
-                    ? product.color.toLowerCase()
-                    : "gray",
+                  backgroundColor: product.color ? product.color.toLowerCase() : "gray",
                 }}
               ></div>
               <div className="rating">
@@ -220,12 +224,10 @@ const PopularProducts = () => {
                 </span>
               </div>
               <div className="price">
-                {product.discountPrice && (
-                  <span className="discount-price">
-                    ₨ {product.discountPrice}
-                  </span>
+                {product.discount_price && (
+                  <span className="discount-price">₨ {product.discount_price}</span>
                 )}
-                <span className="original-price">₨ {product.price || 0}</span>
+                <span className="original-price">₨ {product.price}</span>
               </div>
             </div>
           ))}

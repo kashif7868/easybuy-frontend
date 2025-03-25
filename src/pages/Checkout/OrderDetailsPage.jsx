@@ -18,16 +18,15 @@ const OrderDetailsPage = () => {
   }, [dispatch, orderId]);
 
   const formatCurrency = (amount) => {
-    // Ensure the amount is a number
     const numericAmount = Number(amount);
     if (isNaN(numericAmount)) {
-      return `₨0.00`; // Return a default value if the amount is not a valid number
+      return `₨0.00`; // Default value for invalid amount
     }
     return `₨${numericAmount.toFixed(2)}`; // Format to 2 decimal places
   };
 
   const handleContinueShopping = () => {
-    navigate("/"); // Redirect to home page
+    navigate("/"); // Navigate to home page
   };
 
   if (orderStatus === "loading") {
@@ -138,7 +137,6 @@ const OrderDetailsPage = () => {
                 <p className="selected-bank">
                   Selected Bank: {order.selectedBank}
                 </p>
-                {/* Show the selected bank with account details */}
                 {order.selectedBank && (
                   <div className="order-details__selected-bank">
                     <p className="order-details__account-number">
@@ -149,8 +147,7 @@ const OrderDetailsPage = () => {
                         ? "02540108520675"
                         : order.selectedBank === "jazzCash"
                         ? "0300-4645503"
-                        : "0300-4645503"}{" "}
-                      {/* Adjust the account numbers accordingly */}
+                        : "0300-4645503"}
                     </p>
                   </div>
                 )}
@@ -173,13 +170,11 @@ const OrderDetailsPage = () => {
                       <td>
                         <div className="product-item">
                           <img
-                            src={
-                              product.image
-                                ? `/storage/products/${product.image}`
-                                : "default_image_url"
-                            }
-                            alt={product.name}
-                            className="product-image"
+                            src={`http://localhost:8000/storage/${
+                              product.img || "default_image.jpg"
+                            }`} // Use a default image if 'product.img' is not available
+                            alt={product.productName}
+                            className="checkout-product-image"
                           />
                           <span className="product-name">
                             {product.productName}

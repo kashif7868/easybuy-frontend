@@ -334,7 +334,7 @@ const CheckoutPage = () => {
               {cart.map((item) => (
                 <li key={item.id} className="checkout-product-item">
                   <img
-                    src={item.image || "default_image_url"}
+                    src={`http://localhost:8000/storage/${item.image}`} // Assuming 'item.image' holds the image name or path
                     alt={item.productName}
                     className="checkout-product-image"
                   />
