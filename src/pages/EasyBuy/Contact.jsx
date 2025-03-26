@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "../../assets/css/Easybuy/contactUs.css"; // Updated CSS path
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify"; // Import Toastify
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for Toastify
+import { useSnackbar } from "notistack"; 
+import { useDispatch } from "react-redux"; // Importing useDispatch
+import { createContact } from "../../app/reducer/contactSlice"; // Importing the createContact action
 
 const Contact = () => {
   // State for form data
@@ -11,6 +12,12 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
+  // Snackbar hook
+  const { enqueueSnackbar } = useSnackbar();
+
+  // Redux dispatch hook
+  const dispatch = useDispatch();
 
   // Handle input changes
   const handleChange = (e) => {
@@ -22,24 +29,32 @@ const Contact = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate form submission logic
     const { name, email, message } = feedback;
 
-    // Show success or error message based on form submission
+    // Validate the form
     if (name && email && message) {
-      toast.success("Message sent successfully!");
-    } else {
-      toast.error("Please fill out all fields.");
-    }
+      try {
+        // Dispatch the createContact action to send form data
+        await dispatch(createContact(feedback)).unwrap();
 
-    // Clear form after submission
-    setFeedback({
-      name: "",
-      email: "",
-      message: "",
-    });
+        // Show success message after dispatching
+        enqueueSnackbar("Message sent successfully!", { variant: "success" });
+
+        // Clear form after submission
+        setFeedback({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } catch (error) {
+        // Show error message if there was an issue sending the contact info
+        enqueueSnackbar("Error sending message. Please try again.", { variant: "error" });
+      }
+    } else {
+      enqueueSnackbar("Please fill out all fields.", { variant: "error" });
+    }
   };
 
   return (
@@ -154,9 +169,6 @@ const Contact = () => {
           referrerPolicy="no-referrer-when-downgrade"
         ></iframe>
       </div>
-
-      {/* Toast Notifications */}
-      <ToastContainer autoClose={1500} />
     </div>
   );
 };
