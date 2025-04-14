@@ -1,6 +1,6 @@
 /* Footer Container */
 .footer-container {
-  background-color: #008d3f; /* Green background */
+  background-color: #8e00c9; /* Green background */
   color: #fff; /* White text */
   padding: 40px 20px;
   font-family: "Arial", sans-serif;
@@ -67,7 +67,7 @@
   bottom: -5px;
   width: 100%;
   height: 1px; /* Adjust height as needed */
-  background-color: #17eb6f; /* Light Green for hover */
+  background-color: #8e00c9; /* Light Green for hover */
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.3s ease-in-out;
@@ -176,7 +176,7 @@
   width: 100%; /* Full width */
   max-width: 100px; /* Limit max-width to 100px */
   padding: 12px;
-  background-color: #00bcd4;
+  background-color: #0168df;
   color: #fff;
   font-size: 14px;
   border: none;
@@ -186,7 +186,7 @@
 }
 
 .footer-column .subscribe-btn:hover {
-  background-color: #0097a7;
+  background-color: #ffb102;
 }
 
 .social-icons {

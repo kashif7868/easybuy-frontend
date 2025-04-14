@@ -11,7 +11,9 @@ import Preloader from "./components/Preloader";
 import { AuthProvider } from "./context/authContext";
 import useNavigationLoader from "./hooks/useNavigationLoader";
 import SearchResults from "./pages/SearchResults";
-import Test from "./pages/Test";
+import MyOrders from "./pages/Checkout/MyOrders";
+import PromoPopUp from "./components/PromoPopUp"; // Import the PromoPopUp component
+
 const AppContent = () => {
   const loading = useNavigationLoader();
 
@@ -22,10 +24,11 @@ const AppContent = () => {
       ) : (
         <>
           <Navbar />
+          <PromoPopUp /> {/* Show the pop-up */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search-results" element={<SearchResults />} />
-            <Route path="/test" element={<Test />} />
+            <Route path="/orders" element={<MyOrders />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route

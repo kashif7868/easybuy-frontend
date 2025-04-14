@@ -1,0 +1,109 @@
+/* PromoPopUp.css */
+.boxPromoPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: boxFadeIn 1s ease-out; /* Animation to make the popup appear */
+  }
+  
+  .boxPopupContent {
+    background-color: #ffffff; /* White background for better contrast */
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    position: relative;
+    opacity: 0; /* Start with opacity 0 for fade-in */
+    animation: boxSlideIn 0.5s ease-out forwards, boxFadeIn 1s ease-out forwards; /* Combine sliding and fading animation */
+    width: 80%; /* Adjust width */
+    max-width: 450px; /* Max width for responsive design */
+    border: 3px solid #8e00c9; /* Purple border to match the new color */
+  }
+  
+  .boxHeading {
+    font-size: 28px;
+    font-weight: bold;
+    color: #8e00c9; /* Purple text for the heading */
+    margin-bottom: 20px;
+  }
+  
+  .boxDescription {
+    font-size: 20px;
+    margin: 15px 0;
+    color: #333; /* Dark text color for better readability */
+  }
+  
+  .boxShopNowButton {
+    background-color: #FF6600; /* Orange button */
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow for button */
+  }
+  
+  .boxShopNowButton:hover {
+    background-color: #ff4500; /* Darker orange on hover */
+  }
+  
+  .boxCloseButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    font-size: 22px;
+    background: none;
+    color: #8e00c9; 
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Animation for fading in */
+  @keyframes boxFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Animation for sliding in from the top */
+  @keyframes boxSlideIn {
+    from {
+      transform: translateY(-50px); /* Start from above */
+    }
+    to {
+      transform: translateY(0); /* End at the original position */
+    }
+  }
+  
+  /* Fade-out animation when closing */
+  @keyframes boxFadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  /* Styling for the gift box image */
+  .boxGiftBoxImage {
+    width: 150px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  

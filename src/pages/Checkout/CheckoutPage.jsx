@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { clearCart } from "../../app/actions/actionsCart";
 import { postOrder } from "../../app/reducer/orderSlice";
+import { useAuth } from "../../context/authContext"; // Import the useAuth hook
 import "../../assets/css/Pages/checkout.css";
 import cityData from "../../data/cityData.json";
 
 const CheckoutPage = () => {
+  const { user } = useAuth(); // Get user data from context
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,9 +23,9 @@ const CheckoutPage = () => {
   const orderId = `EB-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
   const [userDetails, setUserDetails] = useState({
-    name: "",
+    name: user?.fullName || "", // Use user's name if available
     mobile: "",
-    email: "",
+    email: user?.email || "", // Use user's email if available
     country: "Pakistan", // Default to Pakistan
     province: "Punjab", // Default to Punjab
     city: "",
